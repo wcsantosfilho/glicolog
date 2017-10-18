@@ -1,0 +1,6 @@
+2017-10-15 10:31:42 jdbc[7]: exception
+org.h2.jdbc.JdbcSQLException: Table "PESSOA" not found; SQL statement:
+insert into pessoa (id, version, nome, idade) values (null, ?, ?, ?) [42102-195]
+2017-10-15 10:31:42 jdbc[7]: exception
+org.h2.jdbc.JdbcSQLException: Table "PESSOA" not found; SQL statement:
+insert into pessoa (id, version, nome, idade) values (null, ?, ?, ?) [42102-195]

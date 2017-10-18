@@ -1,0 +1,42 @@
+/* styles.css */
+
+/* Show it is fixed to the top */
+body {
+  min-height: 75rem;
+  padding-top: 4.5rem;
+}
+
+.logoGlicolog {
+    height: auto; 
+    width: auto; 
+    max-width: 40px; 
+    max-height: 40px; 
+    border: 1px solid red;
+}
+.grupoDeCampos {
+    padding: 10px 5px 10px 5px;
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: darkgrey;
+}
+
+.colunaDoForm {
+    padding-left: 5px;
+    padding-right: 5px; 
+}
+
+#grupoGlicemia {
+    background-color: aqua;
+}
+
+#grupoInsulina {
+    background-color: brown;
+}
+
+#grupoRefeicao {
+    background-color: coral;
+}
+
+#grupoAtivFisica {
+    background-color: crimson;
+}
