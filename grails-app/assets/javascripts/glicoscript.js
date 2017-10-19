@@ -6,9 +6,13 @@ $(function() {
     
     var date_input=$('input[name="formData"]'); //our date input has the name "date"
     var options={
-        format: 'dd/mm/yyyy',
+        dateFormat: 'dd/mm/yy',
         todayHighlight: true,
         autoclose: true,
+        dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+        dayNamesMin: [ "Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab" ],
+        showButtonPanel: true,
+        maxDate: "+0d"
       };
     date_input.datepicker(options);
     

@@ -27,7 +27,7 @@ class PessoaController {
             transactionStatus.setRollbackOnly()
             notFound()
             return
-        }
+        } 
 
         if (pessoa.hasErrors()) {
             transactionStatus.setRollbackOnly()

@@ -4,9 +4,13 @@
     <title>Home Page</title>
 </head>
 <body>
-
      <div class="container">
-        <div class="row">
+         <div class="row">
+             <g:if test="${flash.message}">
+                <div class="alert alert-danger" role="status">${flash.message}</div>
+            </g:if>
+         </div>
+         <div class="row">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-xs-6"> <!-- lado esquerdo do form -->
@@ -45,31 +49,52 @@
                         </div> <!-- row -->
                     </div> <!-- lado esquerdo do form -->
                     <div class="col-md-6 col-xs-6"> <!-- lado direito do form -->
-                        <div class="grupoDeCampos" id="grupoGlicemia">
-                            <label for="formTipoGlicemia">Tipo Glicemia</label>
-                            <select class="form-control" id="formTipoGlicemia" name="formTipoGlicemia">
-                                <option>Pré prandial</option>
-                                <option>Pós prandial</option>
-                                <option>Controle</option>
-                            </select>
-                            <div class="form-group"> 
-                                <label for="formGlicemia">Glicemia</label>
-                                <input type="text" id="formGlicemia" class="form-control" name="formGlicemia">
-                            </div> 
-                        </div>    
-                        <div class="grupoDeCampos" id="grupoInsulina">
-                            <label for="formTipoInsulina">Tipo Insulina</label>
-                            <select class="form-control" id="formTipoInsulina" name="formTipoInsulina">
-                                <option>Rápida - Aspart</option>
-                                <option>Lenta - Glargina</option>
-                            </select>
-                            <div class="form-group">
-                                <label for="formInsulina">Insulina (doses)</label>
-                                <input type="text" id="formInsulina" class="form-control" name="formInsulina">
+                        <!-- ============================================================ -->
+                        <!--                                                              -->
+                        <!-- ============================================================ -->
+                        <g:form name="formGlicemia" url="[action:'save',controller:'glicemia']" class="container"> <!-- FORM DA GLICEMIA -->
+                            <div class="grupoDeCampos" id="grupoGlicemia">
+                                <g:textField class="formDataLadoDireito" name="dataAtivFisica" hidden="true" />
+                                <g:textField type="text" class="formHoraLadoDireito" name="horaAtivFisica" hidden="true" />
+                                <label for="formTipoGlicemia">Tipo Glicemia</label>
+                                <select class="form-control" id="formTipoGlicemia" name="formTipoGlicemia">
+                                    <option>Pré prandial</option>
+                                    <option>Pós prandial</option>
+                                    <option>Controle</option>
+                                </select>
+                                <div class="form-group"> 
+                                    <label for="formGlicemia">Glicemia</label>
+                                    <input type="text" id="formGlicemia" class="form-control" name="formGlicemia">
+                                </div> 
+                                <button type="submit" class="btn btn-warning botaoFormLadoDireito">Gravar</button>
                             </div>
-                        </div>
-                        <form class="container"> <!-- FORM DA REFEIÇÃO -->
+                        </g:form>
+                        <!-- ============================================================ -->
+                        <!--                                                              -->
+                        <!-- ============================================================ -->
+                        <g:form name="formInsulina" url="[action:'save',controller:'insulina']" class="container"> <!-- FORM DA INSULINA -->
+                            <div class="grupoDeCampos" id="grupoInsulina">
+                                <g:textField class="formDataLadoDireito" name="dataAtivFisica" hidden="true" />
+                                <g:textField type="text" class="formHoraLadoDireito" name="horaAtivFisica" hidden="true" />
+                                <label for="formTipoInsulina">Tipo Insulina</label>
+                                <select class="form-control" id="formTipoInsulina" name="formTipoInsulina">
+                                    <option>Rápida - Aspart</option>
+                                    <option>Lenta - Glargina</option>
+                                </select>
+                                <div class="form-group">
+                                    <label for="formInsulina">Insulina (doses)</label>
+                                    <input type="text" id="formInsulina" class="form-control" name="formInsulina">
+                                </div>
+                                <button type="submit" class="btn btn-warning botaoFormLadoDireito">Gravar</button>
+                            </div>
+                        </g:form>
+                        <!-- ============================================================ -->
+                        <!--                                                              -->
+                        <!-- ============================================================ -->
+                        <g:form name="formRefeicao" url="[action:'save',controller:'refeicao']" class="container"> <!-- FORM DA REFEIÇÃO -->
                             <div class="grupoDeCampos" id="grupoRefeicao">
+                                <g:textField class="formDataLadoDireito" name="dataAtivFisica" hidden="true" />
+                                <g:textField type="text" class="formHoraLadoDireito" name="horaAtivFisica" hidden="true" />
                                 <div class="form-group">
                                     <label for="formTipoRefeicao">Tipo Refeição</label>
                                     <select class="form-control" id="formTipoRefeicao" name="formRefeicao">
@@ -84,16 +109,14 @@
                                     <label for="formObsRefeicao">Observação Refeição (opcional)</label>
                                     <input type="text" id="formObsRefeicao" class="form-control" name="formObsRefeicao">
                                 </div>
-                                <button type="submit" name="actionFormRefeicao" value="actionFormRefeicao" class="btn btn-warning botaoFormLadoDireito">Gravar</button>
+                                <button type="submit" class="btn btn-warning botaoFormLadoDireito">Gravar</button>
                             </div>
-                        </form>
+                        </g:form>
                         <!-- ============================================================ -->
                         <!--                                                              -->
                         <!-- ============================================================ -->
                         <g:form name="formAtivFisica" url="[action:'save',controller:'ativFisica']" class="container"> <!-- FORM DA ATIVIDADE FISICA -->
-                        
                             <div class="grupoDeCampos" id="grupoAtivFisica">
-                                <g:textField name="nome" value="Carlos Carvalhares" />
                                 <g:textField class="formDataLadoDireito" name="dataAtivFisica" hidden="true" />
                                 <g:textField type="text" class="formHoraLadoDireito" name="horaAtivFisica" hidden="true" />
                                 <div class="form-group">
@@ -107,7 +130,7 @@
                                 </div>
                                 <button type="submit"  class="btn btn-warning botaoFormLadoDireito">Gravar</button>
                             </div>
-                        </g:form>> <!-- / FORM DA ATIVIDADE FISICA -->
+                        </g:form> <!-- / FORM DA ATIVIDADE FISICA -->
                         <!-- ============================================================ -->
                         <!--                                                              -->
                         <!-- ============================================================ -->

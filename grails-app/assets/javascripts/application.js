@@ -6,8 +6,6 @@
 // to create separate JavaScript files as needed.
 //
 //= require jquery-2.1.4
-//= require tether
-//= require bootstrap
 //= require jquery-ui
 //= require glicoscript
 

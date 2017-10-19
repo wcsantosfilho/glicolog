@@ -9,6 +9,6 @@ class HomeController {
     def index() { }
     
     def insereAtivFisica() {
-        redirect(controller: "AtivFisica", action: "save", params: ['nome': "Jose"])
+        redirect(controller: "AtivFisica", action: "save")
     }
 }
