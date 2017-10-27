@@ -15,39 +15,7 @@ class AtivFisicaController {
         respond AtivFisica.list(params), model:[ativfisicaCount: AtivFisica.count()]
     }
 
-    /* --------------------------------
-     *  Save
-       -------------------------------- */
-    @Transactional
-    def save() {
-        def pessoa = Pessoa.findByNome("Carlos Carvalhares")
-        if (pessoa == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        } 
-        
-        if (pessoa.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond pessoa.errors, view:'index'
-            return
-        }
 
-
-
-        def dataHoraAtiv = Date.parse('dd/MM/yyyy HH:mm:ss', params.dataAtivFisica + " " + params.horaAtivFisica+":00")
-        def ativfisica = new AtivFisica (dataAtivFisica: dataHoraAtiv, tipoAtivFisica: params.tipoAtivFisica, observAtivFisica: params.observAtivFisica, pessoa: pessoa )
-        ativfisica.save(flush: true)
-        
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'ativfisica.label', default: 'AtivFisica'), ativfisica.toString()])
-                redirect(controller: "AtivFisica")
-            }
-            '*' { respond a1, [status: CREATED] }
-        }
-    }
-    
     
     /* --------------------------------
      *  notFound
@@ -62,3 +30,4 @@ class AtivFisicaController {
         }
     }
 }
+
