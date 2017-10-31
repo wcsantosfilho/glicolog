@@ -11,8 +11,4 @@ class AtivFisicaSpec extends Specification implements DomainUnitTest<AtivFisica>
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-            true == false
-    }
 }

@@ -11,8 +11,4 @@ class InsulinaSpec extends Specification implements DomainUnitTest<Insulina> {
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-            true == false
-    }
 }

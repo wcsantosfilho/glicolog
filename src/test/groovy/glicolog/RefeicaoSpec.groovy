@@ -11,8 +11,4 @@ class RefeicaoSpec extends Specification implements DomainUnitTest<Refeicao> {
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-            true == false
-    }
 }

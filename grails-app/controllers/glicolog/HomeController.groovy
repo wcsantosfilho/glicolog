@@ -6,11 +6,14 @@ import grails.transaction.Transactional
 class HomeController {
 
     
+    /* ------------------------------------------------ *
+     *  index                                           *
+     * ------------------------------------------------ */
     def index() { }
     
-    /* --------------------------------
-     *  Save Form (input originario do home/index)
-       -------------------------------- */
+    /* ------------------------------------------------ *
+     *  saveForm (input originario do home/index)      *
+     * ------------------------------------------------ */
     @Transactional
     def saveForm(RegistroInfo info) {
         
@@ -25,7 +28,6 @@ class HomeController {
         if (pessoa == null) {
             transactionStatus.setRollbackOnly()
             respond pessoa.errors, view:'index'
-            // notFound()
             return
         }
         
@@ -35,7 +37,6 @@ class HomeController {
             return
         }
 
-        //info.validate()
         if (info.hasErrors()) {
             println "Erro no Info"
             transactionStatus.setRollbackOnly()
@@ -43,16 +44,25 @@ class HomeController {
             return
         }
         
-    /*    def dataHoraAtiv = Date.parse('dd/MM/yyyy HH:mm:ss', info.dataAtivFisica + " " + info.horaAtivFisica+":00")
-        def ativfisica = new AtivFisica (dataAtivFisica: dataHoraAtiv, tipoAtivFisica: info.tipoAtivFisica, observAtivFisica: info.observAtivFisica, pessoa: pessoa )
-        ativfisica.save(flush: true)
-*/
+        AtivFisica ativfisica;
+        switch(params.tipoRegistro) {
+            case 'AtivFisica':
+                def dataHoraAtiv = Date.parse('dd/MM/yyyy HH:mm:ss', info.dataRegistro + " " + info.horaRegistro+":00")
+                ativfisica = new AtivFisica (dataAtivFisica: dataHoraAtiv, tipoAtivFisica: info.tipoAtivFisica, observAtivFisica: info.observAtivFisica, pessoa: pessoa )
+                ativfisica.save(flush: true)
+
+                break
+            default:
+                println("Nenhum tipo de registro escolhido");
+                break;
+        }
+
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'ativfisica.label', default: 'AtivFisica'), ativfisica.toString()])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'ativfisica.label', default: 'ativfisica'), ativfisica.toString()])
                 redirect(controller: "AtivFisica")
             }
-            '*' { respond a1, [status: CREATED] }
+            '*' { respond ativfisica, [status: CREATED] }
         }
     }
 }
@@ -73,6 +83,9 @@ class RegistroInfo implements grails.validation.Validateable {
     String observAtivFisica
 
     static constraints = {
+        horaRegistro (blank: false, validator: {value, object ->
+                if (!value.startsWith('12')) return 'validation.horaRegistroNot12';
+        })
         tipoGlicemia nullable: true
         taxaGlicemia nullable: true
         tipoInsulina nullable: true
@@ -82,9 +95,10 @@ class RegistroInfo implements grails.validation.Validateable {
         tipoAtivFisica nullable: true
         observAtivFisica nullable: true
         tipoAtivFisica (validator:{ value, object ->
-            if (!['Leve','Moderada','Intensa'].contains(value) || object.tipoRegistro == 'AtivFisica') {
-                return ['tipoAtivFisicaMissing']
-			}
+            if (object.tipoRegistro == 'AtivFisica' &&
+                !['Leve','Moderada','Intensa'].contains(value) ) {
+                    return 'validation.tipoAtivFisicaErrado'
+			}    
         })
 
     }

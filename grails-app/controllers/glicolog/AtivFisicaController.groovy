@@ -15,11 +15,38 @@ class AtivFisicaController {
         respond AtivFisica.list(params), model:[ativfisicaCount: AtivFisica.count()]
     }
 
+    /* -------------------------------- *
+     *  save                        *
+     * -------------------------------- */
+    @Transactional
+    protected void save(AtivFisica ativFisica) {
+        if (ativFisica == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        } 
 
+        if (ativFisica.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond ativFisica.errors, view:'index'
+            return
+        }
+
+        ativFisica.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'ativFisica.label', default: 'Atividade Fisica'), ativFisica.id])
+                redirect ativFisica
+            }
+            '*' { respond ativFisica, [status: CREATED] }
+        }
+
+    }
     
-    /* --------------------------------
-     *  notFound
-       -------------------------------- */
+    /* -------------------------------- *
+     *  notFound                        *
+     * -------------------------------- */
     protected void notFound() {
         request.withFormat {
             form multipartForm {

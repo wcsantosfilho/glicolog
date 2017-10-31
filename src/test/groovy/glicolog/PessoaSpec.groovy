@@ -1,18 +1,36 @@
 package glicolog
 
 import grails.testing.gorm.DomainUnitTest
+import spock.lang.Shared
 import spock.lang.Specification
+import spock.lang.Stepwise
 
+@Stepwise
 class PessoaSpec extends Specification implements DomainUnitTest<Pessoa> {
 
-    def setup() {
+    @Shared int id
+    
+    void "teste de persistencia de Pessoa - mocking"() {
+        setup:
+            new Pessoa(nome: "Walter", idade: 46).save()
+            new Pessoa(nome: "Alfredo", idade: 33).save()
+        
+        expect:
+            Pessoa.count() == 2
     }
+    
+    void "teste de instância do dominio"() {
+        setup:
+        id = System.identityHashCode(domain)
 
-    def cleanup() {
-    }
+        expect:
+        domain != null
+        domain.hashCode() == id
 
-    void "test something"() {
-        expect:"fix me"
-            true == false
+        when:
+        domain.nome = 'Walter'
+
+        then:
+        domain.nome == 'Walter'
     }
 }

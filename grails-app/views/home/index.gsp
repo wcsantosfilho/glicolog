@@ -13,7 +13,7 @@
          <g:hasErrors>
             <ul class="errors" role="alert">
                 <g:eachError var="error">
-                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+                <li  <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/>AAAA</li>
                 </g:eachError>
             </ul>
         </g:hasErrors>
@@ -25,13 +25,14 @@
                             <div class="col-md-6 col-xs-3 colunaDoForm"> <!-- 1a subdivisão do lado esquerdo do form -->
 
                                 <label class="label-control">Data e Hora:</label>
-                                <div class="input-group">
+                                <div class="input-group input-group-md">
                                     <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                    <input type="text" class="form-control input-xs" id="dataRegistro" name="dataRegistro" placeholder="dd/mm/yyyy" value="${registroInfo?.dataRegistro}">
+                                    <g:field type="text" class="form-control" id="dataRegistro" name="dataRegistro" placeholder="dd/mm/yyyy" value="${registroInfo?.dataRegistro}" />
                                 </div>
-                                <div class="input-group">
+                                <br>    
+                                <div class="input-group input-group-md">
                                     <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
-                                    <input type="text" class="form-control input-xs" id="horaRegistro" name="horaRegistro"  placeholder="hh:mm" value="${registroInfo?.horaRegistro}">
+                                    <g:field type="text" class="form-control" id="horaRegistro" name="horaRegistro"  placeholder="hh:mm" value="${registroInfo?.horaRegistro}" />
                                 </div>
                             </div> <!-- /1a subdivisão do lado esquerdo do form -->
                             <div class="col-md-6 col-xs-3 colunaDoForm"> <!-- 2a subdivisão do lado esquerdo do form -->
@@ -55,13 +56,16 @@
                                 <g:textField type="text" class="formDataLadoDireito" name="dataRegistro" hidden="true" value="${registroInfo?.dataRegistro}"/>
                                 <g:textField type="text" class="formHoraLadoDireito" name="horaRegistro" hidden="true" value ="${registroInfo?.horaRegistro}"/>
                                 <g:textField type="text" class="formTipoLadoDireito" name="tipoRegistro" hidden="true" value ="${registroInfo?.tipoRegistro}"/>
-                                <label for="tipoGlicemia">Tipo Glicemia</label>
-                                <select class="form-control" id="tipoGlicemia" name="tipoGlicemia" value="${registroInfo?.tipoGlicemia}">
-                                    <option>Pré prandial</option>
-                                    <option>Pós prandial</option>
-                                    <option>Controle</option>
-                                </select>
-                                <div class="form-group"> 
+                                
+                                <div class="form-group form-group-sm">
+                                    <label for="tipoGlicemia">Tipo Glicemia</label>
+                                    <select class="form-control" id="tipoGlicemia" name="tipoGlicemia" value="${registroInfo?.tipoGlicemia}">
+                                        <option>Pré prandial</option>
+                                        <option>Pós prandial</option>
+                                        <option>Controle</option>
+                                    </select>
+                                </div>
+                                <div class="form-group form-group-sm"> 
                                     <label for="taxaGlicemia">Glicemia</label>
                                     <input type="text" id="taxaGlicemia" class="form-control" name="taxaGlicemia" value="${registroInfo?.taxaGlicemia}">
                                 </div> 

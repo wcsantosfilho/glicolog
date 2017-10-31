@@ -1,6 +1,6 @@
 /* styles.css */
 
-/* Show it is fixed to the top */
+/* Define o espaço para a barra de navegação no topo */
 body {
   min-height: 75rem;
   padding-top: 4.5rem;

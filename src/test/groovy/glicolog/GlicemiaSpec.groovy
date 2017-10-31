@@ -11,8 +11,4 @@ class GlicemiaSpec extends Specification implements DomainUnitTest<Glicemia> {
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-            true == false
-    }
 }

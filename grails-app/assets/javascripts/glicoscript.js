@@ -18,16 +18,8 @@ $(document).ready(function() {
     
   
     // Define uma máscara para o campo Hora do formulário
-    //$('input[name="formHora"]').mask('00:00');
+    $('input[name="horaRegistro"]').mask('99:99');
 
-/*
-    // Esconde os formulários para habilitar depois conforme a escolha
-    $('#grupoGlicemia').hide();
-    $('#grupoInsulina').hide();
-    $('#grupoRefeicao').hide();
-    $('#grupoAtivFisica').hide();
-*/
-    
     // Conforme a opção escolhida no Tipo de Registro, mostra a seção do formulário respectiva
     var myFunction = function() {
         var v1 = $("input:radio[name ='tipoRegistro']:checked").val()
@@ -77,7 +69,6 @@ $(document).ready(function() {
     
     
     // Copia os valores do campos Data e Hora da parte esquerda do formulario para os campos da parte direita
-    
     $('.botaoFormLadoDireito').click(function() {
         $('input.formDataLadoDireito').val($('#dataRegistro').val());
         $('input.formHoraLadoDireito').val($('#horaRegistro').val());
