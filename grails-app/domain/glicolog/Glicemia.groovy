@@ -2,10 +2,12 @@ package glicolog
 
 class Glicemia {
     Date dataGlicemia
+    String tipoGlicemia
     Integer taxaGlicemia
     static belongsTo = [pessoa: Pessoa]
 
     static constraints = {
+        tipoGlicemia inList: ['Pre','Pos','Controle']
     }
     
     String toString() {

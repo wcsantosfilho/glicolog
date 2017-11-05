@@ -37,7 +37,7 @@ class AtivFisicaController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'ativFisica.label', default: 'Atividade Fisica'), ativFisica.id])
-                redirect ativFisica
+                redirect home
             }
             '*' { respond ativFisica, [status: CREATED] }
         }

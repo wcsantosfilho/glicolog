@@ -13,7 +13,7 @@
          <g:hasErrors>
             <ul class="errors" role="alert">
                 <g:eachError var="error">
-                <li  <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/>AAAA</li>
+                <li  <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
                 </g:eachError>
             </ul>
         </g:hasErrors>
@@ -56,20 +56,21 @@
                                 <g:textField type="text" class="formDataLadoDireito" name="dataRegistro" hidden="true" value="${registroInfo?.dataRegistro}"/>
                                 <g:textField type="text" class="formHoraLadoDireito" name="horaRegistro" hidden="true" value ="${registroInfo?.horaRegistro}"/>
                                 <g:textField type="text" class="formTipoLadoDireito" name="tipoRegistro" hidden="true" value ="${registroInfo?.tipoRegistro}"/>
-                                
-                                <div class="form-group form-group-sm">
-                                    <label for="tipoGlicemia">Tipo Glicemia</label>
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-addon" id="basic-addon3">Tipo Glicemia</span>
                                     <select class="form-control" id="tipoGlicemia" name="tipoGlicemia" value="${registroInfo?.tipoGlicemia}">
-                                        <option>Pré prandial</option>
-                                        <option>Pós prandial</option>
-                                        <option>Controle</option>
+                                        <option value="Pre">Pré prandial</option>
+                                        <option value="Pos">Pós prandial</option>
+                                        <option value="Controle">Controle</option>
                                     </select>
                                 </div>
-                                <div class="form-group form-group-sm"> 
-                                    <label for="taxaGlicemia">Glicemia</label>
+                                <br>
+                                <div class="input-group input-group-sm"> 
+                                    <span class="input-group-addon" id="basic-addon3">Taxa Glicemia</span>
                                     <input type="text" id="taxaGlicemia" class="form-control" name="taxaGlicemia" value="${registroInfo?.taxaGlicemia}">
                                 </div> 
-                                <button type="submit" class="btn btn-warning botaoFormLadoDireito">Gravar</button>
+                                <br>
+                                <button type="submit" class="btn btn-primary btn-sm botaoFormLadoDireito">Gravar</button>
                             </div>
                         </g:form>
                         <!-- ============================================================ -->
@@ -82,8 +83,8 @@
                                 <g:textField type="text" class="formTipoLadoDireito" name="tipoRegistro" hidden="true" value ="${registroInfo?.tipoRegistro}"/>
                                 <label for="tipoInsulina">Tipo Insulina</label>
                                 <select class="form-control" id="tipoInsulina" name="tipoInsulina" value="{registroInfo?.tipoInsulina}">
-                                    <option>Rápida - Aspart</option>
-                                    <option>Lenta - Glargina</option>
+                                    <option value="Aspart">Rápida - Aspart</option>
+                                    <option value="Glargina">Lenta - Glargina</option>
                                 </select>
                                 <div class="form-group">
                                     <label for="doseInsulina">Insulina (doses)</label>
@@ -103,11 +104,11 @@
                                 <div class="form-group">
                                     <label for="tipoRefeicao">Tipo Refeição</label>
                                     <select class="form-control" id="tipoRefeicao" name="tipoRefeicao" value="${registroInfo?.tipoRefeicao}">
-                                        <option>Café da manhã</option>
-                                        <option>Almoço</option>
-                                        <option>Lanche da tarde</option>
-                                        <option>Jantar</option>
-                                        <option>Ceia</option>
+                                        <option value="Cafe">Café da manhã</option>
+                                        <option value="Almoco">Almoço</option>
+                                        <option value="Lanche">Lanche da tarde</option>
+                                        <option value="Jantar">Jantar</option>
+                                        <option value="Ceia">Ceia</option>
                                     </select>
                                 </div>
                                 <div class="form-group">

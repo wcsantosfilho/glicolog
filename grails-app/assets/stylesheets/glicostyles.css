@@ -45,3 +45,16 @@ body {
 li.listRadio {
     list-style-type:none;
 }
+
+.boxMensagem {
+    padding: 10px 5px 10px 5px;
+    margin: 10px auto 10px;
+    border: 3px solid;
+    border-radius: 5px;
+    border-color: black;
+    background: #B10000;
+    width: 600px;
+    font-family: courier, san-serif;
+    color: yellow;
+    text-align: center;
+}
