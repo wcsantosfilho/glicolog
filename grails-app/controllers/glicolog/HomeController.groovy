@@ -1,16 +1,28 @@
 package glicolog
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
-
+import grails.converters.JSON
+import grails.converters.XML
 
 @Transactional(readOnly = true)
 class HomeController {
-
+    static allowedMethods = [index:'GET',
+            saveForm:'POST',
+    ]
     
     /* ------------------------------------------------ *
      *  index                                           *
      * ------------------------------------------------ */
-    def index() { }
+    def index() { 
+        params.max = Math.min(params.max ? params.int('max') : 50, 200)
+        def list = Registro.list(params)
+        def listObject = [registroList: list, registroTotal: Registro.count()]
+        withFormat {
+            html { listObject }
+            json { render list as JSON }
+            xml { render listObject as XML }
+        }
+    }
     
     /* ------------------------------------------------ *
      *  saveForm (input originario do home/index)      *
@@ -19,13 +31,58 @@ class HomeController {
     def saveForm(RegistroInfo info) {
         try {
             def pessoa = Pessoa.findByNome("Carlos Carvalhares")
-            println 11111
-            println pessoa.nome
-            println 33333
-            println params
-            println 55555
-            println info
-            println 99999
+            if (pessoa == null) {
+                transactionStatus.setRollbackOnly()
+                respond pessoa.errors, view:'index'
+                return
+            }
+            if (pessoa.hasErrors()) {
+                transactionStatus.setRollbackOnly()
+                respond pessoa.errors, view:'index'
+                return
+            }
+            if (info.hasErrors()) {
+                println "Erro no Info"
+                transactionStatus.setRollbackOnly()
+                respond info.errors, view:'index'
+                return
+            }
+            switch(params.tipoRegistro) {
+                case 'AtivFisica':
+                    // Cria a instância
+                    AtivFisica ativfisica;
+                
+                    // Monta os atributos com os dados do Command Info
+                    def dataHoraAtiv = Date.parse('dd/MM/yyyy HH:mm:ss', info.dataRegistro + " " + info.horaRegistro+":00")
+                    ativfisica = new AtivFisica (dataRegistro: dataHoraAtiv, tipoAtivFisica: info.tipoAtivFisica, observAtivFisica: info.observAtivFisica, pessoa: pessoa )
+                
+                    // salva
+                    if (!ativfisica.save(flush: true)) {
+                        def mensagemErro = ativFisica.errors.allErrors.join(' \n')
+                        def errG = new errosGerais(controller: 'saveForm', erroNoCatch:'Erro no Save', erroException: mensagemErro)
+                        respond errG, view:'error'
+                        return
+                    }
+
+                    // request.withFormat => avalia o formato do request para gerar a resposta
+                    request.withFormat {
+                        // trata o conteúdo submetido por um "form" ou de um "multipartForm"
+                        form multipartForm {
+                            flash.message = message(code: 'default.created.message', args: [message(code: 'ativfisica.label', default: 'ativfisica'), ativfisica.toString()])
+                            redirect(controller: "Home")
+                        }
+                        // '*' => Trata o conteúdo geral, o que não se aplicar acima.
+                        '*' { 
+                            respond ativfisica, [status: CREATED] 
+                        }
+                    }
+
+                    break
+                default:
+                    println("Nenhum tipo de registro escolhido")
+                    respond info.errors, view: 'index'
+                    break
+            }
         } catch(NullPointerException ex) {
             def errG = new errosGerais(controller: 'saveForm', erroNoCatch:'NullPointerException', erroException: ex.message)
             respond errG, view:'error'
@@ -38,45 +95,6 @@ class HomeController {
             def errG = new errosGerais(controller: 'saveForm', erroNoCatch: 'Exception', erroException: ex.message)
             respond errG, view:'error'
             return
-        }
-        if (pessoa == null) {
-            transactionStatus.setRollbackOnly()
-            respond pessoa.errors, view:'index'
-            return
-        }
-        
-        if (pessoa.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond pessoa.errors, view:'index'
-            return
-        }
-
-        if (info.hasErrors()) {
-            println "Erro no Info"
-            transactionStatus.setRollbackOnly()
-            respond info.errors, view:'index'
-            return
-        }
-        
-        AtivFisica ativfisica;
-        switch(params.tipoRegistro) {
-            case 'AtivFisica':
-                def dataHoraAtiv = Date.parse('dd/MM/yyyy HH:mm:ss', info.dataRegistro + " " + info.horaRegistro+":00")
-                ativfisica = new AtivFisica (dataAtivFisica: dataHoraAtiv, tipoAtivFisica: info.tipoAtivFisica, observAtivFisica: info.observAtivFisica, pessoa: pessoa )
-                ativfisica.save(flush: true)
-                break
-            default:
-                println("Nenhum tipo de registro escolhido")
-                respond info.errors, view: 'index'
-                break
-        }
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'ativfisica.label', default: 'ativfisica'), ativfisica.toString()])
-                redirect(controller: "Home")
-            }
-            '*' { respond ativfisica, [status: CREATED] }
         }
     }
 }

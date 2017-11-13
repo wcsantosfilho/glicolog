@@ -1,17 +1,15 @@
 package glicolog
 
-class Glicemia {
-    Date dataGlicemia
+class Glicemia extends Registro {
     String tipoGlicemia
     Integer taxaGlicemia
-    static belongsTo = [pessoa: Pessoa]
 
     static constraints = {
         tipoGlicemia inList: ['Pre','Pos','Controle']
     }
     
     String toString() {
-        Date dd1 = this.dataGlicemia
+        Date dd1 = this.dataRegistro
 		String data1 = dd1.getDateTimeString()
 		"${data1} : ${this.taxaGlicemia}"
     }

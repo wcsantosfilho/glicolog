@@ -1,10 +1,8 @@
 package glicolog
 
-class Insulina {
-    Date dataInsulina
+class Insulina extends Registro {
     String tipoInsulina
     Integer dosesInsulina
-    static belongsTo = [pessoa:Pessoa]
 
     static constraints = {
         tipoInsulina inList: ['Aspart','Glargina']

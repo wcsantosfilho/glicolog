@@ -1,17 +1,15 @@
 package glicolog
 
-class AtivFisica {
-    Date dataAtivFisica
+class AtivFisica extends Registro {
     String tipoAtivFisica
     String observAtivFisica
-    static belongsTo = [pessoa:Pessoa]
 
     static constraints = {
         tipoAtivFisica inList: ['Leve','Moderada','Intensa']
     }
     
     String toString() {
-        def dt1 = dataAtivFisica.format("dd/MM/yyyy HH:mm:ss")
+        def dt1 = dataRegistro.format("dd/MM/yyyy HH:mm:ss")
         "${this.pessoa} : ${dt1}"
     }
 }

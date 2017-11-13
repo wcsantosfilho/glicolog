@@ -9,14 +9,17 @@
              <g:if test="${flash.message}">
                 <div class="alert alert-danger" role="status">${flash.message}</div>
             </g:if>
+             <g:hasErrors>
+                <ul class="errors" role="alert">
+                    <g:eachError var="error">
+                        <g:if test="${error in org.springframework.validation.FieldError}">
+                            data-field-id="${error.field}"
+                        </g:if>
+                        <li><g:message error="${error}"/></li>
+                    </g:eachError>
+                </ul>
+            </g:hasErrors>
          </div>
-         <g:hasErrors>
-            <ul class="errors" role="alert">
-                <g:eachError var="error">
-                <li  <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-                </g:eachError>
-            </ul>
-        </g:hasErrors>
          <div class="row">
             <div class="container">
                 <div class="row">
@@ -142,6 +145,18 @@
                 </div> <!-- row -->
             </div>
         </div><!-- row -->
-    </div>
+        <div class="row">
+            <div id="list-registros" role="main">
+                <h1><g:message code="default.list.label" args="[entityName]" /></h1>
+                <h2>${registroTotal}</h2>
+                <g:each in="${registroList}">
+                    <p>${it}</p>
+                </g:each>
+                <div class="pagination">
+                    <g:paginate total="${registroTotal ?: 0}" />
+                </div>
+            </div>
+        </div>
+    </div> <!-- row -->
 </body>
 </html>

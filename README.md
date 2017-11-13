@@ -9,6 +9,8 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Mensagem de erro deve voltar no formulário com dados                      OK
 * Voltar no formulario após erro selecinando o "sub" form do lado direito   OK
 * Validar formulário selecionado sem campos preenchidos                     OK
+* Implementar o save em cada Tipo de Registro                               None
+* Implementar o Validator no Client-Side                                    None
 * Validar no Command Info as Constrains do Domain                           None
 * Colocar em tabelas os tipos (tipo de glicemia, tipo de insulina etc)      None
 * Decidir questão do usuário vs pessoa                                      None
