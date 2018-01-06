@@ -6,6 +6,32 @@ body {
   padding-top: 4.5rem;
 }
 
+.table-glicolog {
+    table-layout: fixed;
+}
+.td-glicolog {
+    overflow: hidden;
+}
+
+.td-glicolog:nth-of-type(1) {
+    width: 15%;
+}
+.td-glicolog:nth-of-type(2) {
+    width: 20%;
+}
+.td-glicolog:nth-of-type(3) {
+    width: 20%;
+}
+.td-glicolog:nth-of-type(4) {
+    width: 20%
+}
+.td-glicolog:nth-of-type(5) {
+    width: 20%;
+}
+
+
+
+
 .logoGlicolog {
     height: auto; 
     width: auto; 
@@ -57,4 +83,44 @@ li.listRadio {
     font-family: courier, san-serif;
     color: yellow;
     text-align: center;
+}
+
+/* Define estilo de paginação */
+.step {
+    padding: 10px;
+    color: black;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+}
+
+.nextLink {
+    padding: 10px;
+    color: black;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+}
+
+.prevLink {
+    padding: 10px;
+    color: black;        
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+}
+
+.currentStep {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+.step.gap {
+    display: none;
+}
+
+.step:hover:not(.active) {
+    background-color: #ddd;
 }

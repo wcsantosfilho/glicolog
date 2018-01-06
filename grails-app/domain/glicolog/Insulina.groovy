@@ -2,7 +2,7 @@ package glicolog
 
 class Insulina extends Registro {
     String tipoInsulina
-    Integer dosesInsulina
+    Integer doseInsulina
 
     static constraints = {
         tipoInsulina inList: ['Aspart','Glargina']

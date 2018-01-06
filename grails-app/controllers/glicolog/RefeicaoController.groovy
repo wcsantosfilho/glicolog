@@ -5,41 +5,41 @@ import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 
-class AtivFisicaController {
+class RefeicaoController {
 
     /* --------------------------------
      *  Index
        -------------------------------- */
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond AtivFisica.list(params), model:[ativfisicaCount: AtivFisica.count()]
+        respond Refeicao.list(params), model:[refeicaoCount: Refeicao.count()]
     }
 
     /* -------------------------------- *
      *  save                        *
      * -------------------------------- */
     @Transactional
-    protected void save(AtivFisica ativFisica) {
-        if (ativFisica == null) {
+    protected void save(Refeicao refeicao) {
+        if (refeicao == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         } 
 
-        if (ativFisica.hasErrors()) {
+        if (refeicao.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond ativFisica.errors, view:'index'
+            respond refeicao.errors, view:'index'
             return
         }
 
-        ativFisica.save flush:true
+        refeicao.save flush:true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'ativFisica.label', default: 'Atividade Fisica'), ativFisica.id])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'refeicao.label', default: 'Refeição'), refeicao.id])
                 redirect home
             }
-            '*' { respond ativFisica, [status: CREATED] }
+            '*' { respond refeicao, [status: CREATED] }
         }
 
     }
@@ -50,7 +50,7 @@ class AtivFisicaController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'ativFisica.label', default: 'AtivFisica'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'refeicao.label', default: 'Refeicao'), params.id])
                 redirect controller: "home", action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }

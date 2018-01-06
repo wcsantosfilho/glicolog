@@ -1,4 +1,5 @@
 package glicolog
+import groovy.json.*
 
 class AtivFisica extends Registro {
     String tipoAtivFisica
@@ -6,10 +7,5 @@ class AtivFisica extends Registro {
 
     static constraints = {
         tipoAtivFisica inList: ['Leve','Moderada','Intensa']
-    }
-    
-    String toString() {
-        def dt1 = dataRegistro.format("dd/MM/yyyy HH:mm:ss")
-        "${this.pessoa} : ${dt1}"
     }
 }

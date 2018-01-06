@@ -14,13 +14,17 @@ class HomeController {
      *  index                                           *
      * ------------------------------------------------ */
     def index() { 
-        params.max = Math.min(params.max ? params.int('max') : 50, 200)
-        def list = Registro.list(params)
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        params.sort = params.sort ?: 'dataRegistro'
+        params.order = params.order ?: 'desc'
+
+        def list = Registro.findAll(params)
+        def registroTotal = Registro.count()
         def listObject = [registroList: list, registroTotal: Registro.count()]
         withFormat {
             html { listObject }
             json { render list as JSON }
-            xml { render listObject as XML }
+            xml { render listobject as XML }
         }
     }
     
@@ -44,10 +48,103 @@ class HomeController {
             if (info.hasErrors()) {
                 println "Erro no Info"
                 transactionStatus.setRollbackOnly()
-                respond info.errors, view:'index'
+                // flagErro será passado para a GSP. Se for true, não irá montar a paginação (já que a lista não foi montada)
+                def flagErro = true
+                def listObject = [errors: info.errors, flagErro: flagErro]
+                respond listObject, view:'index'
                 return
             }
             switch(params.tipoRegistro) {
+                case 'Glicemia':
+                    // Cria a instância
+                    Glicemia glicemia;
+                
+                    // Monta os atributos com os dados do Command Info
+                    def dataHoraAtiv = Date.parse('dd/MM/yyyy HH:mm:ss', info.dataRegistro + " " + info.horaRegistro+":00")
+                    glicemia = new Glicemia (dataRegistro: dataHoraAtiv, tipoGlicemia: info.tipoGlicemia, taxaGlicemia: info.taxaGlicemia, pessoa: pessoa )
+                
+                    // salva
+                    if (!glicemia.save(flush: true)) {
+                        def mensagemErro = glicemia.errors.allErrors.join(' \n')
+                        def errG = new errosGerais(controller: 'saveForm', erroNoCatch:'Erro no Save', erroException: mensagemErro)
+                        respond errG, view:'error'
+                        return
+                    }
+
+                    // request.withFormat => avalia o formato do request para gerar a resposta
+                    request.withFormat {
+                        // trata o conteúdo submetido por um "form" ou de um "multipartForm"
+                        form multipartForm {
+                            flash.message = message(code: 'default.created.message', args: [message(code: 'glicemia.label', default: 'glicemia'), glicemia.toString()])
+                            redirect(controller: "Home")
+                        }
+                        // '*' => Trata o conteúdo geral, o que não se aplicar acima.
+                        '*' { 
+                            respond glicemia, [status: CREATED] 
+                        }
+                    }
+
+                    break                
+                case 'Insulina':
+                    // Cria a instância
+                    Insulina insulina;
+                
+                    // Monta os atributos com os dados do Command Info
+                    def dataHoraAtiv = Date.parse('dd/MM/yyyy HH:mm:ss', info.dataRegistro + " " + info.horaRegistro+":00")
+                    insulina = new Insulina (dataRegistro: dataHoraAtiv, tipoInsulina: info.tipoInsulina, doseInsulina: info.doseInsulina, pessoa: pessoa )
+                
+                    // salva
+                    if (!insulina.save(flush: true)) {
+                        def mensagemErro = insulina.errors.allErrors.join(' \n')
+                        def errG = new errosGerais(controller: 'saveForm', erroNoCatch:'Erro no Save', erroException: mensagemErro)
+                        respond errG, view:'error'
+                        return
+                    }
+
+                    // request.withFormat => avalia o formato do request para gerar a resposta
+                    request.withFormat {
+                        // trata o conteúdo submetido por um "form" ou de um "multipartForm"
+                        form multipartForm {
+                            flash.message = message(code: 'default.created.message', args: [message(code: 'insulina.label', default: 'Insulina'), insulina.toString()])
+                            redirect(controller: "Home")
+                        }
+                        // '*' => Trata o conteúdo geral, o que não se aplicar acima.
+                        '*' { 
+                            respond insulina, [status: CREATED] 
+                        }
+                    }
+
+                    break                
+                case 'Refeicao':
+                    // Cria a instância
+                    Refeicao refeicao;
+                
+                    // Monta os atributos com os dados do Command Info
+                    def dataHoraAtiv = Date.parse('dd/MM/yyyy HH:mm:ss', info.dataRegistro + " " + info.horaRegistro+":00")
+                    refeicao = new Refeicao (dataRegistro: dataHoraAtiv, tipoRefeicao: info.tipoRefeicao, observRefeicao: info.observRefeicao, pessoa: pessoa )
+                
+                    // salva
+                    if (!refeicao.save(flush: true)) {
+                        def mensagemErro = refeicao.errors.allErrors.join(' \n')
+                        def errG = new errosGerais(controller: 'saveForm', erroNoCatch:'Erro no Save', erroException: mensagemErro)
+                        respond errG, view:'error'
+                        return
+                    }
+
+                    // request.withFormat => avalia o formato do request para gerar a resposta
+                    request.withFormat {
+                        // trata o conteúdo submetido por um "form" ou de um "multipartForm"
+                        form multipartForm {
+                            flash.message = message(code: 'default.created.message', args: [message(code: 'refeicao.label', default: 'Refeicao'), refeicao.toString()])
+                            redirect(controller: "Home")
+                        }
+                        // '*' => Trata o conteúdo geral, o que não se aplicar acima.
+                        '*' { 
+                            respond refeicao, [status: CREATED] 
+                        }
+                    }
+
+                    break
                 case 'AtivFisica':
                     // Cria a instância
                     AtivFisica ativfisica;
@@ -68,7 +165,7 @@ class HomeController {
                     request.withFormat {
                         // trata o conteúdo submetido por um "form" ou de um "multipartForm"
                         form multipartForm {
-                            flash.message = message(code: 'default.created.message', args: [message(code: 'ativfisica.label', default: 'ativfisica'), ativfisica.toString()])
+                            flash.message = message(code: 'default.created.message', args: [message(code: 'ativfisica.label', default: 'Ativfisica'), ativfisica.toString()])
                             redirect(controller: "Home")
                         }
                         // '*' => Trata o conteúdo geral, o que não se aplicar acima.
@@ -119,9 +216,6 @@ class RegistroInfo implements grails.validation.Validateable {
     String observAtivFisica
 
     static constraints = {
-        horaRegistro (blank: false, validator: {value, object ->
-                if (!value.startsWith('12')) return 'validation.horaRegistroNot12';
-        })
         tipoRegistro (validator:{ value, object ->
             if (!['Glicemia','Insulina','Refeicao','AtivFisica'].contains(value) ) {
                     return 'validation.tipoRegistroErrado'

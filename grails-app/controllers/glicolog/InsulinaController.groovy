@@ -5,40 +5,40 @@ import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 
-class GlicemiaController {
+class InsulinaController {
     /* -------------------------------
      * Index
        ------------------------------- */
     def index(Integer max) {
         param.max = Math.min(max ?: 10, 100)
-        respond Glicemia.list(params), model:[glicemiaCount: Glicemia.count()]
+        respond Insulina.list(params), model:[insulinaCount: Insulina.count()]
     }
 
     /* -------------------------------
      * save
      * ------------------------------- */
     @Transactional
-    protected void save(Glicemia glicemia) {
-        if (glicemia == null) {
+    protected void save(Insulina insulina) {
+        if (insulina == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
         
-        if (glicemia.hasErrors()) {
+        if (insulina.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond glicemia.errors, view:'index'
+            respond insulina.errors, view:'index'
             return
         }
         
-        glicemia.save flush:true
+        insulina.save flush:true
         
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code:'glicemia.label', default: 'Glicemia'), glicemia.id])
+                flash.message = message(code: 'default.created.message', args: [message(code:'insulina.label', default: 'Insulina'), insulina.id])
                 redirect home
             }
-            '*' { respond glicemia, [status: CREATED]}
+            '*' { respond insulina, [status: CREATED]}
         }
     }
     
@@ -48,7 +48,7 @@ class GlicemiaController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code:'glicemia.label', default: 'Glicemia'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code:'insulina.label', default: 'Insulina'), params.id])
                 redirect controller: "home", action: "index", method: "GET"
             }
             '*' { render status: NOT_FOUND }

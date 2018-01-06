@@ -9,6 +9,8 @@ class BootStrap {
      	new Pessoa(nome: "Arnaldo de Sá e Mello", idade:22)
     		.addToGlicemias(new Glicemia(dataRegistro: "2015-05-02 06:02:02.00" , tipoGlicemia: "Pre", taxaGlicemia: 80))
     		.addToGlicemias(new Glicemia(dataRegistro: "2015-05-05 21:02:02.00" ,  tipoGlicemia: "Pos", taxaGlicemia: 114))
+            .addToAtivFisicas(new AtivFisica(dataRegistro: "2015-05-02 12:00:00.00", tipoAtivFisica: "Leve", observAtivFisica:"Corridinha leve"))
+            .addToAtivFisicas(new AtivFisica(dataRegistro: "2015-05-05 12:00:00.00", tipoAtivFisica: "Moderada", observAtivFisica:"Musculação"))
     		.save(failOnError: true)
     		
     	new Pessoa(nome: "Bernardino Boehringer", idade:25)
@@ -17,7 +19,7 @@ class BootStrap {
     		
     	new Pessoa(nome: "Carlos Carvalhares", idade: 44)
     		.addToGlicemias(new Glicemia(dataRegistro: "2015-05-02 06:02:02.00",  tipoGlicemia: "Controle", taxaGlicemia: 80))
-            .addToInsulinas(new Insulina(dataRegistro: "2015-05-02 06:10:02.00",  tipoInsulina: "Aspart", dosesInsulina: 8))
+            .addToInsulinas(new Insulina(dataRegistro: "2015-05-02 06:10:02.00",  tipoInsulina: "Aspart", doseInsulina: 8))
     		.save(failOnError: true)
     		
     	new Pessoa(nome: "Décio Domingues", idade:12)
