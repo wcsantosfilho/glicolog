@@ -14,12 +14,17 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Quando gera erro de validação, o que fazer com o index() - lista de registros? Está gerando erro por falta do campo registroTotal - Veja HomeController, linhas 50 a 59 (solução porca!)                                                                                                   OK
 * Implementar o save em cada Tipo de Registro                               OK
 * Erro na gravação da Insulina                                              OK
+* Estudar e Criar casos de testes                                           None
 * Avanço de cursor pelo teclado após Data                                   None
 * Implementar o Validator no Client-Side                                    None
 * Validar no Command Info as Constrains do Domain                           None
 * Colocar em tabelas os tipos (tipo de glicemia, tipo de insulina etc)      None
 * Decidir questão do usuário vs pessoa                                      None
 * Eliminar itens inúteis do home/index                                      None
+* Alterar SGBD para MySQL no ambiente de desenvolvimento                    OK
+* Acertar permissão no MySQL para gravar com usuário glicolog               None
 * Montar lista de Registros abaixo do form principal da home/index          OK
 * Decidir como fazer a lista de itens (Herança no Registro, mas e a saída?) OK
 * Arrumar a paginação                                                       OK
+* Criar mecanismo de exclusão de registro                                   None
+* Criar ícone no cabeçalho da index para mostrar se é asc ou desc           None

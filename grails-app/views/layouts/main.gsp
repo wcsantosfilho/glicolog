@@ -32,8 +32,6 @@
             <div class="collapse navbar-collapse" id="Colapsable">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active"><a class="nav-link" href="/home/">Home <span class="sr-only">(current)</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="/ativFisica/">Ativ Física</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/cadbasicos/">Cadastros Básicos</a></li>
                     <li class="nav-item"><a class="nav-link" href="/pessoa/">Pessoa</a></li>
                 </ul>
                 <form class="form-inline mt-2 mt-md-0">
