@@ -3,8 +3,6 @@ package glicolog
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
-@Transactional(readOnly = true)
-
 class GlicemiaController {
     /* -------------------------------
      * Index
@@ -17,7 +15,7 @@ class GlicemiaController {
     /* -------------------------------
      * save
      * ------------------------------- */
-    @Transactional
+    @Transactional(readOnly = false)
     protected void save(Glicemia glicemia) {
         if (glicemia == null) {
             transactionStatus.setRollbackOnly()

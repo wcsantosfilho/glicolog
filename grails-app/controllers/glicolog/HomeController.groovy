@@ -4,26 +4,39 @@ import grails.transaction.Transactional
 import grails.converters.JSON
 import grails.converters.XML
 
-@Transactional(readOnly = true)
+
 class HomeController {
     static allowedMethods = [index:'GET',
             saveForm:'POST',
     ]
-    
+
     /* ------------------------------------------------ *
      *  index                                           *
      * ------------------------------------------------ */
     def index() { 
+        if (!session?.user) {
+            transactionStatus.setRollbackOnly()
+            respond session.errors, view:'index'
+            return
+        }
+        
+        def pessoaParaSearch = Pessoa.findByNome(session?.user.name)
+        if (pessoaParaSearch == null) {
+            transactionStatus.setRollbackOnly()
+            respond pessoa.errors, view:'index'
+            return
+        }
+
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         params.sort = params.sort ?: 'dataRegistro'
         params.order = params.order ?: 'desc'
 
-        def list = Registro.findAll(params)
-        def registroTotal = Registro.count()
-        def listObject = [registroList: list, registroTotal: Registro.count()]
+        def searchResults = Registro.findAllByPessoa(pessoaParaSearch, params)
+        def registroTotal = Registro.countByPessoa(pessoaParaSearch)
+        def listObject = [registroList: searchResults, registroTotal: registroTotal]
         withFormat {
             html { listObject }
-            json { render list as JSON }
+            json { render searchResults as JSON }
             xml { render listobject as XML }
         }
     }
@@ -31,10 +44,10 @@ class HomeController {
     /* ------------------------------------------------ *
      *  saveForm (input originario do home/index)      *
      * ------------------------------------------------ */
-    @Transactional
+    @Transactional(readOnly = false)
     def saveForm(RegistroInfo info) {
         try {
-            def pessoa = Pessoa.findByNome("Carlos Carvalhares")
+            def pessoa = Pessoa.findByNome(session.user.name)
             if (pessoa == null) {
                 transactionStatus.setRollbackOnly()
                 respond pessoa.errors, view:'index'

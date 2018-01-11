@@ -22,7 +22,8 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Decidir questão do usuário vs pessoa                                      None
 * Eliminar itens inúteis do home/index                                      None
 * Alterar SGBD para MySQL no ambiente de desenvolvimento                    OK
-* Acertar permissão no MySQL para gravar com usuário glicolog               None
+* Acertar permissão no MySQL para gravar com usuário glicolog               OK
+* Duração da Session                                                        None
 * Montar lista de Registros abaixo do form principal da home/index          OK
 * Decidir como fazer a lista de itens (Herança no Registro, mas e a saída?) OK
 * Arrumar a paginação                                                       OK

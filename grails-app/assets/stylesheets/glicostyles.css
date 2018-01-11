@@ -8,6 +8,9 @@ body {
 
 .table-glicolog {
     table-layout: fixed;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
 }
 .td-glicolog {
     overflow: hidden;
@@ -28,9 +31,6 @@ body {
 .td-glicolog:nth-of-type(5) {
     width: 20%;
 }
-
-
-
 
 .logoGlicolog {
     height: auto; 

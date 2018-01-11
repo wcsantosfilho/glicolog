@@ -177,7 +177,7 @@
             <div class="row">
                 <div class="container">
                     <div id="list-registros" role="main">
-                        <table class="table table-responsive table-sm table-striped table-bordered table-glicolog">
+                        <table class="table table-sm table-striped table-bordered table-glicolog">
                             <thead class="thead-inverse">
                                 <tr>
                                     <g:sortableColumn property="dataRegistro" title="Data Registro" />

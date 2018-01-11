@@ -39,7 +39,7 @@
                     <button class="btn btn-outline-sucess my-2 my-sm-0" type="submit">Busca</button>
                 </form>
                 <ul class="navbar-nav d-flex flex-row-reverse">
-                    <li class="nav-item"><a class="nav-link" href="/Usuario/">Usuário</a></li>
+                    <li class="nav-item nav-link"><g:loginControl /></li>
                 </ul>
             </div> <!-- Collapse navbar -->
         </nav> <!-- navbar -->
