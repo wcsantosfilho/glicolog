@@ -6,6 +6,8 @@
 </head>
 
 <body>
+    ${session.user}
+    ${session?.user}
     <div class="container">
         <div class="row">
             <g:if test="${flash.message}">

@@ -14,15 +14,22 @@ class HomeController {
      *  index                                           *
      * ------------------------------------------------ */
     def index() { 
+        println 11111
+        println session
+        println 22222
         if (!session?.user) {
-            transactionStatus.setRollbackOnly()
-            respond session.errors, view:'index'
+            println 'session error'
+            println 33333
+            //respond session.errors, view:'index'
+            def flagErro = true
+            def textoErro = "Sessão não iniciada. Faça Login"
+            def listObject = [errors: textoErro, flagErro: flagErro]
+            respond listObject, view:'index'            
             return
         }
         
         def pessoaParaSearch = Pessoa.findByNome(session?.user.name)
         if (pessoaParaSearch == null) {
-            transactionStatus.setRollbackOnly()
             respond pessoa.errors, view:'index'
             return
         }
