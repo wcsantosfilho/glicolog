@@ -14,37 +14,38 @@ class HomeController {
      *  index                                           *
      * ------------------------------------------------ */
     def index() { 
-        println 11111
-        println session
-        println 22222
-        if (!session?.user) {
-            println 'session error'
-            println 33333
-            //respond session.errors, view:'index'
-            def flagErro = true
-            def textoErro = "Sessão não iniciada. Faça Login"
-            def listObject = [errors: textoErro, flagErro: flagErro]
-            respond listObject, view:'index'            
-            return
-        }
-        
-        def pessoaParaSearch = Pessoa.findByNome(session?.user.name)
-        if (pessoaParaSearch == null) {
-            respond pessoa.errors, view:'index'
-            return
-        }
+        try {
+            if (!session?.usuario) {
+                //respond session.errors, view:'index'
+                def flagErro = true
+                def textoErro = "Sessão não iniciada. Faça Login"
+                def listObject = [errors: textoErro, flagErro: flagErro]
+                respond listObject, view:'index'            
+                return
+            }
 
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        params.sort = params.sort ?: 'dataRegistro'
-        params.order = params.order ?: 'desc'
+            def pessoaParaSearch = Pessoa.findByNome(session?.usuario.name)
+            if (pessoaParaSearch == null) {
+                respond pessoaParaSearch.errors, view:'index'
+                return
+            }
 
-        def searchResults = Registro.findAllByPessoa(pessoaParaSearch, params)
-        def registroTotal = Registro.countByPessoa(pessoaParaSearch)
-        def listObject = [registroList: searchResults, registroTotal: registroTotal]
-        withFormat {
-            html { listObject }
-            json { render searchResults as JSON }
-            xml { render listobject as XML }
+            params.max = Math.min(params.max ? params.int('max') : 10, 100)
+            params.sort = params.sort ?: 'dataRegistro'
+            params.order = params.order ?: 'desc'
+
+            def searchResults = Registro.findAllByPessoa(pessoaParaSearch, params)
+            def registroTotal = Registro.countByPessoa(pessoaParaSearch)
+            def listObject = [registroList: searchResults, registroTotal: registroTotal]
+            withFormat {
+                html { listObject }
+                json { render searchResults as JSON }
+                xml { render listobject as XML }
+            }
+        } catch (Exception ex) {
+            def errG = new errosGerais(controller: 'home', erroNoCatch: 'Exception', erroException: ex.message)
+            respond errG, view:'error'
+            return
         }
     }
     
@@ -54,7 +55,7 @@ class HomeController {
     @Transactional(readOnly = false)
     def saveForm(RegistroInfo info) {
         try {
-            def pessoa = Pessoa.findByNome(session.user.name)
+            def pessoa = Pessoa.findByNome(session.usuario.name)
             if (pessoa == null) {
                 transactionStatus.setRollbackOnly()
                 respond pessoa.errors, view:'index'

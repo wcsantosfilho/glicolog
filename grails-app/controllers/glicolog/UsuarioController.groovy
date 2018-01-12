@@ -1,14 +1,14 @@
 package glicolog
 
-class UserController {
+class UsuarioController {
  
   def login = {}
  
   def authenticate = {
-    def user = User.findByLoginAndPassword(params.login, params.password)
-    if(user) {
-      session.user = user
-      flash.message = "Olá ${user.name}, seja bem-vindo ao Glicolog!"
+    def usuario = Usuario.findByLoginAndPassword(params.login, params.password)
+    if(usuario) {
+      session.usuario = usuario
+      flash.message = "Olá ${usuario.name}, seja bem-vindo ao Glicolog!"
       redirect(controller:"home", action:"index")
     } else {
       flash.message = "Ops, ${params.login}. Suas credenciais não batem com nossos registros."
@@ -17,8 +17,8 @@ class UserController {
   }
  
   def logout = {
-    flash.message = "Até mais ${session.user.name}!"
-    session.user = null
+    flash.message = "Até mais ${session.usuario.name}!"
+    session.usuario = null
     redirect(controller:"home", action:"index")
   }
 }
