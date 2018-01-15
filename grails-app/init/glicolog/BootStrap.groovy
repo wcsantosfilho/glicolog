@@ -14,12 +14,8 @@ class BootStrap {
         
         def countPessoas = Pessoa.count()
         if (countPessoas == 0) {
-            def userArnaldo = new Usuario(login:"arnaldo.mello@gmail.com", password:"aaa", name: "Arnaldo de Sá e Mello", tipo: "Comum")
-            new Pessoa(nome: "Arnaldo de Sá e Mello", idade:22, usuario: userArnaldo)
-                .addToGlicemias(new Glicemia(dataRegistro: "2015-05-02 06:02:02.00" , tipoGlicemia: "Pre", taxaGlicemia: 80))
-                .addToGlicemias(new Glicemia(dataRegistro: "2015-05-05 21:02:02.00" ,  tipoGlicemia: "Pos", taxaGlicemia: 114))
-                .addToAtivFisicas(new AtivFisica(dataRegistro: "2015-05-02 12:00:00.00", tipoAtivFisica: "Leve", observAtivFisica:"Corridinha leve"))
-                .addToAtivFisicas(new AtivFisica(dataRegistro: "2015-05-05 12:00:00.00", tipoAtivFisica: "Moderada", observAtivFisica:"Musculação"))
+            def userLucas = new Usuario(login:"lucassantos202@gmail.com", password:"lucas", name: "Lucas Santos", tipo: "Comum")
+            new Pessoa(nome: "Lucas Santos", idade:18, usuario: userLucas)
                 .save(failOnError: true)
 
             def userBernardino = new Usuario(login:"bernardino.boehringer@gmail.com", password:"aaa", name: "Bernardino Boehringer", tipo: "Comum")
