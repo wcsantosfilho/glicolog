@@ -117,9 +117,11 @@ environments:
             url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
     production:
         dataSource:
-            dbCreate: none
-            url: jdbc:h2:./prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            dbCreate: update
+            url:"jdbc:mysql://us-cdbr-iron-east-05.cleardb.net/heroku_ff3208be6c204fa?useSSL=false"
             properties:
+                username: bb593a7abd5c90
+                password: 7b193d88
                 jmxEnabled: true
                 initialSize: 5
                 maxActive: 50

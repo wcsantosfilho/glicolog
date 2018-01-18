@@ -29,3 +29,6 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Arrumar a paginação                                                       OK
 * Criar mecanismo de exclusão de registro                                   None
 * Criar ícone no cabeçalho da index para mostrar se é asc ou desc           None
+* Refatorar codigo para conceito de services (ver post)                     None
+* Estudar e fazer deploy no Heroku com Gradle (com e sem Tomcat embedded)   None
+* Alterar ambiente de produção para Postgres (Heroku)                       None
