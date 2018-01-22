@@ -12,8 +12,11 @@ class PessoaSpec extends Specification implements DomainUnitTest<Pessoa> {
     
     void "teste de persistencia de Pessoa - mocking"() {
         setup:
-            new Pessoa(nome: "Walter", idade: 46).save()
-            new Pessoa(nome: "Alfredo", idade: 33).save()
+            def userWalter = new Usuario(login: "walter@mail.com", password: "aaa", name: "Walter Santos", tipo: "Comum")
+            def userAlfredo = new Usuario(login: "alfredo@mail.com", password: "aaa", neme: "Alfredo Santos", tipo: "Comum")
+
+            new Pessoa(nome: "Walter", idade: 46, usuario: userWalter).save()
+            new Pessoa(nome: "Alfredo", idade: 33, usuario: userAlfredo).save()
         
         expect:
             Pessoa.count() == 2

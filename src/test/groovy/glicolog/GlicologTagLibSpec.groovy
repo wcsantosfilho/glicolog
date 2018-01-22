@@ -11,8 +11,4 @@ class GlicologTagLibSpec extends Specification implements TagLibUnitTest<Glicolo
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-            true == false
-    }
 }

@@ -11,8 +11,4 @@ class UsuarioSpec extends Specification implements DomainUnitTest<Usuario> {
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-            true == false
-    }
 }

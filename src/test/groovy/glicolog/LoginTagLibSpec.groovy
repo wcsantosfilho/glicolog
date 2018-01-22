@@ -11,8 +11,5 @@ class LoginTagLibSpec extends Specification implements TagLibUnitTest<LoginTagLi
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-            true == false
-    }
+
 }
