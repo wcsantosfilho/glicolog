@@ -89,3 +89,11 @@ task copyToLib(type: Copy) {
 stage.dependsOn(copyToLib)
 
 build.mustRunAfter clean
+
+tasks.stage.doLast() {
+    delete fileTree(dir: "build/distributions")
+    delete fileTree(dir: "build/assetCompile")
+    delete fileTree(dir: "build/distributions")
+    delete fileTree(dir: "build/libs", exclude: "*.war")
+}
+
