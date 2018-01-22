@@ -26,6 +26,7 @@ repositories {
 }
 
 dependencies {
+    compile "com.github.jsimone:webapp-runner:8.5.11.3"
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-autoconfigure"
     compile "org.grails:grails-core"
@@ -72,5 +73,19 @@ assets {
     minifyCss = true
 }
 
-task stage(dependsOn: ['build', 'clean'])
+task stage() {
+    dependsOn: clean, war
+}
+
+war.mustRunAfter clean
+
+task copyToLib(type: Copy) {
+    into "$buildDir/server"
+    from(configuration.compile) {
+        include "webapp-runner"
+    }
+}
+
+stage.dependsOn(copyToLib)
+
 build.mustRunAfter clean
