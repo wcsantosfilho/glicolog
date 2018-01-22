@@ -20,17 +20,10 @@ class HomeControllerFuncSpec extends Specification {
                 dataRegistro = '01/10/2017'
                 horaRegistro = '10:42'
                 tipoRegistro = 'Glicemia'
-                tipoGlicemia = 'Aspart'
+                tipoGlicemia = 'Pre'
                 taxaGlicemia = 120
             }
         }
-
         then:
-        resp.status == 422 
-/*
-        resp.json.errors.find { it.field == 'tipoRegistro' }.message == 'Tipo Registro fora da especificação'
-*/
-/*        resp.json.errors.find { it.field == 'tipoAtivFIsica' }.message == 'Property [tipoAtivFisica] of class [class glicolog.Home] cannot be null'
-    }
-*/    
+            resp.status == 422 
 }
