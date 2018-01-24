@@ -1,4 +1,5 @@
 Thumbs.db
+Procfile.windows
 .DS_Store
 .gradle
 !.gradle/wrapper/gradle-wrapper.jar
@@ -11,3 +12,4 @@ build/
 .project
 .settings
 .classpath
+target/

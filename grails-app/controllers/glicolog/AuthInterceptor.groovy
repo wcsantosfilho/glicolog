@@ -12,7 +12,7 @@ class AuthInterceptor {
     
     boolean before() { 
         // Se o usuário não está autenticado
-        // redireciona para /user/login/
+        // redireciona para /usuario/login/
         if(!session.usuario) {
             redirect controller: 'usuario', action: 'login'
             return false
