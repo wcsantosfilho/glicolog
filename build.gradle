@@ -98,12 +98,10 @@ task stage(dependsOn: ['build', 'clean'])
 
 tasks.stage.doLast() {
     println "stage.doLast"
-/*
     delete fileTree(dir: "build/distributions")
     delete fileTree(dir: "build/assetCompile")
     delete fileTree(dir: "build/distributions")
     delete fileTree(dir: "build/libs", exclude: "*.war")
-*/
 }
 
 war.mustRunAfter clean
