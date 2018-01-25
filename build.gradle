@@ -20,7 +20,7 @@ plugins {
 }
 
 version "0.1"
-group "glicolog"
+group "heroku"
 
 apply plugin:"org.springframework.boot"
 apply plugin:"eclipse"
@@ -29,6 +29,11 @@ apply plugin:"war"
 apply plugin:"org.grails.grails-web"
 apply plugin:"asset-pipeline"
 apply plugin:"org.grails.grails-gsp"
+
+ext {
+    grailsVersion = project.grailsVersion
+    gradleWrapperVersion = project.gradleWrapperVersion
+}
 
 repositories {
     mavenLocal()
@@ -66,7 +71,7 @@ dependencies {
     compile "org.grails.plugins:gsp"
     compile 'org.grails:grails-datastore-rest-client'
     console "org.grails:grails-console"
-    profile "org.grails.profiles:web"
+//    profile "org.grails.profiles:web"
     runtime "org.glassfish.web:el-impl:2.1.2-b03"
     runtime "com.h2database:h2"
     runtime 'mysql:mysql-connector-java:5.1.16'
@@ -108,7 +113,7 @@ war.mustRunAfter clean
 
 task copyToLib(type: Copy) {
     println "*** copyToLib ***"
-    into "./build/server"
+    into "$buildDir/server"
     from(configurations.compile) {
         include "webapp-runner*"
     }
