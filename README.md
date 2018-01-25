@@ -14,6 +14,7 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Quando gera erro de validação, o que fazer com o index() - lista de registros? Está gerando erro por falta do campo registroTotal - Veja HomeController, linhas 50 a 59 (solução porca!)                                                                                                   OK
 * Implementar o save em cada Tipo de Registro                               OK
 * Erro na gravação da Insulina                                              OK
+* Inclusão de Glicemia sem hora dá mensagem de erro, mas zera o form.       None
 * Estudar e Criar casos de testes                                           None
 * Avanço de cursor pelo teclado após Data                                   None
 * Implementar o Validator no Client-Side                                    None
