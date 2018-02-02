@@ -118,10 +118,10 @@ environments:
     production:
         dataSource:
             dbCreate: update
-            url: jdbc:mysql://weatech.com.br/glicolog?useSSL=false
+            url: jdbc:mysql://bb593a7abd5c90:7b193d88@us-cdbr-iron-east-05.cleardb.net/heroku_ff3208be6c204fa?reconnect=true
             properties:
-                username: glicolog
-                password: glicolog
+                username: bb593a7abd5c90
+                password: 7b193d88
                 jmxEnabled: true
                 initialSize: 5
                 maxActive: 50
