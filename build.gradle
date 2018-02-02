@@ -48,7 +48,7 @@ dependencyManagement {
 }
 
 dependencies {
-    //compile "com.github.jsimone:webapp-runner:8.0.33.0"
+    compile "com.github.jsimone:webapp-runner:8.0.33.0"
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-autoconfigure"
     compile "org.grails:grails-core"
