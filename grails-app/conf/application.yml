@@ -95,12 +95,13 @@ dataSource:
     pooled: true
     jmxExport: true
     driverClassName: com.mysql.jdbc.Driver
+    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
 environments:
     development:
         dataSource:
             dbCreate: update
-            url: "jdbc:mysql://localhost:3306/glicolog?useSSL=false"
+            url: "jdbc:mysql://weatech.com.br:3306/glicolog?useSSL=false"
             properties:
                 username: "glicolog"
                 password: "glicolog"
@@ -118,10 +119,10 @@ environments:
     production:
         dataSource:
             dbCreate: update
-            url: jdbc:mysql://bb593a7abd5c90:7b193d88@us-cdbr-iron-east-05.cleardb.net/heroku_ff3208be6c204fa?reconnect=true
+            url: "jdbc:mysql://us-cdbr-iron-east-05.cleardb.net/heroku_ff3208be6c204fa?reconnect=true"
             properties:
-                username: bb593a7abd5c90
-                password: 7b193d88
+                username: "bb593a7abd5c90"
+                password: "7b193d88"
                 jmxEnabled: true
                 initialSize: 5
                 maxActive: 50

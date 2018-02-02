@@ -13,16 +13,20 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Validar formulário selecionado sem campos preenchidos                     OK
 * Quando gera erro de validação, o que fazer com o index() - lista de registros? Está gerando erro por falta do campo registroTotal - Veja HomeController, linhas 50 a 59 (solução porca!)                                                                                                   OK
 * Implementar o save em cada Tipo de Registro                               OK
+* Verificar falta dos scriptse formatação do HTML                           OK
+* Acertar URL do TOMCAT no Catalyst                                         OK
 * Erro na gravação da Insulina                                              OK
-* Verificar falta dos scriptse formatação do HTML                           None
-* Acertar URL do TOMCAT no Catalyst                                         None
+* Erro na gravação da refeição                                              None
 * Inclusão de Glicemia sem hora dá mensagem de erro, mas zera o form.       None
 * Estudar e Criar casos de testes                                           None
 * Avanço de cursor pelo teclado após Data                                   None
+* Trazer data e hora pré-preenchidas                                        None
+* Layout responsivo para celular                                            None
 * Implementar o Validator no Client-Side                                    None
 * Validar no Command Info as Constrains do Domain                           None
 * Colocar em tabelas os tipos (tipo de glicemia, tipo de insulina etc)      None
 * Decidir questão do usuário vs pessoa                                      None
+* Cadastro de novos usuários                                                None
 * Eliminar itens inúteis do home/index                                      None
 * Alterar SGBD para MySQL no ambiente de desenvolvimento                    OK
 * Acertar permissão no MySQL para gravar com usuário glicolog               OK
@@ -33,5 +37,4 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Criar mecanismo de exclusão de registro                                   None
 * Criar ícone no cabeçalho da index para mostrar se é asc ou desc           None
 * Refatorar codigo para conceito de services (ver post)                     None
-* Estudar e fazer deploy no Heroku com Gradle (com e sem Tomcat embedded)   None
-* Alterar ambiente de produção para Postgres (Heroku)                       None
+* Estudar e fazer deploy no Heroku com WAR                                  OK
