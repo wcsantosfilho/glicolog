@@ -1,0 +1,36 @@
+<html>
+    <script src="grails-app/assets/javascripts/jquery-2.1.4.js"></script>
+    <script src="grails-app/assets/javascripts/pickadate.js"></script>
+    <link rel="stylesheet" href="grails-app/assets/stylesheets/datepicker/classic.css" id="theme_base">
+    <link rel="stylesheet" href="grails-app/assets/stylesheets/datepicker/classic.date.css" id="theme_date">
+    <link rel="stylesheet" href="grails-app/assets/stylesheets/datepicker/classic.time.css" id="theme_time">
+    
+
+    <body>
+        <h1>tt1</h1>
+        <input type=text id="dataRegistro" name="dataRegistro" />
+        <input id="horaRegistro" name="horaRegistro" />
+        <h1>tt1</h1>
+        
+        
+        <script>
+            $(document).ready(function() {
+    
+                var date_input=$('input[name="dataRegistro"]'); 
+                var date_options = {
+                    today: 'Hoje',
+                    format: 'dd/mm/yyyy',
+                    formatSubmitt: 'dd/mm/yyyy'
+                }
+                date_input.pickadate(date_options);
+
+                var time_input=$('input[name="horaRegistro"]'); 
+                var time_options = {
+                    format: 'HH:i',			// Displayed and application format
+		            interval: 15,				// Interval between values (in minutes)
+	            }
+                time_input.pickatime(time_options);
+            });
+        </script>
+    </body>
+</html>

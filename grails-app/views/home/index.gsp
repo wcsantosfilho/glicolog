@@ -35,16 +35,13 @@
                     <div class="row">
                         <div class="col-md-6 col-xs-3 colunaDoForm">
                             <!-- 1a subdivisão do lado esquerdo do form -->
-
-                            <label class="label-control">Data e Hora:</label>
+                                <label for="dataRegistro" class="label-control">Data e Hora:</label>
                             <div class="input-group input-group-md">
-                                <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                <g:field type="text" class="form-control" id="dataRegistro" name="dataRegistro" placeholder="dd/mm/yyyy" value="${registroInfo?.dataRegistro}" />
+                                <input id="dataRegistro" name="dataRegistro" value="${registroInfo?.dataRegistro}">
                             </div>
                             <br>
                             <div class="input-group input-group-md">
-                                <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
-                                <g:field type="text" class="form-control" id="horaRegistro" name="horaRegistro" placeholder="hh:mm" value="${registroInfo?.horaRegistro}" />
+                                <input id="horaRegistro" name="horaRegistro"  value="${registroInfo?.horaRegistro}" />
                             </div>
                         </div>
                         <!-- /1a subdivisão do lado esquerdo do form -->

@@ -12,7 +12,9 @@
 
         <!-- Bootstrap CSS -->
         <asset:stylesheet src="application.css"/>
-        <asset:stylesheet href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+        <asset:stylesheet src="datepicker/classic.css" id="theme_base"/>
+        <asset:stylesheet src="datepicker/classic.date.css" id="theme_date"/>
+        <asset:stylesheet src="datepicker/classic.time.css" id="theme_time"/>
 
 
         <g:layoutHead/>

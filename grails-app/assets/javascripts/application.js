@@ -9,6 +9,7 @@
 //= require jquery-2.1.4
 //= require jquery-ui
 //= require jquery.maskedinput
+//= require pickadate
 //= require glicoscript
 
 

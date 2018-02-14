@@ -1,0 +1,122 @@
+/* ==========================================================================
+   $BASE-PICKER
+   ========================================================================== */
+/**
+ * Note: the root picker element should *NOT* be styled more than what’s here.
+ */
+.picker {
+  font-size: 16px;
+  text-align: left;
+  line-height: 1.2;
+  color: #000000;
+  position: absolute;
+  z-index: 10000;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+/**
+ * The picker input element.
+ */
+.picker__input {
+  cursor: default;
+}
+/**
+ * When the picker is opened, the input element is “activated”.
+ */
+.picker__input.picker__input--active {
+  border-color: #0089ec;
+}
+/**
+ * The holder is the only “scrollable” top-level container element.
+ */
+.picker__holder {
+  width: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/*!
+ * Classic picker styling for pickadate.js
+ * Demo: http://amsul.github.io/pickadate.js
+ */
+/**
+ * Note: the root picker element should *NOT* be styled more than what’s here.
+ */
+.picker {
+  width: 100%;
+  max-width: 500px; /* Keeps the picker from expanding the width of the page's content -RS 7/30/15 */
+}
+/**
+ * The holder is the base of the picker.
+ */
+.picker__holder {
+  position: absolute;
+  background: #ffffff;
+  border: 1px solid #aaaaaa;
+  border-top-width: 0;
+  border-bottom-width: 0;
+  -webkit-border-radius: 0 0 5px 5px;
+  -moz-border-radius: 0 0 5px 5px;
+  border-radius: 0 0 5px 5px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  min-width: 176px;
+  max-width: 466px;
+  max-height: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  -moz-opacity: 0;
+  opacity: 0;
+  -webkit-transform: translateY(-1em) perspective(600px) rotateX(10deg);
+  -moz-transform: translateY(-1em) perspective(600px) rotateX(10deg);
+  transform: translateY(-1em) perspective(600px) rotateX(10deg);
+  -webkit-transition: -webkit-transform 0.15s ease-out, opacity 0.15s ease-out, max-height 0s 0.15s, border-width 0s 0.15s;
+  -moz-transition: -moz-transform 0.15s ease-out, opacity 0.15s ease-out, max-height 0s 0.15s, border-width 0s 0.15s;
+  transition: transform 0.15s ease-out, opacity 0.15s ease-out, max-height 0s 0.15s, border-width 0s 0.15s;
+}
+/**
+ * The frame and wrap work together to ensure that
+ * clicks within the picker don’t reach the holder.
+ */
+.picker__frame {
+  padding: 1px;
+}
+.picker__wrap {
+  margin: -1px;
+}
+/**
+ * When the picker opens...
+ */
+.picker--opened .picker__holder {
+  max-height: 25em;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: alpha(opacity=100);
+  -moz-opacity: 1;
+  opacity: 1;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  -webkit-transform: translateY(0) perspective(600px) rotateX(0);
+  -moz-transform: translateY(0) perspective(600px) rotateX(0);
+  transform: translateY(0) perspective(600px) rotateX(0);
+  -webkit-transition: -webkit-transform 0.15s ease-out, opacity 0.15s ease-out, max-height 0s, border-width 0s;
+  -moz-transition: -moz-transform 0.15s ease-out, opacity 0.15s ease-out, max-height 0s, border-width 0s;
+  transition: transform 0.15s ease-out, opacity 0.15s ease-out, max-height 0s, border-width 0s;
+  -webkit-box-shadow: 0 6px 18px 1px rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0 6px 18px 1px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 18px 1px rgba(0, 0, 0, 0.12);
+}
+
+/* ADDED BY RSEITZ FOR PUTTING CALENDAR ICON IN INPUT FIELD - 10/06/2016 */
+input.showcal.picker__input {
+	background: white url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozREU2QTU3OTgzRjkxMUU2OUNCNkQ0NDJBNkMxMDJENCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozREU2QTU3QTgzRjkxMUU2OUNCNkQ0NDJBNkMxMDJENCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjNERTZBNTc3ODNGOTExRTY5Q0I2RDQ0MkE2QzEwMkQ0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjNERTZBNTc4ODNGOTExRTY5Q0I2RDQ0MkE2QzEwMkQ0Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+PUH2AAAAALhJREFUeNrs20EKgzAQBVC/9P5nyE3jXmgpxcTUebM3wmO+yYim975Vrn0rXuUBXq21K9d7l6cssp4OAHCOwIc2mxGN29cTAQAAAJTfBVY+uAxfTwREYO3KvwFEBB4SgTKviewCAAAAsAs8YT83C4gAAACzh6Fvjsv54bpceC8dAAAAAAAAAIw5B2TiddEBAAAAMAwZhkQAAAAAAAAAMA3qAAAAAIx9CPpKDAAAACUqfp4Wgdp1CDAA4jgZdEYSClMAAAAASUVORK5CYII=') no-repeat right 3px center;
+	background-size: 18px;
+}
+
+/* ADDED BY RSEITZ TO SHOW CLOCK ICON IN INPUT FIELD */
+input.showclock.picker__input {
+	background: white url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozREU2QTU3RDgzRjkxMUU2OUNCNkQ0NDJBNkMxMDJENCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozREU2QTU3RTgzRjkxMUU2OUNCNkQ0NDJBNkMxMDJENCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjNERTZBNTdCODNGOTExRTY5Q0I2RDQ0MkE2QzEwMkQ0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjNERTZBNTdDODNGOTExRTY5Q0I2RDQ0MkE2QzEwMkQ0Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+ycLkOAAAAZBJREFUeNrsm1GSAyEIRIXy/leYo/b+p3YiKBgFrMpnRvrRaCYKPc/TnAcWv0+ewfVDRb89i04GgOY/zGH0S4R/m3cJBF8q3iyGvmlScp5n2g3dMSiLGiXlvNDOyw7iyWnrkj4XHg7ApoxrXAGLkmAD8bRRvHZeWJfAr7LuFgMvEFwVj4+PFwTMAsDhmTeBwEHET0PgC2veNEZWZP8G8aNYMQIQQbwKArfkg4NmX+yCckCAVX9pV+CD/tjYPTByAAUSS14vQyHWACTWD05g/6+aqgQKQAHIPbTnAigHFIACkHoNoHJAASgABSADgIivyK8nQ5TYAFQlkOR3//B0OGMZkGQXQOTs1zb4AYACumB43lkOEL7tIWL23xwQAYL4qN/jquzRq74UAF0KQX27bfZ0GBHES0rgFgjT9xrTd4xIAEhuZONHwrEYu/hfYdM7+hsyTpYO0D7YyxFoDo0bMz1D1OT9O23RFe7NWbNdY6QM0HuNmC679B0j3TAA3CTcEsB/AeFk0V4AvGC4ltmfAAMARBtWdFZi8Q8AAAAASUVORK5CYII=') no-repeat right 3px center;
+	background-size: 18px;
+}

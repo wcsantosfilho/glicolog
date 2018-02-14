@@ -3,22 +3,34 @@
 $(document).ready(function() {
     
     // Ativa o DatePicker (Calendário) para o campo Data do formulário
-    
-    var date_input=$('input[name="dataRegistro"]'); //our date input has the name "date"
-    var options={
-        dateFormat: 'dd/mm/yy',
-        todayHighlight: true,
-        autoclose: true,
-        dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
-        dayNamesMin: [ "Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab" ],
-        maxDate: "+0d"
+    var date_input=$('input[name="dataRegistro"]'); //our date input has the name "dataRegistro"
+    var date_options={
+        monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+        monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+        weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+        weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+        
+        // Buttons
+        today: 'Hoje',
+        clear: 'Limpar',
+        close: 'Fechar',
+        
+        // Formats
+        format: 'dd/mm/yyyy',
+        formatSubmit: 'dd/mm/yyyy',
+        
+        // Date limits
+        max: "+0d"
       };
-    date_input.datepicker(options);
-    
-    
+    date_input.pickadate(date_options);
   
     // Define uma máscara para o campo Hora do formulário
-    $('input[name="horaRegistro"]').mask('99:99');
+    var time_input=$('input[name="horaRegistro"]'); //our time input has the name "horaRegistro"
+    var time_options={
+        // Formats
+        format: 'HH:i',
+      };
+    time_input.pickatime(time_options);
 
     // Conforme a opção escolhida no Tipo de Registro, mostra a seção do formulário respectiva
     var myFunction = function() {
