@@ -37,10 +37,12 @@
                             <!-- 1a subdivisão do lado esquerdo do form -->
                                 <label for="dataRegistro" class="label-control">Data e Hora:</label>
                             <div class="input-group input-group-md">
+                                <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                                 <input id="dataRegistro" name="dataRegistro" value="${registroInfo?.dataRegistro}">
                             </div>
                             <br>
                             <div class="input-group input-group-md">
+                                <span class="input-group-addon"><span class="fa fa-clock"></span></span>
                                 <input id="horaRegistro" name="horaRegistro"  value="${registroInfo?.horaRegistro}" />
                             </div>
                         </div>
