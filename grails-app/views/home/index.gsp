@@ -42,7 +42,7 @@
                             </div>
                             <br>
                             <div class="input-group input-group-md">
-                                <span class="input-group-addon"><span class="fa fa-clock"></span></span>
+                                <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
                                 <input id="horaRegistro" name="horaRegistro"  value="${registroInfo?.horaRegistro}" />
                             </div>
                         </div>

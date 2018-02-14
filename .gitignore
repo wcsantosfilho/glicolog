@@ -13,3 +13,5 @@ build/
 .settings
 .classpath
 target/
+testFile01.log
+testFile02.log
