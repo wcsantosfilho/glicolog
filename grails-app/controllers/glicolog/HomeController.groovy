@@ -34,8 +34,25 @@ class HomeController {
             params.sort = params.sort ?: 'dataRegistro'
             params.order = params.order ?: 'desc'
 
-            def searchResults = Registro.findAllByPessoa(pessoaParaSearch, params)
-            def registroTotal = Registro.countByPessoa(pessoaParaSearch)
+            def registroCriteria = Registro.createCriteria()
+            def searchResults = registroCriteria.list(params) {
+                pessoa {
+                    eq 'nome', session?.usuario.name
+                }
+                projections { 
+                    groupProperty ('dataRegistro', 'dataRegistro')
+                    min ('tipoGlicemia')
+                    min ('taxaGlicemia')
+                    min ('tipoInsulina')
+                    min ('doseInsulina')
+                    min ('tipoRefeicao')
+                    min ('observRefeicao')
+                    min ('tipoAtivFisica')
+                    min ('observAtivFisica')
+                }
+            }
+            
+            def registroTotal = searchResults.totalCount
             def listObject = [registroList: searchResults, registroTotal: registroTotal]
             withFormat {
                 html { listObject }
