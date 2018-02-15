@@ -8,3 +8,23 @@ WARN asset.pipeline.DirectiveProcessor - Unable to Locate Asset: /pickerdate
 WARN asset.pipeline.DirectiveProcessor - Unable to Locate Asset: /pickertime
 WARN asset.pipeline.DirectiveProcessor - Unable to Locate Asset: /pickerdate
 WARN asset.pipeline.DirectiveProcessor - Unable to Locate Asset: /pickertime
+ERROR org.grails.web.errors.GrailsExceptionResolver - NullPointerException occurred when processing request: [GET] /usuario/logout
+Cannot get property 'name' on null object. Stacktrace follows:
+java.lang.reflect.InvocationTargetException: null
+	at org.grails.core.DefaultGrailsControllerClass$ReflectionInvoker.invoke(DefaultGrailsControllerClass.java:211)
+	at org.grails.core.DefaultGrailsControllerClass.invoke(DefaultGrailsControllerClass.java:188)
+	at org.grails.web.mapping.mvc.UrlMappingsInfoHandlerAdapter.handle(UrlMappingsInfoHandlerAdapter.groovy:90)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:967)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:901)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:861)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
+	at org.springframework.boot.web.filter.ApplicationContextHeaderFilter.doFilterInternal(ApplicationContextHeaderFilter.java:55)
+	at org.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:77)
+	at org.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.NullPointerException: Cannot get property 'name' on null object
+	at glicolog.UsuarioController$_closure3.doCall(UsuarioController.groovy:20)
+	... 14 common frames omitted

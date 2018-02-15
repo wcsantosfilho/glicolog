@@ -16,12 +16,14 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Verificar falta dos scriptse formatação do HTML                           OK
 * Acertar URL do TOMCAT no Catalyst                                         OK
 * Erro na gravação da Insulina                                              OK
-* Erro na gravação da refeição                                              None
+* Erro na gravação da refeição                                              OK
 * Inclusão de Glicemia sem hora dá mensagem de erro, mas zera o form.       None
 * Estudar e Criar casos de testes                                           None
 * Avanço de cursor pelo teclado após Data                                   None
 * Trazer data e hora pré-preenchidas                                        None
 * Layout responsivo para celular                                            None
+* |-> Conteúdo da tabela                                                    None
+* |-> Menu não abre                                                         OK
 * Implementar o Validator no Client-Side                                    None
 * Validar no Command Info as Constrains do Domain                           None
 * Colocar em tabelas os tipos (tipo de glicemia, tipo de insulina etc)      None
@@ -38,3 +40,6 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Criar ícone no cabeçalho da index para mostrar se é asc ou desc           None
 * Refatorar codigo para conceito de services (ver post)                     None
 * Estudar e fazer deploy no Heroku com WAR                                  OK
+* Criar ícone para a aplicação                                              None
+* Unificar a linha de dados para mesma data e hora                          None
+* Implementar Busca (por alguma coisa... taxa, tipo registro)               None
