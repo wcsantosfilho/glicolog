@@ -6,31 +6,85 @@ body {
   padding-top: 4.5rem;
 }
 
-.table-glicolog {
-    table-layout: fixed;
-    width: 100%;
-    max-width: 100%;
-    margin-bottom: 20px;
-}
-.td-glicolog {
-    overflow: hidden;
+/* Visualização no mobile */
+@media screen and (max-width: 480px) {
+    .table-glicolog th {
+        display: none;
+    }
+    
+    .table-glicolog .td-glicolog {
+        display: block;
+        border: none;
+    }
+    
+    .table-glicolog .td-glicolog:nth-of-type(1) {
+        width: auto;
+    }
+
+    .table-glicolog .td-glicolog:nth-of-type(2) {
+        width: auto;
+        padding-left: 1.5em;
+    }
+    
+    .table-glicolog .td-glicolog:nth-of-type(3) {
+        width: auto;
+        padding-left: 1.5em;
+    }
+
+    .table-glicolog .td-glicolog:nth-of-type(4) {
+        width: auto;
+        padding-left: 1.5em;
+    }
+
+    .table-glicolog .td-glicolog:nth-of-type(5) {
+        width: auto;
+        padding-left: 1.5em;
+    }
+    
+    .table-glicolog .td-glicolog:first-child {
+        padding-top: .5em;
+    }
+    
+    .table-glicolog .td-glicolog:last-child {
+        padding-bottom: .5em;
+    }
+    
+    .table-glicolog .td-glicolog:before {
+        content: attr(data-th)": ";
+        font-weight: bold;
+    }
 }
 
-.td-glicolog:nth-of-type(1) {
-    width: 15%;
+
+/* Visualização da tabela de registros no browser */
+@media screen and (min-width: 481px and max-width: 992px){
+    .table-glicolog {
+        table-layout: fixed;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+    .td-glicolog {
+        display: table-cell;
+    }
+
+    .td-glicolog:nth-of-type(1) {
+        width: 15%;
+    }
+    .td-glicolog:nth-of-type(2) {
+        width: 20%;
+    }
+    .td-glicolog:nth-of-type(3) {
+        width: 20%;
+    }
+    .td-glicolog:nth-of-type(4) {
+        width: 20%
+    }
+    .td-glicolog:nth-of-type(5) {
+        width: 20%;
+    }
 }
-.td-glicolog:nth-of-type(2) {
-    width: 20%;
-}
-.td-glicolog:nth-of-type(3) {
-    width: 20%;
-}
-.td-glicolog:nth-of-type(4) {
-    width: 20%
-}
-.td-glicolog:nth-of-type(5) {
-    width: 20%;
-}
+
 
 .logoGlicolog {
     height: auto; 

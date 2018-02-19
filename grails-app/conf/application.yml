@@ -101,22 +101,22 @@ dataSource:
 environments:
     development:
         dataSource:
-            dbCreate: update
-            url: "jdbc:mysql://localhost:3306/glicolog?useSSL=false"
-            properties:
-              username: glicolog
-              password: glicolog
-              maxIdle: 50
-              maxActive: 50
-              minIdle: 10
-              testOnBorrow: true
-              validationQuery: SELECT 1
-              testWhileIdle: true
-              maxAge: 600000
+            dbCreate: create-drop
+            url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            pooled: true
+            jmxExport: true
+            driverClassName: org.h2.Driver
+            username: sa
+            password: ''
     test:
         dataSource:
             dbCreate: update
             url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            pooled: true
+            jmxExport: true
+            driverClassName: org.h2.Driver
+            username: sa
+            password: ''
     production:
         dataSource:
             dbCreate: update

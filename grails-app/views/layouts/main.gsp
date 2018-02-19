@@ -16,7 +16,8 @@
         <asset:stylesheet src="datepicker/classic.date.css" id="theme_date"/>
         <asset:stylesheet src="datepicker/classic.time.css" id="theme_time"/>
 
-
+        <link rel="shortcut icon" href="${createLinkTo(dir:'images',file:'favicon.ico')}" type="image/x-icon" /> 
+        
         <g:layoutHead/>
     </head>
 

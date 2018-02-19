@@ -177,23 +177,19 @@
                 <div class="container">
                     <div id="list-registros" role="main">
                         <table class="table table-sm table-striped table-bordered table-glicolog">
-                            <thead class="thead-inverse">
+                            <tr>
+                                <g:sortableColumn property="dataRegistro" title="Data Registro" />
+                                <th>Glicemia</th>
+                                <th>Insulina</th>
+                                <th>Refeição</th>
+                                <th>Ativ.Física</th>
+                            </tr>
+                            <g:each in="${registroList}">
                                 <tr>
-                                    <g:sortableColumn property="dataRegistro" title="Data Registro" />
-                                    <th>Glicemia</th>
-                                    <th>Insulina</th>
-                                    <th>Refeição</th>
-                                    <th>Ativ.Física</th>
+                                    <!-- a Taglib listaDetalheRegistro já monta as tags <td></td> para cada coluna conforme o tipo do Registro -->
+                                    <glicolog:listaDetalheRegistro item="${it}" />
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <g:each in="${registroList}">
-                                    <tr>
-                                        <!-- a Taglib listaDetalheRegistro já monta as tags <td></td> para cada coluna conforme o tipo do Registro -->
-                                        <glicolog:listaDetalheRegistro item="${it}" />
-                                    </tr>
-                                </g:each>
-                            </tbody>
+                            </g:each>
                         </table>
                         <g:if test="${!flagErro}">
                             <nav aria-label="Page navigation records">

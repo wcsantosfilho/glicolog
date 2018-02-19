@@ -43,3 +43,4 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Criar ícone para a aplicação                                              None
 * Unificar a linha de dados para mesma data e hora                          None
 * Implementar Busca (por alguma coisa... taxa, tipo registro)               None
+* Colocar consistência para evitar dois registros iguais na mesma data e hora None

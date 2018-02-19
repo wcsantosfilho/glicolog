@@ -10,15 +10,9 @@ conversionRule 'wex', WhitespaceThrowableProxyConverter
 
 // See http://logback.qos.ch/manual/groovy.html for details on configuration
 
-// define HOSTNAME by assigning it hostname
-def HOSTNAME=hostname
-// will print "hostname is x" where x is the current host's name
-println "Hostname is ${HOSTNAME}"
 
 
 appender('STDOUT', ConsoleAppender) {
-  // will print "hostname is x" where x is the current host's name
-  println "Hostname is ${HOSTNAME}" 
     encoder(PatternLayoutEncoder) {
         charset = Charset.forName('UTF-8')
 
@@ -32,9 +26,6 @@ appender('STDOUT', ConsoleAppender) {
 }
 
 appender("FILE", FileAppender) {
-  // will print "hostname is x" where x is the current host's name
-  println "Hostname is ${HOSTNAME}" 
-
   file = "testFile02.log"
   append = true
   encoder(PatternLayoutEncoder) {
@@ -53,6 +44,6 @@ if (Environment.isDevelopmentMode() && targetDir != null) {
     logger("StackTrace", ERROR, ['FULL_STACKTRACE'], false)
 }
 
-//root(INFO, ['STDOUT'])
-root(INFO, ['FILE'])
-root(WARN, ['STDOUT'])
+root(ERROR, ['STDOUT'])
+//root(INFO, ['FILE'])
+//root(WARN, ['STDOUT'])

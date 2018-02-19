@@ -1,0 +1,61 @@
+/* tt2.css */
+
+:root {
+    --bpa: 480px;
+    --vermelho: #b00;
+    --azul: #00b;
+}
+
+@media screen {
+    .table-glicolog {
+        margin: 1em 0;
+    }
+    
+    .table-glicolog tr {
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .table-glicolog th {
+        color: #000;
+        display: inline;
+    }
+
+    .table-glicolog td {
+        text-align: left;
+
+        display: table-cell;
+        padding: .25em .5em;
+        background-color: var(--vermelho);
+    }
+
+    .table-glicolog td:first-child {
+        padding-left: 0;
+    }
+
+    .table-glicolog td:last-child {
+        padding-right: 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .table-glicolog th {
+        display: none;
+    }
+
+    .table-glicolog td {
+        display: block; 
+        background-color: var(--azul);
+    }
+    .table-glicolog td:first-child {
+        padding-top: .5em;
+    }
+     .table-glicolog td:last-child {
+        padding-bottom: .5em;
+    }
+    .table-glicolog td:before {
+        content: attr(data-th)": ";
+        font-weight: bold;
+    }
+}
+

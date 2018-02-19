@@ -3,6 +3,7 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.converters.JSON
 import grails.converters.XML
+import org.hibernate.criterion.CriteriaSpecification
 
 
 class HomeController {
@@ -15,6 +16,7 @@ class HomeController {
      * ------------------------------------------------ */
     def index() { 
         try {
+            // Verifica se há uma sessão ativa
             if (!session?.usuario) {
                 //respond session.errors, view:'index'
                 def flagErro = true
@@ -24,35 +26,41 @@ class HomeController {
                 return
             }
 
+            // Busca a pessoa ligada ao usuário da sessão ativa
             def pessoaParaSearch = Pessoa.findByNome(session?.usuario.name)
             if (pessoaParaSearch == null) {
                 respond pessoaParaSearch.errors, view:'index'
                 return
             }
 
+            // Parametros de busca e paginação
             params.max = Math.min(params.max ? params.int('max') : 10, 100)
             params.sort = params.sort ?: 'dataRegistro'
             params.order = params.order ?: 'desc'
-
+            
+            // Constroi o 'criteria' para buscar os registros da pessoa, agrupados pela data e hora em uma mesma linha
             def registroCriteria = Registro.createCriteria()
             def searchResults = registroCriteria.list(params) {
+                resultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP)
                 pessoa {
                     eq 'nome', session?.usuario.name
                 }
                 projections { 
                     groupProperty ('dataRegistro', 'dataRegistro')
-                    min ('tipoGlicemia')
-                    min ('taxaGlicemia')
-                    min ('tipoInsulina')
-                    min ('doseInsulina')
-                    min ('tipoRefeicao')
-                    min ('observRefeicao')
-                    min ('tipoAtivFisica')
-                    min ('observAtivFisica')
+                    min ('tipoGlicemia', 'tipoGlicemia')
+                    min ('taxaGlicemia', 'taxaGlicemia')
+                    min ('tipoInsulina', 'tipoInsulina')
+                    min ('doseInsulina', 'doseInsulina')
+                    min ('tipoRefeicao', 'tipoRefeicao')
+                    min ('observRefeicao', 'observRefeicao')
+                    min ('tipoAtivFisica', 'tipoAtivFisica')
+                    min ('observAtivFisica', 'observAtivFisica')
+                    count('dataRegistro', 'ct') 
                 }
             }
-            
             def registroTotal = searchResults.totalCount
+            
+            // define a lista para passar para o GSP
             def listObject = [registroList: searchResults, registroTotal: registroTotal]
             withFormat {
                 html { listObject }
@@ -72,17 +80,21 @@ class HomeController {
     @Transactional(readOnly = false)
     def saveForm(RegistroInfo info) {
         try {
+            // Busca a pessoa ligada ao usuário da sessão
             def pessoa = Pessoa.findByNome(session.usuario.name)
             if (pessoa == null) {
                 transactionStatus.setRollbackOnly()
                 respond pessoa.errors, view:'index'
                 return
             }
+            
             if (pessoa.hasErrors()) {
                 transactionStatus.setRollbackOnly()
                 respond pessoa.errors, view:'index'
                 return
             }
+            
+            // Validação do Command Info
             if (info.hasErrors()) {
                 println "Erro no Info"
                 transactionStatus.setRollbackOnly()
@@ -92,6 +104,8 @@ class HomeController {
                 respond listObject, view:'index'
                 return
             }
+            
+            // Valida qual tipo de Registro está sendo inserido para chamar o objeto correspondente
             switch(params.tipoRegistro) {
                 case 'Glicemia':
                     // Cria a instância
@@ -161,7 +175,7 @@ class HomeController {
                     def dataHoraAtiv = Date.parse('dd/MM/yyyy HH:mm:ss', info.dataRegistro + " " + info.horaRegistro+":00")
                     refeicao = new Refeicao (dataRegistro: dataHoraAtiv, tipoRefeicao: info.tipoRefeicao, observRefeicao: info.observRefeicao, pessoa: pessoa )
                 
-                    // salva
+                    // salva o Registro de Refeicao
                     if (!refeicao.save(flush: true)) {
                         def mensagemErro = refeicao.errors.allErrors.join(' \n')
                         def errG = new errosGerais(controller: 'saveForm', erroNoCatch:'Erro no Save', erroException: mensagemErro)
@@ -240,6 +254,9 @@ class errosGerais {
     String erroException;
 }
 
+/* ---------------------------------------------------------- *
+ * CommandInfo para validar dados de entrda pelas constraints *
+ * ---------------------------------------------------------- */
 class RegistroInfo implements grails.validation.Validateable {
     String dataRegistro
     String horaRegistro
@@ -254,11 +271,14 @@ class RegistroInfo implements grails.validation.Validateable {
     String observAtivFisica
 
     static constraints = {
+        // Valida o tipo de Registro
         tipoRegistro (validator:{ value, object ->
             if (!['Glicemia','Insulina','Refeicao','AtivFisica'].contains(value) ) {
                     return 'validation.tipoRegistroErrado'
 			}    
         })
+        
+        // Valida o tipo de Glicemia
         tipoGlicemia nullable: true
         tipoGlicemia (validator:{ value, object ->
             if (object.tipoRegistro == 'Glicemia' &&
@@ -266,6 +286,8 @@ class RegistroInfo implements grails.validation.Validateable {
                     return 'validation.tipoGlicemiaErrado'
 			}    
         })
+        
+        // Valida a taxa de Glicemia
         taxaGlicemia nullable: true
         taxaGlicemia (validator:{ value, object ->
             if (object.tipoRegistro == 'Glicemia' &&
@@ -273,6 +295,8 @@ class RegistroInfo implements grails.validation.Validateable {
                     return 'validation.taxaGlicemiaNulo'
 			}    
         })
+        
+        // Valida o tipo de Insulina
         tipoInsulina nullable: true
         tipoInsulina (validator:{ value, object ->
             if (object.tipoRegistro == 'Insulina' &&
@@ -280,6 +304,8 @@ class RegistroInfo implements grails.validation.Validateable {
                     return 'validation.tipoInsulinaErrado'
 			}    
         })
+        
+        // Valida a dose de insulina
         doseInsulina nullable: true
         doseInsulina (validator:{ value, object ->
             if (object.tipoRegistro == 'Insulina' &&
@@ -287,6 +313,8 @@ class RegistroInfo implements grails.validation.Validateable {
                     return 'validation.doseInsulinaNulo'
 			}    
         })
+        
+        // Valida o tipo de refeição
         tipoRefeicao nullable: true
         tipoRefeicao (validator:{ value, object ->
             if (object.tipoRegistro == 'Refeicao' &&
@@ -294,6 +322,8 @@ class RegistroInfo implements grails.validation.Validateable {
                     return 'validation.tipoRefeicaoErrado'
 			}    
         })
+        
+        // Validação da Observação de Refeição
         observRefeicao nullable: true
         tipoAtivFisica nullable: true
         tipoAtivFisica (validator:{ value, object ->

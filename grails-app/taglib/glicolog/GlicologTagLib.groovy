@@ -16,19 +16,12 @@ class GlicologTagLib {
         Locale localeBR = new Locale("pt", "BR");
         SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy HH:mm", localeBR);
         def formattedDataRegistro = fmt.format(reg?.dataRegistro);
+        def formattedGlicemia = "${reg?.tipoGlicemia ?: ''} - ${reg?.taxaGlicemia ?: ''}"
+        def formattedInsulina = "${reg?.tipoInsulina ?: ''} - ${reg?.doseInsulina ?: ''}"
+        def formattedRefeicao = "${reg?.tipoRefeicao ?: ''} - ${reg?.observRefeicao ?: ''}"
+        def formattedAtivFisica = "${reg?.tipoAtivFisica ?: ''} - ${reg?.observAtivFisica ?: ''}"
 
-        def colDataRegistro = "<td class=\"td-glicolog\">${formattedDataRegistro} </td>"
-        
-        if (reg?.instanceOf(Glicemia)) {
-            out << "${colDataRegistro}<td class=\"td-glicolog\">${reg?.tipoGlicemia} - ${reg?.taxaGlicemia}</td><td class=\"td-glicolog\"></td><td class=\"td-glicolog\"></td><td class=\"td-glicolog\"></td>"
-        } else if (reg?.instanceOf(Insulina)) {
-            out << "${colDataRegistro}<td class=\"td-glicolog\"></td><td class=\"td-glicolog\">${reg?.tipoInsulina} - ${reg?.doseInsulina}</td><td class=\"td-glicolog\"></td><td class=\"td-glicolog\"></td>"
-        } else if (reg?.instanceOf(Refeicao)) {
-            out << "${colDataRegistro}<td class=\"td-glicolog\"></td><td class=\"td-glicolog\"></td><td class=\"td-glicolog\">${reg?.tipoRefeicao} - ${reg?.observRefeicao}</td><td class=\"td-glicolog\"></td>" 
-        } else if (reg?.instanceOf(AtivFisica)) {
-            out << "${colDataRegistro}<td class=\"td-glicolog\"></td><td class=\"td-glicolog\"></td><td class=\"td-glicolog\"></td><td class=\"td-glicolog\">${reg?.tipoAtivFisica} - ${reg?.observAtivFisica}</td>"
-        } else {
-            out << attrs.item 
-        }
+        def colDataRegistro = "<td data-th=\"Data Registro\" class=\"td-glicolog\">${formattedDataRegistro} </td>"
+        out << "${colDataRegistro}<td data-th=\"Glicemia\" class=\"td-glicolog\">${formattedGlicemia}</td><td data-th=\"Insulina\" class=\"td-glicolog\">${formattedInsulina}</td><td data-th=\"Refeição\" class=\"td-glicolog\">${formattedRefeicao}</td><td data-th=\"Ativ.Física\" class=\"td-glicolog\">${formattedAtivFisica}</td>"
     }
 }
