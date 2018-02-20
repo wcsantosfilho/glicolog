@@ -17,30 +17,34 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Acertar URL do TOMCAT no Catalyst                                         OK
 * Erro na gravação da Insulina                                              OK
 * Erro na gravação da refeição                                              OK
+* Layout responsivo para celular                                            OK
+* |-> Conteúdo da tabela                                                    OK
+* |-> Menu não abre                                                         OK
+* Alterar SGBD para MySQL no ambiente de desenvolvimento                    OK
+* Acertar permissão no MySQL para gravar com usuário glicolog               OK
+* Montar lista de Registros abaixo do form principal da home/index          OK
+* Decidir como fazer a lista de itens (Herança no Registro, mas e a saída?) OK
+* Arrumar a paginação                                                       OK
+* Estudar e fazer deploy no Heroku com WAR                                  OK
 * Inclusão de Glicemia sem hora dá mensagem de erro, mas zera o form.       None
+* Campo "Tipo Registro" sobrepõe do "Data e Hora" nas views menores         None
+* Permitir várias inserções de tipos registros diferentes com a mesma data e hora None
 * Estudar e Criar casos de testes                                           None
 * Avanço de cursor pelo teclado após Data                                   None
 * Trazer data e hora pré-preenchidas                                        None
-* Layout responsivo para celular                                            None
-* |-> Conteúdo da tabela                                                    None
-* |-> Menu não abre                                                         OK
 * Implementar o Validator no Client-Side                                    None
 * Validar no Command Info as Constrains do Domain                           None
 * Colocar em tabelas os tipos (tipo de glicemia, tipo de insulina etc)      None
 * Decidir questão do usuário vs pessoa                                      None
 * Cadastro de novos usuários                                                None
 * Eliminar itens inúteis do home/index                                      None
-* Alterar SGBD para MySQL no ambiente de desenvolvimento                    OK
-* Acertar permissão no MySQL para gravar com usuário glicolog               OK
 * Duração da Session                                                        None
-* Montar lista de Registros abaixo do form principal da home/index          OK
-* Decidir como fazer a lista de itens (Herança no Registro, mas e a saída?) OK
-* Arrumar a paginação                                                       OK
 * Criar mecanismo de exclusão de registro                                   None
 * Criar ícone no cabeçalho da index para mostrar se é asc ou desc           None
 * Refatorar codigo para conceito de services (ver post)                     None
-* Estudar e fazer deploy no Heroku com WAR                                  OK
 * Criar ícone para a aplicação                                              None
 * Unificar a linha de dados para mesma data e hora                          None
 * Implementar Busca (por alguma coisa... taxa, tipo registro)               None
 * Colocar consistência para evitar dois registros iguais na mesma data e hora None
+* Layout de impressão para consulta médica                                  None
+* Aviso por e-mail em caso de não preenchimento                             None

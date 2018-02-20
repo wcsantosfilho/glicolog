@@ -7,6 +7,7 @@
 //
 //= require jquery-2.1.4
 //= require jquery-ui 
+//= require tether
 //= require bootstrap
 //= require pickadate
 //= require glicoscript

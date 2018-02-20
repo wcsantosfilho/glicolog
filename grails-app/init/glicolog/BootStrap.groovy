@@ -6,6 +6,7 @@ class BootStrap {
     def init = { servletContext ->
         
 		System.out.println("Inicio do Boostrap")    
+        
         def admin = Usuario.findByLogin('admin@glicolog.com.br')
         if (!admin) {
             new Usuario(login:"admin@glicolog.com.br", password:"admin", name: "Administrador", tipo: "Admin")
