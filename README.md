@@ -26,7 +26,10 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Decidir como fazer a lista de itens (Herança no Registro, mas e a saída?) OK
 * Arrumar a paginação                                                       OK
 * Estudar e fazer deploy no Heroku com WAR                                  OK
+* Corrigir erros da Criteria + Paginação                                    OK
+* Permitir consulta ascendente e descentente                                None
 * Inclusão de Glicemia sem hora dá mensagem de erro, mas zera o form.       None
+* Campos taxaGlicemia e doseInsulina devem ser numéricos                    None
 * Campo "Tipo Registro" sobrepõe do "Data e Hora" nas views menores         None
 * Permitir várias inserções de tipos registros diferentes com a mesma data e hora None
 * Estudar e Criar casos de testes                                           None
@@ -44,6 +47,7 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Refatorar codigo para conceito de services (ver post)                     None
 * Criar ícone para a aplicação                                              None
 * Unificar a linha de dados para mesma data e hora                          None
+* Seleção de Intervalo de data                                              None
 * Implementar Busca (por alguma coisa... taxa, tipo registro)               None
 * Colocar consistência para evitar dois registros iguais na mesma data e hora None
 * Layout de impressão para consulta médica                                  None

@@ -1,5 +1,7 @@
 package glicolog
 import glicolog.*
+import static java.util.Calendar.*
+
 
 class BootStrap {
 
@@ -19,27 +21,58 @@ class BootStrap {
             new Pessoa(nome: "Lucas Santos", idade:18, usuario: userLucas)
                 .save(failOnError: true)
 
-            def userBernardino = new Usuario(login:"bernardino.boehringer@gmail.com", password:"aaa", name: "Bernardino Boehringer", tipo: "Comum")
-            new Pessoa(nome: "Bernardino Boehringer", idade:25, usuario: userBernardino)
-                .addToGlicemias(new Glicemia(dataRegistro: "2015-05-02 06:02:02.00",  tipoGlicemia: "Pre", taxaGlicemia: 80))
-                .addToGlicemias(new Glicemia(dataRegistro: "2015-05-03 08:02:02.00",  tipoGlicemia: "Pre", taxaGlicemia: 78))
-                .addToGlicemias(new Glicemia(dataRegistro: "2015-05-04 08:02:02.00",  tipoGlicemia: "Pre", taxaGlicemia: 120))
-                .addToGlicemias(new Glicemia(dataRegistro: "2015-05-05 07:02:02.00",  tipoGlicemia: "Pre", taxaGlicemia: 99))
-                .addToGlicemias(new Glicemia(dataRegistro: "2015-05-06 06:02:02.00",  tipoGlicemia: "Pre", taxaGlicemia: 280))
-                .addToGlicemias(new Glicemia(dataRegistro: "2015-05-07 08:02:02.00",  tipoGlicemia: "Pre", taxaGlicemia: 114))
-                .addToInsulinas(new Insulina(dataRegistro: "2015-05-02 06:02:02.00", tipoInsulina: "Aspart", doseInsulina: 9))
-                .addToInsulinas(new Insulina(dataRegistro: "2015-05-03 08:02:02.00", tipoInsulina: "Aspart", doseInsulina: 9))
-                .addToInsulinas(new Insulina(dataRegistro: "2015-05-04 07:02:02.00", tipoInsulina: "Aspart", doseInsulina: 9))
-                .addToInsulinas(new Insulina(dataRegistro: "2015-05-05 06:02:02.00", tipoInsulina: "Aspart", doseInsulina: 9))
-                .addToInsulinas(new Insulina(dataRegistro: "2015-05-06 08:02:02.00", tipoInsulina: "Aspart", doseInsulina: 9))
-                .addToInsulinas(new Insulina(dataRegistro: "2015-05-07 06:02:02.00", tipoInsulina: "Aspart", doseInsulina: 9))
-                .addToGlicemias(new Glicemia(dataRegistro: "2015-05-02 08:00:00.00",  tipoGlicemia: "Pos", taxaGlicemia: 118))
-                .addToGlicemias(new Glicemia(dataRegistro: "2015-05-03 10:00:00.00",  tipoGlicemia: "Pos", taxaGlicemia: 44))
-                .addToRefeicoes(new Refeicao(dataRegistro: "2015-05-02 06:02:02.00", tipoRefeicao: "Cafe", observRefeicao: "Bacon com ovos"))
-                .addToRefeicoes(new Refeicao(dataRegistro: "2015-05-03 08:02:02.00", tipoRefeicao: "Cafe", observRefeicao: "Bacon sem ovos"))
-                .addToAtivFisicas(new AtivFisica(dataRegistro: "2015-05-02 10:15:00.00", tipoAtivFisica: "Leve", observAtivFisica: "Corridinha"))
-                .addToAtivFisicas(new AtivFisica(dataRegistro: "2015-05-03 09:18:00.00", tipoAtivFisica: "Moderada", observAtivFisica: "Musculação"))
+            def userWalter = new Usuario(login:"walter.santosf@gmail.com", password:"www", name: "Walter Santos Filho", tipo: "Comum")
+            def pessWalter = new Pessoa(nome: "Walter Santos Filho", idade:25, usuario: userWalter)
                 .save(failOnError: true)
+            
+            def anoReg = 2017
+            def mesReg = 05
+            def diaReg = 02
+            def ctDias = 55
+            def dataBase = new Date().parse("dd.mm.yyyy HH:mm:ss", "${diaReg}.${mesReg}.${anoReg} 06:00:00")
+            1.upto(ctDias) {
+                dataBase = dataBase.plus(1)
+                dataBase = dataBase.parse("dd.mm.yyyy HH:mm:ss", "${dataBase[DATE]}.${dataBase[MONTH]+1}.${dataBase[YEAR]} 06:00:00")
+                def dataBase2 = dataBase.clone()
+
+                new Glicemia(pessoa: pessWalter, dataRegistro: dataBase2,  tipoGlicemia: "Pre", taxaGlicemia: 80)
+                    .save(failOnError: true)
+                new Insulina(pessoa: pessWalter, dataRegistro: dataBase2, tipoInsulina: "Aspart", doseInsulina: 9)
+                    .save(failOnError: true)
+                new Refeicao(pessoa: pessWalter, dataRegistro: dataBase2, tipoRefeicao: "Cafe", observRefeicao: "Bacon com ovos")
+                    .save(failOnError: true)
+                new Insulina(pessoa: pessWalter, dataRegistro: dataBase2, tipoInsulina: "Glargina", doseInsulina: 13)
+                    .save(failOnError: true)
+                
+                dataBase2 = dataBase2.parse("dd.mm.yyyy HH:mm:ss", "${dataBase[DATE]}.${dataBase[MONTH]+1}.${dataBase[YEAR]} 08:00:00")
+                new Glicemia(pessoa: pessWalter, dataRegistro: dataBase2,  tipoGlicemia: "Pos", taxaGlicemia: 78)
+                    .save(failOnError: true)
+
+                dataBase2 = dataBase2.parse("dd.mm.yyyy HH:mm:ss", "${dataBase[DATE]}.${dataBase[MONTH]+1}.${dataBase[YEAR]} 10:30:00")
+                new AtivFisica(pessoa: pessWalter, dataRegistro: dataBase2, tipoAtivFisica: "Leve", observAtivFisica: "Corridinha")
+                    .save(failOnError: true)
+
+                dataBase2 = dataBase2.parse("dd.mm.yyyy HH:mm:ss", "${dataBase[DATE]}.${dataBase[MONTH]+1}.${dataBase[YEAR]} 12:00:00")
+
+                new Glicemia(pessoa: pessWalter, dataRegistro: dataBase2,  tipoGlicemia: "Pre", taxaGlicemia: 120)
+                    .save(failOnError: true)
+                new Insulina(pessoa: pessWalter, dataRegistro: dataBase2, tipoInsulina: "Glargina", doseInsulina: 12)
+                    .save(failOnError: true)
+                new Refeicao(pessoa: pessWalter, dataRegistro: dataBase2, tipoRefeicao: "Almoco", observRefeicao: "Salada, arroz, feijão e carne")
+                    .save(failOnError: true)
+
+                dataBase2 = dataBase2.parse("dd.mm.yyyy HH:mm:ss", "${dataBase[DATE]}.${dataBase[MONTH]+1}.${dataBase[YEAR]} 19:45:00")
+                new Glicemia(pessoa: pessWalter, dataRegistro: dataBase2,  tipoGlicemia: "Pre", taxaGlicemia: 155)
+                    .save(failOnError: true)
+                new Insulina(pessoa: pessWalter, dataRegistro: dataBase2, tipoInsulina: "Glargina", doseInsulina: 13)
+                    .save(failOnError: true)
+                new Refeicao(pessoa: pessWalter, dataRegistro: dataBase2, tipoRefeicao: "Jantar", observRefeicao: "Salada, empadão e bolo de carne")
+                    .save(failOnError: true)
+
+                dataBase2 = dataBase2.parse("dd.mm.yyyy HH:mm:ss", "${dataBase[DATE]}.${dataBase[MONTH]+1}.${dataBase[YEAR]} 22:15:00")
+                new Glicemia(pessoa: pessWalter, dataRegistro: dataBase2,  tipoGlicemia: "Controle", taxaGlicemia: 132)
+                    .save(failOnError: true)
+            }
         }
     		
     	def countPessoasComGlicemia = Pessoa.findAll {

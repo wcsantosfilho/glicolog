@@ -8,9 +8,12 @@ import org.hibernate.criterion.CriteriaSpecification
 
 class HomeController {
     static allowedMethods = [index:'GET',
-            saveForm:'POST',
+            saveForm:'POST', sendmail:'GET'
     ]
 
+    def comunicacaoService
+
+    
     /* ------------------------------------------------ *
      *  index                                           *
      * ------------------------------------------------ */
@@ -38,27 +41,42 @@ class HomeController {
             params.sort = params.sort ?: 'dataRegistro'
             params.order = params.order ?: 'desc'
             
-            // Constroi o 'criteria' para buscar os registros da pessoa, agrupados pela data e hora em uma mesma linha
-            def registroCriteria = Registro.createCriteria()
-            def searchResults = registroCriteria.list(params) {
-                resultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP)
-                pessoa {
-                    eq 'nome', session?.usuario.name
-                }
-                projections { 
-                    groupProperty ('dataRegistro', 'dataRegistro')
-                    min ('tipoGlicemia', 'tipoGlicemia')
-                    min ('taxaGlicemia', 'taxaGlicemia')
-                    min ('tipoInsulina', 'tipoInsulina')
-                    min ('doseInsulina', 'doseInsulina')
-                    min ('tipoRefeicao', 'tipoRefeicao')
-                    min ('observRefeicao', 'observRefeicao')
-                    min ('tipoAtivFisica', 'tipoAtivFisica')
-                    min ('observAtivFisica', 'observAtivFisica')
-                    count('dataRegistro', 'ct') 
-                }
+            // HQL para buscar os registros da pessoa, agrupados pela data e hora em uma mesma linha
+            // depois transforma em Collect para virar um MAPA com propriedades nomeadas (a GSP/Taglib usa assim)
+            def searchResults = Registro.executeQuery("""
+                select dataRegistro, 
+                min (tipoGlicemia),
+                min (taxaGlicemia),
+                min (tipoInsulina),
+                min (doseInsulina),
+                min (tipoRefeicao),
+                min (observRefeicao),
+                min (tipoAtivFisica),
+                min (observAtivFisica)
+                FROM Registro
+                WHERE pessoa.nome = :pessoaNome
+                GROUP BY dataRegistro
+                ORDER BY dataRegistro desc""", [pessoaNome:session?.usuario.name, offset:params.offset, max:params.max]).collect {
+                    [   dataRegistro: it[0],
+                        tipoGlicemia: it[1],
+                        taxaGlicemia: it[2],
+                        tipoInsulina: it[3],
+                        doseInsulina: it[4],
+                        tipoRefeicao: it[5],
+                        observRefeicao: it[6],
+                        tipoAtivFisica: it[7],
+                        observAtivFisica: it[8]
+                    ]
             }
-            def registroTotal = searchResults.totalCount
+            
+            // HQL para contar os registros da pessoa, agrupados pela data e hora em uma mesma linha
+            def searchCount = Registro.executeQuery("""
+                select count(dataRegistro)
+                    FROM Registro
+                    WHERE pessoa.nome = :pessoaNome
+                    GROUP BY dataRegistro""", [pessoaNome:session?.usuario.name])
+            
+            def registroTotal = searchCount.size()
             
             // define a lista para passar para o GSP
             def listObject = [registroList: searchResults, registroTotal: registroTotal]
@@ -245,6 +263,23 @@ class HomeController {
             respond errG, view:'error'
             return
         }
+    }
+    
+    /* ------------------------------------------------ *
+     *  sendmail                                        *
+     * ------------------------------------------------ */
+    def sendmail() {
+        try {
+            comunicacaoService.enviarEmail(
+                "wcsantosfilho@gmail.com",
+                "Novo Login no Glicolog",
+                "O usuario ${session?.usuario.name} acaba de fazer Login no Glicolog")
+        } catch (Exception ex) {
+            def errG = new errosGerais(controller: 'sendmail', erroNoCatch: 'Exception', erroException: ex.message)
+            respond errG, view:'error'
+            return
+        }
+        redirect(controller:"home", action:"index")
     }
 }
 
