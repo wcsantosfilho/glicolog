@@ -84,7 +84,7 @@
                             <br>
                             <div class="input-group input-group-sm">
                                 <span class="input-group-addon" id="basic-addon3">Taxa Glicemia</span>
-                                <input type="text" id="taxaGlicemia" class="form-control" name="taxaGlicemia" value="${registroInfo?.taxaGlicemia}">
+                                <input type="number" id="taxaGlicemia" class="form-control" name="taxaGlicemia" value="${registroInfo?.taxaGlicemia}">
                             </div>
                             <br>
                             <button type="submit" class="btn btn-primary btn-sm botaoFormLadoDireito">Gravar</button>
@@ -109,7 +109,7 @@
                             <br>
                             <div class="input-group input-group-sm">
                                 <span class="input-group-addon" id="basic-addon3">Insulina (doses)</span>
-                                <input type="text" id="doseInsulina" class="form-control" name="doseInsulina" value="${registroInfo?.doseInsulina}">
+                                <input type="number" id="doseInsulina" class="form-control" name="doseInsulina" value="${registroInfo?.doseInsulina}">
                             </div>
                             <br>
                             <button type="submit" class="btn btn-primary btn-sm botaoFormLadoDireito">Gravar</button>

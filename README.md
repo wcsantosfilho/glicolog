@@ -27,28 +27,31 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Arrumar a paginação                                                       OK
 * Estudar e fazer deploy no Heroku com WAR                                  OK
 * Corrigir erros da Criteria + Paginação                                    OK
-* Permitir consulta ascendente e descentente                                None
+* Decidir questão do usuário vs pessoa                                      OK
+* Campos taxaGlicemia e doseInsulina devem ser numéricos                    OK
+* Unificar a linha de dados para mesma data e hora                          OK
+* Pesquisar Plugins de segurança: Spring Security Core & Shiro              +/-
+   |- Duração da Session                                                    None
+* Refatorar codigo para conceito de services (ver post)                     None
+* Permitir várias inserções de registros diferentes com a mesma data e hora None
+* Aviso por e-mail em caso de não preenchimento                             None
 * Inclusão de Glicemia sem hora dá mensagem de erro, mas zera o form.       None
-* Campos taxaGlicemia e doseInsulina devem ser numéricos                    None
-* Campo "Tipo Registro" sobrepõe do "Data e Hora" nas views menores         None
-* Permitir várias inserções de tipos registros diferentes com a mesma data e hora None
-* Estudar e Criar casos de testes                                           None
 * Avanço de cursor pelo teclado após Data                                   None
+* Campo "Tipo Registro" sobrepõe do "Data e Hora" nas views menores         None
+* Permitir consulta ascendente e descentente                                None
+* Pesquisar plugin Google visualization plugin para Charts                  None
+* Estudar e Criar casos de testes                                           None
 * Trazer data e hora pré-preenchidas                                        None
 * Implementar o Validator no Client-Side                                    None
 * Validar no Command Info as Constrains do Domain                           None
 * Colocar em tabelas os tipos (tipo de glicemia, tipo de insulina etc)      None
-* Decidir questão do usuário vs pessoa                                      None
 * Cadastro de novos usuários                                                None
 * Eliminar itens inúteis do home/index                                      None
-* Duração da Session                                                        None
 * Criar mecanismo de exclusão de registro                                   None
 * Criar ícone no cabeçalho da index para mostrar se é asc ou desc           None
-* Refatorar codigo para conceito de services (ver post)                     None
 * Criar ícone para a aplicação                                              None
-* Unificar a linha de dados para mesma data e hora                          None
 * Seleção de Intervalo de data                                              None
 * Implementar Busca (por alguma coisa... taxa, tipo registro)               None
 * Colocar consistência para evitar dois registros iguais na mesma data e hora None
 * Layout de impressão para consulta médica                                  None
-* Aviso por e-mail em caso de não preenchimento                             None
+* Criar tipo de registro para Ocorrências (hipoglicemias, gripes, p.ex.)    None

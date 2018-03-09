@@ -4,7 +4,7 @@ import grails.transaction.Transactional
 import grails.converters.JSON
 import grails.converters.XML
 import org.hibernate.criterion.CriteriaSpecification
-
+import grails.plugin.springsecurity.annotation.Secured
 
 class HomeController {
     static allowedMethods = [index:'GET',
@@ -12,15 +12,19 @@ class HomeController {
     ]
 
     def comunicacaoService
-
     
     /* ------------------------------------------------ *
      *  index                                           *
      * ------------------------------------------------ */
+    @Secured(['ROLE_USER'])
     def index() { 
         try {
+            def usuarioLogado = User.findByUsername(principal.username)
+            // Busca a pessoa ligada ao usuário da sessão
+            def pessoaParaSearch = usuarioLogado.pessoa
+
             // Verifica se há uma sessão ativa
-            if (!session?.usuario) {
+            if (!isLoggedIn()) {
                 //respond session.errors, view:'index'
                 def flagErro = true
                 def textoErro = "Sessão não iniciada. Faça Login"
@@ -29,8 +33,7 @@ class HomeController {
                 return
             }
 
-            // Busca a pessoa ligada ao usuário da sessão ativa
-            def pessoaParaSearch = Pessoa.findByNome(session?.usuario.name)
+            // Valida se há uma pessoa ligada ao usuário logado
             if (pessoaParaSearch == null) {
                 respond pessoaParaSearch.errors, view:'index'
                 return
@@ -54,9 +57,9 @@ class HomeController {
                 min (tipoAtivFisica),
                 min (observAtivFisica)
                 FROM Registro
-                WHERE pessoa.nome = :pessoaNome
+                WHERE pessoa = :pessoaParaSearch
                 GROUP BY dataRegistro
-                ORDER BY dataRegistro desc""", [pessoaNome:session?.usuario.name, offset:params.offset, max:params.max]).collect {
+                ORDER BY dataRegistro desc""", [pessoaParaSearch:pessoaParaSearch, offset:params.offset, max:params.max]).collect {
                     [   dataRegistro: it[0],
                         tipoGlicemia: it[1],
                         taxaGlicemia: it[2],
@@ -73,8 +76,8 @@ class HomeController {
             def searchCount = Registro.executeQuery("""
                 select count(dataRegistro)
                     FROM Registro
-                    WHERE pessoa.nome = :pessoaNome
-                    GROUP BY dataRegistro""", [pessoaNome:session?.usuario.name])
+                    WHERE pessoa = :pessoaParaSearch
+                    GROUP BY dataRegistro""", [pessoaParaSearch:pessoaParaSearch])
             
             def registroTotal = searchCount.size()
             
@@ -96,10 +99,12 @@ class HomeController {
      *  saveForm (input originario do home/index)      *
      * ------------------------------------------------ */
     @Transactional(readOnly = false)
+    @Secured(['ROLE_USER'])
     def saveForm(RegistroInfo info) {
         try {
+            def usuarioLogado = User.findByUsername(principal.username)
             // Busca a pessoa ligada ao usuário da sessão
-            def pessoa = Pessoa.findByNome(session.usuario.name)
+            def pessoa = usuarioLogado.pessoa
             if (pessoa == null) {
                 transactionStatus.setRollbackOnly()
                 respond pessoa.errors, view:'index'
@@ -268,17 +273,19 @@ class HomeController {
     /* ------------------------------------------------ *
      *  sendmail                                        *
      * ------------------------------------------------ */
+    @Secured('ROLE_USER')
     def sendmail() {
         try {
             comunicacaoService.enviarEmail(
                 "wcsantosfilho@gmail.com",
                 "Novo Login no Glicolog",
-                "O usuario ${session?.usuario.name} acaba de fazer Login no Glicolog")
+                "O usuario acaba de fazer Login no Glicolog")
+            /* RETIREI DA LINHA ACIMA: ${session?.usuario.name} */
         } catch (Exception ex) {
             def errG = new errosGerais(controller: 'sendmail', erroNoCatch: 'Exception', erroException: ex.message)
             respond errG, view:'error'
             return
-        }
+        }   
         redirect(controller:"home", action:"index")
     }
 }

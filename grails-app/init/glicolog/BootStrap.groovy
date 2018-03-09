@@ -1,29 +1,53 @@
 package glicolog
 import glicolog.*
 import static java.util.Calendar.*
+import grails.util.Environment
 
 
 class BootStrap {
 
     def init = { servletContext ->
         
-		System.out.println("Inicio do Boostrap")    
+		System.out.println("Inicio do Boostrap")
         
-        def admin = Usuario.findByLogin('admin@glicolog.com.br')
-        if (!admin) {
-            new Usuario(login:"admin@glicolog.com.br", password:"admin", name: "Administrador", tipo: "Admin")
-            .save(failOnError: true)
+        /* ------------------------------------------------- *
+         * Criação de usuário no Spring Security plugin      *
+         * ------------------------------------------------- */
+        
+        def userRole = SecRole.findByAuthority('ROLE_USER') ?: new SecRole(authority: 'ROLE_USER').save(failOnError: true)
+        def adminRole = SecRole.findByAuthority('ROLE_ADMIN') ?: new SecRole(authority: 'ROLE_ADMIN').save(failOnError: true)
+        
+        def adminUser = User.findByUsername('Admin') ?: new User(username: 'Admin', password: 'Admin').save(failOnError: true)
+        
+        def secUandR = SecUserSecRole.findAllBySecUserAndSecRole(adminUser, adminRole) ?: SecUserSecRole.create (adminUser, adminRole)
+        
+        SecUserSecRole.withSession {
+            it.flush()
+            it.clear()
         }
         
-        def countPessoas = Pessoa.count()
-        if (countPessoas == 0) {
-            def userLucas = new Usuario(login:"lucassantos202@gmail.com", password:"lucas", name: "Lucas Santos", tipo: "Comum")
-            new Pessoa(nome: "Lucas Santos", idade:18, usuario: userLucas)
-                .save(failOnError: true)
+        /* ------------------------------------------------- */
+        def lucasPessoa = Pessoa.findByNome('Lucas Santos') ?: new Pessoa(nome: "Lucas Santos", idade:18)
+            .save(failOnError: true)
 
-            def userWalter = new Usuario(login:"walter.santosf@gmail.com", password:"www", name: "Walter Santos Filho", tipo: "Comum")
-            def pessWalter = new Pessoa(nome: "Walter Santos Filho", idade:25, usuario: userWalter)
-                .save(failOnError: true)
+        def lucasUser = User.findByUsername('lucassantos') ?: new User(username: 'lucassantos', password: 'Lucas', pessoa: lucasPessoa).save(failOnError: true)
+        def secUandR2 = SecUserSecRole.findAllBySecUserAndSecRole(lucasUser, userRole) ?: SecUserSecRole.create (lucasUser, userRole)
+        SecUserSecRole.withSession {
+            it.flush()
+            it.clear()
+        }
+
+        /* ------------------------------------------------- */
+        def pessWalter = Pessoa.findByNome('Walter Santos Filho') ?: new Pessoa(nome: "Walter Santos Filho", idade:47)
+            .save(failOnError: true)
+
+        def walterUser = User.findByUsername('wfilho') ?: new User(username: 'wfilho', password: 'www', pessoa: pessWalter).save(failOnError: true)
+        def secUandR3 = SecUserSecRole.findAllBySecUserAndSecRole(walterUser, userRole) ?: SecUserSecRole.create (walterUser, userRole)
+        SecUserSecRole.withSession {
+            it.flush()
+            it.clear()
+        }
+        if (Environment.current == Environment.DEVELOPMENT) {
             
             def anoReg = 2017
             def mesReg = 05
@@ -73,6 +97,7 @@ class BootStrap {
                 new Glicemia(pessoa: pessWalter, dataRegistro: dataBase2,  tipoGlicemia: "Controle", taxaGlicemia: 132)
                     .save(failOnError: true)
             }
+            
         }
     		
     	def countPessoasComGlicemia = Pessoa.findAll {

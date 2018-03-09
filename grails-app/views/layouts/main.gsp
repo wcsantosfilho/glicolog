@@ -42,7 +42,12 @@
                     <button class="btn btn-outline-sucess my-2 my-sm-0" type="submit">Busca</button>
                 </form>
                 <ul class="navbar-nav d-flex flex-row-reverse">
-                    <li class="nav-item nav-link"><g:loginControl /></li>
+                    <li class="nav-item nav-link">
+                        <sec:ifLoggedIn>Olá <sec:username/>. <g:link controller='logoff'>Sair</g:link>
+                        </sec:ifLoggedIn>
+                        <sec:ifNotLoggedIn>
+                        <g:link controller='login' action='auth'>Login</g:link></sec:ifNotLoggedIn>
+                    </li>
                 </ul>
             </div> <!-- Collapse navbar -->
         </nav> <!-- navbar -->

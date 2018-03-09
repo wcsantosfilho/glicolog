@@ -29,7 +29,7 @@ appender("FILE", FileAppender) {
   file = "testFile02.log"
   append = true
   encoder(PatternLayoutEncoder) {
-    pattern = "%level %logger - %msg%n"
+    pattern = "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}) %level %logger - %msg%n"
   }
 }
 def targetDir = BuildSettings.TARGET_DIR
@@ -42,6 +42,9 @@ if (Environment.isDevelopmentMode() && targetDir != null) {
         }
     }
     logger("StackTrace", ERROR, ['FULL_STACKTRACE'], false)
+    logger 'grails.plugin.springsecurity.web.filter.DebugFilter', INFO, ['FILE'], false
+    logger 'org.springframework.security', DEBUG, ['FILE'], false
+    logger 'grails.plugin.springsecurity', DEBUG, ['FILE'], false
 }
 
 root(ERROR, ['STDOUT'])
