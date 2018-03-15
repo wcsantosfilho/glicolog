@@ -10,12 +10,9 @@ conversionRule 'wex', WhitespaceThrowableProxyConverter
 
 // See http://logback.qos.ch/manual/groovy.html for details on configuration
 
-
-
 appender('STDOUT', ConsoleAppender) {
     encoder(PatternLayoutEncoder) {
         charset = Charset.forName('UTF-8')
-
         pattern =
                 '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} ' + // Date
                         '%clr(%5p) ' + // Log level
@@ -26,12 +23,13 @@ appender('STDOUT', ConsoleAppender) {
 }
 
 appender("FILE", FileAppender) {
-  file = "testFile02.log"
-  append = true
-  encoder(PatternLayoutEncoder) {
-    pattern = "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}) %level %logger - %msg%n"
-  }
+    file= "testFile02.log"
+    append = true
+    encoder(PatternLayoutEncoder) {
+        pattern = "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}) %level %logger - %msg%n"
+    }
 }
+
 def targetDir = BuildSettings.TARGET_DIR
 if (Environment.isDevelopmentMode() && targetDir != null) {
     appender("FULL_STACKTRACE", FileAppender) {
@@ -42,7 +40,20 @@ if (Environment.isDevelopmentMode() && targetDir != null) {
         }
     }
     logger("StackTrace", ERROR, ['FULL_STACKTRACE'], false)
-    logger 'grails.plugin.springsecurity.web.filter.DebugFilter', INFO, ['FILE'], false
+    logger 'grails.plugin.springsecurity.web.filter.DebugFilter', DEBUG, ['FILE'], false
+    logger 'org.springframework.security', DEBUG, ['FILE'], false
+    logger 'grails.plugin.springsecurity', DEBUG, ['FILE'], false
+}
+
+if (Environment.current == Environment.PRODUCTION && targetDir != null) {
+    appender("FULL_STACKTRACE", FileAppender) {
+        file = "${targetDir}/stacktrace.log"
+        append = true
+        encoder(PatternLayoutEncoder) {
+            pattern = "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}) %level %logger - %msg%n"
+        }
+    }
+    logger 'grails.plugin.springsecurity.web.filter.DebugFilter', INFO, ['STDOUT'], false
     logger 'org.springframework.security', DEBUG, ['FILE'], false
     logger 'grails.plugin.springsecurity', DEBUG, ['FILE'], false
 }

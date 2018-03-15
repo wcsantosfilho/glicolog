@@ -7,11 +7,7 @@ grails:
         props:
             mail.smtp.auth: "true"
             mail.smtp.port: "465"
-            mail.smtp.socketFactory.port: "465"
-            mail.smtp.socketFactory.class: "javax.net.ssl.SSLSocketFactory"
-            mail.imap.ssl.checkserveridentity: "false"
-            mail.imap.ssl.trust: "*"
-            mail.smtp.socketFactory.fallback: "false"
+            mail.smtp.ssl.enable: "true"
 
 ---
 grails:

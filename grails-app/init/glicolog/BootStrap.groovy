@@ -107,8 +107,19 @@ class BootStrap {
     		glicemias.size() == 0
 		}
         
+        def countUsuariosComRole = User.findAll {
+            pessoa != null
+        }
+        
+        
 		System.out.println("Pessoas com glicemias"+ countPessoasComGlicemia)
 		System.out.println("Pessoas sem glicemias"+ countPessoasSemGlicemia)
+		System.out.println("Usuários com Role"+ countUsuariosComRole)
+        println "Usuarios:"
+        def listaUsuarios = User.executeQuery("""
+        SELECT username, password, pessoa.nome FROM User ORDER BY username""").collect {
+            println "${it[0]} | ${it[1]} - ${it[2]}"
+        }
     		
 		System.out.println("Fim do Boostrap")    	
     }

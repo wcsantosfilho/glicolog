@@ -1,8 +1,10 @@
 
 // Added by the Spring Security Core plugin:
+// grails.plugin.springsecurity.debug.useFilter = true
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'glicolog.SecUser'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'glicolog.SecUserSecRole'
 grails.plugin.springsecurity.authority.className = 'glicolog.SecRole'
+
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/',               access: ['permitAll']],
 	[pattern: '/home/**',        access: ['permitAll']],
@@ -11,6 +13,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/index.gsp',      access: ['permitAll']],
 	[pattern: '/shutdown',       access: ['permitAll']],
 	[pattern: '/assets/**',      access: ['permitAll']],
+    [pattern: '/dbconsole/**',   access: ['permitAll']],
 	[pattern: '/**/js/**',       access: ['permitAll']],
 	[pattern: '/**/css/**',      access: ['permitAll']],
 	[pattern: '/**/images/**',   access: ['permitAll']],
