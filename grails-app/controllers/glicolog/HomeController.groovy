@@ -12,6 +12,8 @@ class HomeController {
     ]
 
     def comunicacaoService
+    def infoPessoaService
+    def infoRegistroService
     
     /* ------------------------------------------------ *
      *  index                                           *
@@ -19,13 +21,8 @@ class HomeController {
     @Secured(['ROLE_USER'])
     def index() { 
         try {
-            def usuarioLogado = User.findByUsername(principal.username)
-            // Busca a pessoa ligada ao usuário da sessão
-            def pessoaParaSearch = usuarioLogado.pessoa
-
             // Verifica se há uma sessão ativa
             if (!isLoggedIn()) {
-                //respond session.errors, view:'index'
                 def flagErro = true
                 def textoErro = "Sessão não iniciada. Faça Login"
                 def listObject = [errors: textoErro, flagErro: flagErro]
@@ -33,6 +30,9 @@ class HomeController {
                 return
             }
 
+            // Busca a pessoa ligada ao usuário da sessão
+            def pessoaParaSearch = infoPessoaService.pessoaDoUsuarioLogado(getPrincipal().username)
+            
             // Valida se há uma pessoa ligada ao usuário logado
             if (pessoaParaSearch == null) {
                 respond pessoaParaSearch.errors, view:'index'
@@ -40,53 +40,14 @@ class HomeController {
             }
 
             // Parametros de busca e paginação
+            params.offset = params.offset ? params.int('offset') : 0
             params.max = Math.min(params.max ? params.int('max') : 10, 100)
-            params.sort = params.sort ?: 'dataRegistro'
             params.order = params.order ?: 'desc'
             
-            // HQL para buscar os registros da pessoa, agrupados pela data e hora em uma mesma linha
-            // depois transforma em Collect para virar um MAPA com propriedades nomeadas (a GSP/Taglib usa assim)
-            def searchResults = Registro.executeQuery("""
-                select dataRegistro, 
-                min (tipoGlicemia),
-                min (taxaGlicemia),
-                min (tipoInsulina),
-                min (doseInsulina),
-                min (tipoRefeicao),
-                min (observRefeicao),
-                min (tipoAtivFisica),
-                min (observAtivFisica)
-                FROM Registro
-                WHERE pessoa = :pessoaParaSearch
-                GROUP BY dataRegistro
-                ORDER BY dataRegistro desc""", [pessoaParaSearch:pessoaParaSearch, offset:params.offset, max:params.max]).collect {
-                    [   dataRegistro: it[0],
-                        tipoGlicemia: it[1],
-                        taxaGlicemia: it[2],
-                        tipoInsulina: it[3],
-                        doseInsulina: it[4],
-                        tipoRefeicao: it[5],
-                        observRefeicao: it[6],
-                        tipoAtivFisica: it[7],
-                        observAtivFisica: it[8]
-                    ]
-            }
-            
-            // HQL para contar os registros da pessoa, agrupados pela data e hora em uma mesma linha
-            def searchCount = Registro.executeQuery("""
-                select count(dataRegistro)
-                    FROM Registro
-                    WHERE pessoa = :pessoaParaSearch
-                    GROUP BY dataRegistro""", [pessoaParaSearch:pessoaParaSearch])
-            
-            def registroTotal = searchCount.size()
-            
-            // define a lista para passar para o GSP
-            def listObject = [registroList: searchResults, registroTotal: registroTotal]
+            // define a lista para passar para o GSP 
+            def listObject = infoRegistroService.consultaRegistrosDaPessoa(pessoaParaSearch, params.offset, params.max, params.order)
             withFormat {
                 html { listObject }
-                json { render searchResults as JSON }
-                xml { render listobject as XML }
             }
         } catch (Exception ex) {
             def errG = new errosGerais(controller: 'home', erroNoCatch: 'Exception', erroException: ex.message)
@@ -102,25 +63,21 @@ class HomeController {
     @Secured(['ROLE_USER'])
     def saveForm(RegistroInfo info) {
         try {
-            def usuarioLogado = User.findByUsername(principal.username)
             // Busca a pessoa ligada ao usuário da sessão
-            def pessoa = usuarioLogado.pessoa
+            def pessoa = infoPessoaService.pessoaDoUsuarioLogado(getPrincipal().username)
+            
             if (pessoa == null) {
-                transactionStatus.setRollbackOnly()
                 respond pessoa.errors, view:'index'
                 return
             }
             
             if (pessoa.hasErrors()) {
-                transactionStatus.setRollbackOnly()
                 respond pessoa.errors, view:'index'
                 return
             }
             
             // Validação do Command Info
             if (info.hasErrors()) {
-                println "Erro no Info"
-                transactionStatus.setRollbackOnly()
                 // flagErro será passado para a GSP. Se for true, não irá montar a paginação (já que a lista não foi montada)
                 def flagErro = true
                 def listObject = [errors: info.errors, flagErro: flagErro]
@@ -131,16 +88,12 @@ class HomeController {
             // Valida qual tipo de Registro está sendo inserido para chamar o objeto correspondente
             switch(params.tipoRegistro) {
                 case 'Glicemia':
-                    // Cria a instância
-                    Glicemia glicemia;
-                
-                    // Monta os atributos com os dados do Command Info
-                    def dataHoraAtiv = Date.parse('dd/MM/yyyy HH:mm:ss', info.dataRegistro + " " + info.horaRegistro+":00")
-                    glicemia = new Glicemia (dataRegistro: dataHoraAtiv, tipoGlicemia: info.tipoGlicemia, taxaGlicemia: info.taxaGlicemia, pessoa: pessoa )
-                
-                    // salva
-                    if (!glicemia.save(flush: true)) {
-                        def mensagemErro = glicemia.errors.allErrors.join(' \n')
+                    try {
+                        // Chama o Service para Salvar a Glicemia
+                        infoRegistroService.salvaRegistroGlicemia(pessoa, info)
+                    }
+                    catch (Exception ex) {
+                        def mensagemErro = info.errors.allErrors.join(' \n')
                         def errG = new errosGerais(controller: 'saveForm', erroNoCatch:'Erro no Save', erroException: mensagemErro)
                         respond errG, view:'error'
                         return
@@ -150,27 +103,23 @@ class HomeController {
                     request.withFormat {
                         // trata o conteúdo submetido por um "form" ou de um "multipartForm"
                         form multipartForm {
-                            flash.message = message(code: 'default.created.message', args: [message(code: 'glicemia.label', default: 'glicemia'), glicemia.toString()])
+                            flash.message = message(code: 'default.created.message', args: [message(code: 'glicemia.label', default: 'glicemia'), info.dataRegistro.toString(), info.horaRegistro.toString()])
                             redirect(controller: "Home")
                         }
                         // '*' => Trata o conteúdo geral, o que não se aplicar acima.
                         '*' { 
-                            respond glicemia, [status: CREATED] 
+                            respond info, [status: CREATED] 
                         }
                     }
 
                     break                
                 case 'Insulina':
-                    // Cria a instância
-                    Insulina insulina;
-                
-                    // Monta os atributos com os dados do Command Info
-                    def dataHoraAtiv = Date.parse('dd/MM/yyyy HH:mm:ss', info.dataRegistro + " " + info.horaRegistro+":00")
-                    insulina = new Insulina (dataRegistro: dataHoraAtiv, tipoInsulina: info.tipoInsulina, doseInsulina: info.doseInsulina, pessoa: pessoa )
-                
-                    // salva
-                    if (!insulina.save(flush: true)) {
-                        def mensagemErro = insulina.errors.allErrors.join(' \n')
+                    try {
+                        // Chama o Service para Salvar a Insulina
+                        infoRegistroService.salvaRegistroInsulina(pessoa, info)
+                    }
+                    catch (Exception ex) {
+                        def mensagemErro = info.errors.allErrors.join(' \n')
                         def errG = new errosGerais(controller: 'saveForm', erroNoCatch:'Erro no Save', erroException: mensagemErro)
                         respond errG, view:'error'
                         return
@@ -180,72 +129,68 @@ class HomeController {
                     request.withFormat {
                         // trata o conteúdo submetido por um "form" ou de um "multipartForm"
                         form multipartForm {
-                            flash.message = message(code: 'default.created.message', args: [message(code: 'insulina.label', default: 'Insulina'), insulina.toString()])
+                            flash.message = message(code: 'default.created.message', args: [message(code: 'insulina.label', default: 'Insulina'), info.dataRegistro.toString()])
                             redirect(controller: "Home")
                         }
                         // '*' => Trata o conteúdo geral, o que não se aplicar acima.
                         '*' { 
-                            respond insulina, [status: CREATED] 
+                            respond info, [status: CREATED] 
                         }
                     }
 
                     break                
                 case 'Refeicao':
-                    // Cria a instância
-                    Refeicao refeicao;
-                
-                    // Monta os atributos com os dados do Command Info
-                    def dataHoraAtiv = Date.parse('dd/MM/yyyy HH:mm:ss', info.dataRegistro + " " + info.horaRegistro+":00")
-                    refeicao = new Refeicao (dataRegistro: dataHoraAtiv, tipoRefeicao: info.tipoRefeicao, observRefeicao: info.observRefeicao, pessoa: pessoa )
-                
-                    // salva o Registro de Refeicao
-                    if (!refeicao.save(flush: true)) {
-                        def mensagemErro = refeicao.errors.allErrors.join(' \n')
+                    try {
+                        // Chama o Service para Salvar a Refeição
+                        infoRegistroService.salvaRegistroRefeicao(pessoa, info)
+                    }
+                    catch (Exception ex) {
+                        def mensagemErro = info.errors.allErrors.join(' \n')
                         def errG = new errosGerais(controller: 'saveForm', erroNoCatch:'Erro no Save', erroException: mensagemErro)
                         respond errG, view:'error'
                         return
                     }
 
+
                     // request.withFormat => avalia o formato do request para gerar a resposta
                     request.withFormat {
                         // trata o conteúdo submetido por um "form" ou de um "multipartForm"
                         form multipartForm {
-                            flash.message = message(code: 'default.created.message', args: [message(code: 'refeicao.label', default: 'Refeicao'), refeicao.toString()])
+                            flash.message = message(code: 'default.created.message', args: [message(code: 'refeicao.label', default: 'Refeicao'), info.dataRegistro.toString()])
                             redirect(controller: "Home")
                         }
                         // '*' => Trata o conteúdo geral, o que não se aplicar acima.
                         '*' { 
-                            respond refeicao, [status: CREATED] 
+                            respond info, [status: CREATED] 
                         }
                     }
 
                     break
                 case 'AtivFisica':
-                    // Cria a instância
-                    AtivFisica ativfisica;
-                
-                    // Monta os atributos com os dados do Command Info
-                    def dataHoraAtiv = Date.parse('dd/MM/yyyy HH:mm:ss', info.dataRegistro + " " + info.horaRegistro+":00")
-                    ativfisica = new AtivFisica (dataRegistro: dataHoraAtiv, tipoAtivFisica: info.tipoAtivFisica, observAtivFisica: info.observAtivFisica, pessoa: pessoa )
-                
-                    // salva
-                    if (!ativfisica.save(flush: true)) {
-                        def mensagemErro = ativFisica.errors.allErrors.join(' \n')
+                    try {
+                        // Chama o Service para Salvar a Atividade Fisica
+                        infoRegistroService.salvaRegistroAtivFisica(pessoa, info)
+                    }
+                    catch (Exception ex) {
+                        println 'Erro de Exception da chamada da Service'
+                        if ( ex.getCause() != null ) { println ex.getCause() } else { println 'sem getCause()'}
+                        if ( ex.message != null ) { println ex.message } else { println 'sem mensagens' }
+                        println '---------------------------------------'
+                        def mensagemErro = info.errors.allErrors.join(' \n')
                         def errG = new errosGerais(controller: 'saveForm', erroNoCatch:'Erro no Save', erroException: mensagemErro)
                         respond errG, view:'error'
                         return
                     }
-
                     // request.withFormat => avalia o formato do request para gerar a resposta
                     request.withFormat {
                         // trata o conteúdo submetido por um "form" ou de um "multipartForm"
                         form multipartForm {
-                            flash.message = message(code: 'default.created.message', args: [message(code: 'ativfisica.label', default: 'Ativfisica'), ativfisica.toString()])
+                            flash.message = message(code: 'default.created.message', args: [message(code: 'ativfisica.label', default: 'Ativfisica'), info.dataRegistro.toString()])
                             redirect(controller: "Home")
                         }
                         // '*' => Trata o conteúdo geral, o que não se aplicar acima.
                         '*' { 
-                            respond ativfisica, [status: CREATED] 
+                            respond info, [status: CREATED] 
                         }
                     }
 

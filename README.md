@@ -5,8 +5,6 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 
 
 * Item ------------------------------------------------------------------| Status |
-* Tratar erros no Controller                                                None
-* Estudar mecanismos de mensagem de erro, tanto no controller quanto no GSP +/-
 * Padronizar formulários do lado direito da home                            OK
 * Mensagem de erro deve voltar no formulário com dados                      OK
 * Voltar no formulario após erro selecinando o "sub" form do lado direito   OK
@@ -30,15 +28,17 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Decidir questão do usuário vs pessoa                                      OK
 * Campos taxaGlicemia e doseInsulina devem ser numéricos                    OK
 * Unificar a linha de dados para mesma data e hora                          OK
-* Pesquisar Plugins de segurança: Spring Security Core & Shiro              +/-
+* Refatorar codigo para conceito de services (ver post)                     OK
+* Pesquisar Plugins de segurança: Spring Security Core                      +/-
    |- Duração da Session                                                    None
-* Refatorar codigo para conceito de services (ver post)                     None
 * Permitir várias inserções de registros diferentes com a mesma data e hora None
 * Aviso por e-mail em caso de não preenchimento                             None
 * Inclusão de Glicemia sem hora dá mensagem de erro, mas zera o form.       None
 * Avanço de cursor pelo teclado após Data                                   None
 * Campo "Tipo Registro" sobrepõe do "Data e Hora" nas views menores         None
 * Permitir consulta ascendente e descentente                                None
+* Tratar erros no Controller                                                None
+* Estudar mecanismos de mensagem de erro, tanto no controller quanto no GSP +/-
 * Pesquisar plugin Google visualization plugin para Charts                  None
 * Estudar e Criar casos de testes                                           None
 * Trazer data e hora pré-preenchidas                                        None

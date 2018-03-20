@@ -31,6 +31,8 @@ appender("FILE", FileAppender) {
 }
 
 def targetDir = BuildSettings.TARGET_DIR
+
+
 if (Environment.isDevelopmentMode() && targetDir != null) {
     appender("FULL_STACKTRACE", FileAppender) {
         file = "${targetDir}/stacktrace.log"
@@ -41,8 +43,11 @@ if (Environment.isDevelopmentMode() && targetDir != null) {
     }
     logger("StackTrace", ERROR, ['FULL_STACKTRACE'], false)
     logger 'grails.plugin.springsecurity.web.filter.DebugFilter', DEBUG, ['FILE'], false
-    logger 'org.springframework.security', DEBUG, ['FILE'], false
-    logger 'grails.plugin.springsecurity', DEBUG, ['FILE'], false
+    // logger 'org.springframework.security', DEBUG, ['FILE'], false
+    // logger 'grails.plugin.springsecurity', DEBUG, ['FILE'], false
+    logger 'grails.app.controllers.glicolog.HomeController', INFO, ['FILE'], false
+    // logger("org.hibernate.SQL", DEBUG, ['FILE'], false)
+    // logger("org.hibernate.type.descriptor.sql.BasicBinder", TRACE, ['FILE'], false)
 }
 
 if (Environment.current == Environment.PRODUCTION && targetDir != null) {
@@ -56,6 +61,7 @@ if (Environment.current == Environment.PRODUCTION && targetDir != null) {
     logger 'grails.plugin.springsecurity.web.filter.DebugFilter', INFO, ['STDOUT'], false
     logger 'org.springframework.security', DEBUG, ['FILE'], false
     logger 'grails.plugin.springsecurity', DEBUG, ['FILE'], false
+    logger 'grails.app.controllers.glicolog.HomeController', INFO, ['STDOUT'], false
 }
 
 root(ERROR, ['STDOUT'])
