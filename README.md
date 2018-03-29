@@ -9,7 +9,9 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Mensagem de erro deve voltar no formulário com dados                      OK
 * Voltar no formulario após erro selecinando o "sub" form do lado direito   OK
 * Validar formulário selecionado sem campos preenchidos                     OK
-* Quando gera erro de validação, o que fazer com o index() - lista de registros? Está gerando erro por falta do campo registroTotal - Veja HomeController, linhas 50 a 59 (solução porca!)                                                                                                   OK
+* Quando gera erro de validação, o que fazer com o 
+| index() - lista de registros? Está gerando erro por falta do campo
+| registroTotal - Veja HomeController, linhas 50 a 59 (solução porca!)      OK
 * Implementar o save em cada Tipo de Registro                               OK
 * Verificar falta dos scriptse formatação do HTML                           OK
 * Acertar URL do TOMCAT no Catalyst                                         OK
@@ -29,20 +31,23 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Campos taxaGlicemia e doseInsulina devem ser numéricos                    OK
 * Unificar a linha de dados para mesma data e hora                          OK
 * Refatorar codigo para conceito de services (ver post)                     OK
+* Inclusão de Glicemia sem hora dá mensagem de erro, mas zera o form.       OK
+* Implementar o Validator no Client-Side                                    OK
 * Pesquisar Plugins de segurança: Spring Security Core                      +/-
    |- Duração da Session                                                    None
+* Testar SendGrid para enviar email pelo Heroku                             None
+* Layout de impressão para consulta médica                                  None
 * Permitir várias inserções de registros diferentes com a mesma data e hora None
 * Aviso por e-mail em caso de não preenchimento                             None
-* Inclusão de Glicemia sem hora dá mensagem de erro, mas zera o form.       None
 * Avanço de cursor pelo teclado após Data                                   None
 * Campo "Tipo Registro" sobrepõe do "Data e Hora" nas views menores         None
 * Permitir consulta ascendente e descentente                                None
+* Testar  http://bootstrapvalidator.com/ para o front-end                   None
 * Tratar erros no Controller                                                None
 * Estudar mecanismos de mensagem de erro, tanto no controller quanto no GSP +/-
 * Pesquisar plugin Google visualization plugin para Charts                  None
 * Estudar e Criar casos de testes                                           None
 * Trazer data e hora pré-preenchidas                                        None
-* Implementar o Validator no Client-Side                                    None
 * Validar no Command Info as Constrains do Domain                           None
 * Colocar em tabelas os tipos (tipo de glicemia, tipo de insulina etc)      None
 * Cadastro de novos usuários                                                None
@@ -52,6 +57,5 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Criar ícone para a aplicação                                              None
 * Seleção de Intervalo de data                                              None
 * Implementar Busca (por alguma coisa... taxa, tipo registro)               None
-* Colocar consistência para evitar dois registros iguais na mesma data e hora None
-* Layout de impressão para consulta médica                                  None
+* Consistência para evitar dois registros iguais na mesma data e hora       None
 * Criar tipo de registro para Ocorrências (hipoglicemias, gripes, p.ex.)    None

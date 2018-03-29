@@ -79,8 +79,11 @@ class HomeController {
             // Validação do Command Info
             if (info.hasErrors()) {
                 // flagErro será passado para a GSP. Se for true, não irá montar a paginação (já que a lista não foi montada)
+                println "Erro na validacao do Command Info (info.hasErrors())"
+                println info.tipoAtivFisica
+                println "-----------------"
                 def flagErro = true
-                def listObject = [errors: info.errors, flagErro: flagErro]
+                def listObject = [registroInfo: info, errors: info.errors, flagErro: flagErro]
                 respond listObject, view:'index'
                 return
             }

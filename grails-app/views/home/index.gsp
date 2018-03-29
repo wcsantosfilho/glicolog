@@ -1,3 +1,4 @@
+<%@ page import="glicolog.Pessoa" contentType="text/html;charset=UTF-8" %>
 <html>
 
 <head>
@@ -16,14 +17,9 @@
                     <g:eachError var="error">
                         <g:if test="${error in org.springframework.validation.FieldError}">
                             <div class="alert alert-danger">
-                                data-field-id="${error.field}"
-                            </div>
-                        </g:if>
-                        <li>
-                            <div class="alert alert-danger">
                                 <g:message error="${error}" />
                             </div>
-                        </li>
+                        </g:if>
                     </g:eachError>
                 </ul>
             </g:hasErrors>
@@ -35,16 +31,20 @@
                     <div class="row">
                         <div class="col-md-6 col-xs-3 colunaDoForm">
                             <!-- 1a subdivisão do lado esquerdo do form -->
-                                <label for="dataRegistro" class="label-control">Data e Hora:</label>
-                            <div class="input-group input-group-md">
+                            <label for="dataRegistro" class="label-control">Data e Hora:</label>
+                            <div class="input-group input-group-sm" id="divDataRegistro">
                                 <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                <input id="dataRegistro" name="dataRegistro" value="${registroInfo?.dataRegistro}">
+                                <input name="dataRegistro" value="${registroInfo?.dataRegistro}" id="dataRegistro"/>
+                                <div class="errorField" aria-live="polite"></div>
+                            </div>
+                            
+                            <br>
+                            <div class="input-group input-group-sm" id="divHoraRegistro">
+                                <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
+                                <input name="horaRegistro"  value="${registroInfo?.horaRegistro}" id="horaRegistro"/>
+                                <div class="errorField" aria-live="polite"></div>
                             </div>
                             <br>
-                            <div class="input-group input-group-md">
-                                <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
-                                <input id="horaRegistro" name="horaRegistro"  value="${registroInfo?.horaRegistro}" />
-                            </div>
                         </div>
                         <!-- /1a subdivisão do lado esquerdo do form -->
                         <div class="col-md-6 col-xs-3 colunaDoForm">
@@ -67,24 +67,22 @@
                     <!-- ============================================================ -->
                     <!--     FORM DA GLICEMIA                                         -->
                     <!-- ============================================================ -->
-                    <g:form name="formGlicemia" resource="${this.registroInfo}" url="[action:'saveForm',controller:'home']" class="container">
+                    <g:form name="formGlicemia" resource="${this.registroInfo}" url="[action:'saveForm',controller:'home']" class="container formGlicolog" id="formGlicemia">
                         <!-- FORM DA GLICEMIA -->
                         <div class="grupoDeCampos" id="grupoGlicemia">
                             <g:textField type="text" class="formDataLadoDireito" name="dataRegistro" hidden="true" value="${registroInfo?.dataRegistro}" />
                             <g:textField type="text" class="formHoraLadoDireito" name="horaRegistro" hidden="true" value="${registroInfo?.horaRegistro}" />
                             <g:textField type="text" class="formTipoLadoDireito" name="tipoRegistro" hidden="true" value="${registroInfo?.tipoRegistro}" />
-                            <div class="input-group input-group-sm">
+                            <div class="input-group input-group-sm" id="divTipoGlicemia">
                                 <span class="input-group-addon" id="basic-addon3">Tipo Glicemia</span>
-                                <select class="form-control" id="tipoGlicemia" name="tipoGlicemia" value="${registroInfo?.tipoGlicemia}">
-                                        <option value="Pre">Pré prandial</option>
-                                        <option value="Pos">Pós prandial</option>
-                                        <option value="Controle">Controle</option>
-                                    </select>
+                                <g:select class="form-control" id="tipoGlicemia" name="tipoGlicemia" value="${registroInfo?.tipoGlicemia}" from="${['Pré prandial','Pós prandial','Controle']}" keys="${['Pre','Pos','Controle']}" noSelection="['':'-Tipo de Glicemia-']" />
+                                <div class="errorField" aria-live="polite"></div>
                             </div>
                             <br>
-                            <div class="input-group input-group-sm">
+                            <div class="input-group input-group-sm" id="divTaxaGlicemia">
                                 <span class="input-group-addon" id="basic-addon3">Taxa Glicemia</span>
-                                <input type="number" id="taxaGlicemia" class="form-control" name="taxaGlicemia" value="${registroInfo?.taxaGlicemia}">
+                                <input type="number" id="taxaGlicemia" class="form-control" name="taxaGlicemia" value="${registroInfo?.taxaGlicemia}" />
+                                <div class="errorField" aria-live="polite"></div>
                             </div>
                             <br>
                             <button type="submit" class="btn btn-primary btn-sm botaoFormLadoDireito">Gravar</button>
@@ -93,23 +91,22 @@
                     <!-- ============================================================ -->
                     <!--     FORM DA INSULINA                                         -->
                     <!-- ============================================================ -->
-                    <g:form name="formInsulina" resource="${this.registroInfo}" url="[action:'saveForm',controller:'home']" class="container">
+                    <g:form name="formInsulina" resource="${this.registroInfo}" url="[action:'saveForm',controller:'home']" class="container formGlicolog" id="formInsulina">
                         <!-- FORM DA INSULINA -->
                         <div class="grupoDeCampos" id="grupoInsulina">
                             <g:textField type="text" class="formDataLadoDireito" name="dataRegistro" hidden="true" value="${registroInfo?.dataRegistro}" />
                             <g:textField type="text" class="formHoraLadoDireito" name="horaRegistro" hidden="true" value="${registroInfo?.horaRegistro}" />
                             <g:textField type="text" class="formTipoLadoDireito" name="tipoRegistro" hidden="true" value="${registroInfo?.tipoRegistro}" />
-                            <div class="input-group input-group-sm">
+                            <div class="input-group input-group-sm" id="divTipoInsulina">
                                 <span class="input-group-addon" id="basic-addon3">Tipo Insulina</span>
-                                <select class="form-control" id="tipoInsulina" name="tipoInsulina" value="${registroInfo?.tipoInsulina}">
-                                        <option value="Aspart">Rápida - Aspart</option>
-                                        <option value="Glargina">Lenta - Glargina</option>
-                                    </select>
+                                <g:select class="form-control" id="tipoInsulina" name="tipoInsulina" value="${registroInfo?.tipoInsulina}" from="${['Rápida - Aspart','Lenta - Glargina']}" keys="${['Aspart', 'Glargina']}" noSelection="['':'-Tipo de Insulina']" />
+                                <div class="errorField" aria-live="polite"></div>
                             </div>
                             <br>
-                            <div class="input-group input-group-sm">
+                            <div class="input-group input-group-sm" id="divDoseInsulina">
                                 <span class="input-group-addon" id="basic-addon3">Insulina (doses)</span>
-                                <input type="number" id="doseInsulina" class="form-control" name="doseInsulina" value="${registroInfo?.doseInsulina}">
+                                <input type="number" id="doseInsulina" class="form-control" name="doseInsulina" value="${registroInfo?.doseInsulina}" />
+                                <div class="errorField" aria-live="polite"></div>
                             </div>
                             <br>
                             <button type="submit" class="btn btn-primary btn-sm botaoFormLadoDireito">Gravar</button>
@@ -118,27 +115,23 @@
                     <!-- ============================================================ -->
                     <!--       FORM DA REFEICAO                                      -->
                     <!-- ============================================================ -->
-                    <g:form name="formRefeicao" resource="${this.registroInfo}" url="[action:'saveForm',controller:'home']" class="container">
+                    <g:form name="formRefeicao" resource="${this.registroInfo}" url="[action:'saveForm',controller:'home']" class="container formGlicolog" id="formRefeicao">
                         <!-- FORM DA REFEIÇÃO -->
                         <div class="grupoDeCampos" id="grupoRefeicao">
                             <g:textField type="text" class="formDataLadoDireito" name="dataRegistro" hidden="true" value="${registroInfo?.dataRegistro}" />
                             <g:textField type="text" class="formHoraLadoDireito" name="horaRegistro" hidden="true" value="${registroInfo?.horaRegistro}" />
                             <g:textField type="text" class="formTipoLadoDireito" name="tipoRegistro" hidden="true" value="${registroInfo?.tipoRegistro}" />
 
-                            <div class="input-group input-group-sm">
-                                <span class="input-group-addon" id="basic-addon3">Tipo Insulina</span>
-                                <select class="form-control" id="tipoRefeicao" name="tipoRefeicao" value="${registroInfo?.tipoRefeicao}">
-                                        <option value="Cafe">Café da manhã</option>
-                                        <option value="Almoco">Almoço</option>
-                                        <option value="Lanche">Lanche da tarde</option>
-                                        <option value="Jantar">Jantar</option>
-                                        <option value="Ceia">Ceia</option>
-                                    </select>
+                            <div class="input-group input-group-sm" id="divTipoRefeicao">
+                                <span class="input-group-addon" id="basic-addon3">Tipo Refeição</span>
+                                <g:select class="form-control" id="tipoRefeicao" name="tipoRefeicao" value="${registroInfo?.tipoRefeicao}" from="${['Café','Almoço','Lanche','Jantar','Ceia']}" keys="${['Cafe', 'Almoco', 'Lanche', 'Jantar', 'Ceia']}" noSelection="['':'-Tipo de Refeição-']" />
+                                <div class="errorField" aria-live="polite"></div>
                             </div>
                             <br>
-                            <div class="input-group input-group-sm">
+                            <div class="input-group input-group-sm" id="divObservRefeicao">
                                 <span class="input-group-addon" id="basic-addon3">Obs Refeição</span>
-                                <input type="text" id="observRefeicao" class="form-control" name="observRefeicao" value="${registroInfo?.observRefeicao}">
+                                <input type="text" id="observRefeicao" class="form-control" name="observRefeicao" value="${registroInfo?.observRefeicao}" />
+                                <div class="errorField" aria-live="polite"></div>
                             </div>
                             <br>
                             <button type="submit" class="btn btn-primary btn-sm botaoFormLadoDireito">Gravar</button>
@@ -148,20 +141,22 @@
                     <!--        FORM DA ATIVIDADE FISICA                          -->
                     <!-- ============================================================ -->
                     <div class="grupoDeCampos" id="grupoAtivFisica">
-                        <g:form name="formAtivFisica" resource="${this.registroInfo}" url="[action:'saveForm',controller:'home']" class="container">
+                        <g:form name="formAtivFisica" resource="${this.registroInfo}" url="[action:'saveForm',controller:'home']" id="formAtivFisica" class="container formGlicolog">
                             <!-- FORM DA ATIVIDADE FISICA -->
                             <g:textField type="text" class="formDataLadoDireito" name="dataRegistro" hidden="true" value="${registroInfo?.dataRegistro}" />
                             <g:textField type="text" class="formHoraLadoDireito" name="horaRegistro" hidden="true" value="${registroInfo?.horaRegistro}" />
                             <g:textField type="text" class="formTipoLadoDireito" name="tipoRegistro" hidden="true" value="${registroInfo?.tipoRegistro}" />
 
-                            <div class="input-group input-group-sm">
-                                <span class="input-group-addon" id="basic-addon3">Tipo Insulina</span>
-                                <g:select class="form-control" name="tipoAtivFisica" from="${['Leve','Moderada','Intensa']}" value="${registroInfo?.tipoAtivFisica}" noSelection="['':'-Grau de Atividade-']" />
+                            <div class="input-group input-group-sm" id="divGrauAtivFisica">
+                                <span class="input-group-addon" id="basic-addon3">Grau Ativ Física</span>
+                                <g:select class="form-control" name="tipoAtivFisica" from="${['Leve','Moderada','Intensa']}" value="${registroInfo?.tipoAtivFisica}" noSelection="['':'-Grau de Atividade-']" id="tipoAtivFisica" />
+                                <div class="errorField" aria-live="polite"></div>
                             </div>
                             <br>
-                            <div class="input-group input-group-sm">
+                            <div class="input-group input-group-sm" id="divObservAtivFisica">
                                 <span class="input-group-addon" id="basic-addon3">Obs Ativ Física</span>
-                                <input type="text" id="observAtivFisica" class="form-control" name="observAtivFisica" value="${registroInfo?.observAtivFisica}">
+                                <input type="text" class="form-control" name="observAtivFisica" value="${registroInfo?.observAtivFisica}" id="observAtivFisica" />
+                                <div class="errorField" aria-live="polite"></div>
                             </div>
                             <br>
                             <button type="submit" class="btn btn-primary btn-sm botaoFormLadoDireito">Gravar</button>
