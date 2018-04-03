@@ -226,6 +226,7 @@ class HomeController {
         try {
             comunicacaoService.enviarEmail(
                 "wcsantosfilho@gmail.com",
+                "Walter Santos Filho",
                 "Novo Login no Glicolog",
                 "O usuario acaba de fazer Login no Glicolog")
             /* RETIREI DA LINHA ACIMA: ${session?.usuario.name} */

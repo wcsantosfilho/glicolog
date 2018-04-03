@@ -35,6 +35,7 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Implementar o Validator no Client-Side                                    OK
 * Pesquisar Plugins de segurança: Spring Security Core                      +/-
    |- Duração da Session                                                    None
+* Problemas com formulário submetido com "Enter"                            None
 * Testar SendGrid para enviar email pelo Heroku                             None
 * Layout de impressão para consulta médica                                  None
 * Permitir várias inserções de registros diferentes com a mesma data e hora None

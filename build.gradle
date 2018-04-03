@@ -71,9 +71,9 @@ dependencies {
     compile "org.hibernate:hibernate-core:5.1.5.Final"
     compile "org.grails.plugins:gsp"
     compile 'org.grails:grails-datastore-rest-client'
-    compile 'org.grails.plugins:mail:2.0.0'
     compile 'org.grails.plugins:quartz:2.0.13'
     compile 'org.grails.plugins:spring-security-core:3.2.0'
+    compile 'desirableobjects.grails.plugins:grails-sendgrid:2.0'
     console "org.grails:grails-console"
     profile "org.grails.profiles:web"
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.14.2"

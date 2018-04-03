@@ -1,13 +1,19 @@
 grails:
-    mail:
-        host: "smtp.gmail.com"
-        port: 465
-        username: "walter.santosf@gmail.com"
-        password: "catalepticos"
-        props:
-            mail.smtp.auth: "true"
-            mail.smtp.port: "465"
-            mail.smtp.ssl.enable: "true"
+#    mail:
+#        host: "smtp.gmail.com"
+#        port: 465
+#        username: "walter.santosf@gmail.com"
+#        password: "catalepticos"
+#        props:
+#            mail.smtp.auth: "true"
+#            mail.smtp.port: "465"
+#            mail.smtp.ssl.enable: "true"
+            
+    sendgrid:
+        username: 'app85830155@heroku.com'
+        password: 'o74lvrkt7863'
+
+
 
 ---
 grails:
@@ -95,7 +101,7 @@ grails:
 endpoints:
     jmx:
         unique-names: true
-
+        
 ---
 hibernate:
     cache:
