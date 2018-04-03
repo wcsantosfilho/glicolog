@@ -15,4 +15,5 @@ build/
 target/
 testFile*.log
 upWar.bat
-.grails-app/services/glicolog/ComunicacaoService.groovy
+!.grails-app/services/glicolog/ComunicacaoService.groovy
+p1.html
