@@ -135,7 +135,6 @@ $(document).ready(function() {
     // Chama a função para as mudanças no seletor de radio do tipo do registro
     $('input[type=radio][name=tipoRegistro]').on ( "change", myFunction);
     
-    
     // Copia os valores do campos Data e Hora da parte esquerda do formulario para os campos da parte direita
     $('.botaoFormLadoDireito').on("mouseenter",function() {
         $('input.formDataLadoDireito').val($('#dataRegistro').val());

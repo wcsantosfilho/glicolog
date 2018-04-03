@@ -56,6 +56,9 @@
                                     <g:message code="${it.label}" />
                                 </li>
                             </g:radioGroup>
+                            
+                            <g:select name="tpRg" id="tpRg" class="form-control" from="${['Glicemia','Insulina','Refeição','Atividade Física']}" Key="${['Glicemia','Insulina','Refeicao','AtivFisica']}" multiple="true" />
+
                         </div>
                         <!-- /2a subdivisão do lado esquerdo do form -->
                     </div>
