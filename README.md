@@ -37,6 +37,7 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
    |- Duração da Session                                                    None
 * Problemas com formulário submetido com "Enter"                            None
 * Testar SendGrid para enviar email pelo Heroku                             None
+* Montar esquema para proteger API SendGrid                                 None
 * Layout de impressão para consulta médica                                  None
 * Permitir várias inserções de registros diferentes com a mesma data e hora None
 * Aviso por e-mail em caso de não preenchimento                             None

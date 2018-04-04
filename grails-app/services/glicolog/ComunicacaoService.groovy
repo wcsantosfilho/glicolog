@@ -26,7 +26,7 @@ class ComunicacaoService {
             ToEmail toEmail = new ToEmail(emailAddressTo: emailDestinatario, emailNameTo: nomeDestinatario)
             
             // Remetente do e-mail é a applicação no Heroku
-            FromEmail fromEmail = new FromEmail(emailAddressFrom: "app85830155@heroku.com", emailNameFrom: "Glicolog")
+            FromEmail fromEmail = new FromEmail(emailAddressFrom: ${buscar no database}, emailNameFrom: "Glicolog")
             
             // Formata o conteúdo do email a ser enviado
             ContentEmail contentEmail = new ContentEmail()
@@ -67,7 +67,7 @@ class ComunicacaoService {
             def restSendGrid = new RestBuilder()
 
             def respSendGrid = restSendGrid.post("https://api.sendgrid.com/v3/mail/send") {
-                header 'authorization', 'Bearer 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'
+                header 'authorization', ${Buscar no Database}
                 accept('application/json')
                 contentType('application/json')
                 body(jsonSendGrid.toString())
