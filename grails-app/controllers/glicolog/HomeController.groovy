@@ -79,129 +79,92 @@ class HomeController {
             // Validação do Command Info
             if (info.hasErrors()) {
                 // flagErro será passado para a GSP. Se for true, não irá montar a paginação (já que a lista não foi montada)
-                println "Erro na validacao do Command Info (info.hasErrors())"
-                println info.tipoAtivFisica
-                println "-----------------"
                 def flagErro = true
                 def listObject = [registroInfo: info, errors: info.errors, flagErro: flagErro]
                 respond listObject, view:'index'
                 return
             }
             
-            // Valida qual tipo de Registro está sendo inserido para chamar o objeto correspondente
-            switch(params.tipoRegistro) {
-                case 'Glicemia':
-                    try {
-                        // Chama o Service para Salvar a Glicemia
-                        infoRegistroService.salvaRegistroGlicemia(pessoa, info)
+            // Grava o Registro conforme a relação contida em TipoRegistro
+            if (params.tipoRegistro.contains('Glicemia')) {
+                try {
+                    // Chama o Service para Salvar a Glicemia
+                    infoRegistroService.salvaRegistroGlicemia(pessoa, info)
                     }
-                    catch (Exception ex) {
-                        def mensagemErro = info.errors.allErrors.join(' \n')
-                        def errG = new errosGerais(controller: 'saveForm', erroNoCatch:'Erro no Save', erroException: mensagemErro)
-                        respond errG, view:'error'
-                        return
-                    }
-
-                    // request.withFormat => avalia o formato do request para gerar a resposta
-                    request.withFormat {
-                        // trata o conteúdo submetido por um "form" ou de um "multipartForm"
-                        form multipartForm {
-                            flash.message = message(code: 'default.created.message', args: [message(code: 'glicemia.label', default: 'glicemia'), info.dataRegistro.toString(), info.horaRegistro.toString()])
-                            redirect(controller: "Home")
-                        }
-                        // '*' => Trata o conteúdo geral, o que não se aplicar acima.
-                        '*' { 
-                            respond info, [status: CREATED] 
-                        }
-                    }
-
-                    break                
-                case 'Insulina':
-                    try {
-                        // Chama o Service para Salvar a Insulina
-                        infoRegistroService.salvaRegistroInsulina(pessoa, info)
-                    }
-                    catch (Exception ex) {
-                        def mensagemErro = info.errors.allErrors.join(' \n')
-                        def errG = new errosGerais(controller: 'saveForm', erroNoCatch:'Erro no Save', erroException: mensagemErro)
-                        respond errG, view:'error'
-                        return
-                    }
-
-                    // request.withFormat => avalia o formato do request para gerar a resposta
-                    request.withFormat {
-                        // trata o conteúdo submetido por um "form" ou de um "multipartForm"
-                        form multipartForm {
-                            flash.message = message(code: 'default.created.message', args: [message(code: 'insulina.label', default: 'Insulina'), info.dataRegistro.toString()])
-                            redirect(controller: "Home")
-                        }
-                        // '*' => Trata o conteúdo geral, o que não se aplicar acima.
-                        '*' { 
-                            respond info, [status: CREATED] 
-                        }
-                    }
-
-                    break                
-                case 'Refeicao':
-                    try {
-                        // Chama o Service para Salvar a Refeição
-                        infoRegistroService.salvaRegistroRefeicao(pessoa, info)
-                    }
-                    catch (Exception ex) {
-                        def mensagemErro = info.errors.allErrors.join(' \n')
-                        def errG = new errosGerais(controller: 'saveForm', erroNoCatch:'Erro no Save', erroException: mensagemErro)
-                        respond errG, view:'error'
-                        return
-                    }
-
-
-                    // request.withFormat => avalia o formato do request para gerar a resposta
-                    request.withFormat {
-                        // trata o conteúdo submetido por um "form" ou de um "multipartForm"
-                        form multipartForm {
-                            flash.message = message(code: 'default.created.message', args: [message(code: 'refeicao.label', default: 'Refeicao'), info.dataRegistro.toString()])
-                            redirect(controller: "Home")
-                        }
-                        // '*' => Trata o conteúdo geral, o que não se aplicar acima.
-                        '*' { 
-                            respond info, [status: CREATED] 
-                        }
-                    }
-
-                    break
-                case 'AtivFisica':
-                    try {
-                        // Chama o Service para Salvar a Atividade Fisica
-                        infoRegistroService.salvaRegistroAtivFisica(pessoa, info)
-                    }
-                    catch (Exception ex) {
-                        println 'Erro de Exception da chamada da Service'
-                        if ( ex.getCause() != null ) { println ex.getCause() } else { println 'sem getCause()'}
-                        if ( ex.message != null ) { println ex.message } else { println 'sem mensagens' }
-                        println '---------------------------------------'
-                        def mensagemErro = info.errors.allErrors.join(' \n')
-                        def errG = new errosGerais(controller: 'saveForm', erroNoCatch:'Erro no Save', erroException: mensagemErro)
-                        respond errG, view:'error'
-                        return
-                    }
-                    // request.withFormat => avalia o formato do request para gerar a resposta
-                    request.withFormat {
-                        // trata o conteúdo submetido por um "form" ou de um "multipartForm"
-                        form multipartForm {
-                            flash.message = message(code: 'default.created.message', args: [message(code: 'ativfisica.label', default: 'Ativfisica'), info.dataRegistro.toString()])
-                            redirect(controller: "Home")
-                        }
-                        // '*' => Trata o conteúdo geral, o que não se aplicar acima.
-                        '*' { 
-                            respond info, [status: CREATED] 
-                        }
-                    }
-
-                    break
-                default:
+                catch (Exception ex) {
+                    def mensagemErro = info.errors.allErrors.join(' \n')
+                    def errG = new errosGerais(controller: 'saveForm', erroNoCatch:'Erro no Save', erroException: mensagemErro)
+                    respond errG, view:'error'
+                    return
+                }
+            }
+            
+            // Grava o Registro conforme a relação contida em TipoRegistro
+            if (params.tipoRegistro.contains('Insulina')) {
+                try {
+                    // Chama o Service para Salvar a Insulina
+                    infoRegistroService.salvaRegistroInsulina(pessoa, info)
+                }
+                catch (Exception ex) {
+                    def mensagemErro = info.errors.allErrors.join(' \n')
+                    def errG = new errosGerais(controller: 'saveForm', erroNoCatch:'Erro no Save', erroException: mensagemErro)
+                    respond errG, view:'error'
+                    return
+                }
+            }
+            
+            // Grava o Registro conforme a relação contida em TipoRegistro
+            if (params.tipoRegistro.contains('Refeicao')) {
+                try {
+                    // Chama o Service para Salvar a Refeição
+                    infoRegistroService.salvaRegistroRefeicao(pessoa, info)
+                }
+                catch (Exception ex) {
+                    def mensagemErro = info.errors.allErrors.join(' \n')
+                    def errG = new errosGerais(controller: 'saveForm', erroNoCatch:'Erro no Save', erroException: mensagemErro)
+                    respond errG, view:'error'
+                    return
+                }
+            }
+            
+            // Grava o Registro conforme a relação contida em TipoRegistro
+            if (params.tipoRegistro.contains('AtivFisica')) {
+                try {
+                    // Chama o Service para Salvar a Atividade Fisica
+                    infoRegistroService.salvaRegistroAtivFisica(pessoa, info)
+                }
+                catch (Exception ex) {
+                    println 'Erro de Exception da chamada da Service'
+                    if ( ex.getCause() != null ) { println ex.getCause() } else { println 'sem getCause()'}
+                    if ( ex.message != null ) { println ex.message } else { println 'sem mensagens' }
+                    println '---------------------------------------'
+                    def mensagemErro = info.errors.allErrors.join(' \n')
+                    def errG = new errosGerais(controller: 'saveForm', erroNoCatch:'Erro no Save', erroException: mensagemErro)
+                    respond errG, view:'error'
+                    return
+                }
+            }
+            
+            // Se o TipoRegistro não contem qquer dos tipos válidos...
+            if (!params.tipoRegistro.contains('Glicemia') &&
+                !params.tipoRegistro.contains('Insulina') &&
+                !params.tipoRegistro.contains('Refeicao') &&
+                !params.tipoRegistro.contains('AtivFisica') ) {
                     println("Nenhum tipo de registro escolhido")
                     respond info.errors, view: 'index'
-                    break
+            } else {
+                // request.withFormat => avalia o formato do request para gerar a resposta
+                request.withFormat {
+                    // trata o conteúdo submetido por um "form" ou de um "multipartForm"
+                    form multipartForm {
+                        flash.message = message(code: 'default.created.message', args: [message(code: 'ativfisica.label', default: 'Registro'), info.dataRegistro.toString()])
+                        redirect(controller: "Home")
+                    }
+                    // '*' => Trata o conteúdo geral, o que não se aplicar acima.
+                    '*' { 
+                        respond info, [status: CREATED] 
+                    }
+                }
             }
         } catch(NullPointerException ex) {
             def errG = new errosGerais(controller: 'saveForm', erroNoCatch:'NullPointerException', erroException: ex.message)
@@ -262,9 +225,12 @@ class RegistroInfo implements grails.validation.Validateable {
     String observAtivFisica
 
     static constraints = {
-        // Valida o tipo de Registro
+        // Valida o tipo de Registro (agora será um string com os tipos de registro)
         tipoRegistro (validator:{ value, object ->
-            if (!['Glicemia','Insulina','Refeicao','AtivFisica'].contains(value) ) {
+            if (!value.contains('Glicemia') &&
+                !value.contains('Insulina') &&
+                !value.contains('Refeicao') &&
+                !value.contains('AtivFisica') ) {
                     return 'validation.tipoRegistroErrado'
 			}    
         })
@@ -272,7 +238,7 @@ class RegistroInfo implements grails.validation.Validateable {
         // Valida o tipo de Glicemia
         tipoGlicemia nullable: true
         tipoGlicemia (validator:{ value, object ->
-            if (object.tipoRegistro == 'Glicemia' &&
+            if (object.tipoRegistro.contains('Glicemia') &&
                 !['Pre','Pos','Controle'].contains(value) ) {
                     return 'validation.tipoGlicemiaErrado'
 			}    
@@ -281,7 +247,7 @@ class RegistroInfo implements grails.validation.Validateable {
         // Valida a taxa de Glicemia
         taxaGlicemia nullable: true
         taxaGlicemia (validator:{ value, object ->
-            if (object.tipoRegistro == 'Glicemia' &&
+            if (object.tipoRegistro.contains('Glicemia') &&
                 value == null ) {
                     return 'validation.taxaGlicemiaNulo'
 			}    
@@ -290,7 +256,7 @@ class RegistroInfo implements grails.validation.Validateable {
         // Valida o tipo de Insulina
         tipoInsulina nullable: true
         tipoInsulina (validator:{ value, object ->
-            if (object.tipoRegistro == 'Insulina' &&
+            if (object.tipoRegistro.contains('Insulina') &&
                 !['Aspart','Glargina'].contains(value) ) {
                     return 'validation.tipoInsulinaErrado'
 			}    
@@ -299,7 +265,7 @@ class RegistroInfo implements grails.validation.Validateable {
         // Valida a dose de insulina
         doseInsulina nullable: true
         doseInsulina (validator:{ value, object ->
-            if (object.tipoRegistro == 'Insulina' &&
+            if (object.tipoRegistro.contains('Insulina') &&
                 value == null ) {
                     return 'validation.doseInsulinaNulo'
 			}    
@@ -308,7 +274,7 @@ class RegistroInfo implements grails.validation.Validateable {
         // Valida o tipo de refeição
         tipoRefeicao nullable: true
         tipoRefeicao (validator:{ value, object ->
-            if (object.tipoRegistro == 'Refeicao' &&
+            if (object.tipoRegistro.contains('Refeicao') &&
                 !['Cafe','Almoco','Lanche','Jantar','Ceia'].contains(value) ) {
                     return 'validation.tipoRefeicaoErrado'
 			}    
@@ -318,7 +284,7 @@ class RegistroInfo implements grails.validation.Validateable {
         observRefeicao nullable: true
         tipoAtivFisica nullable: true
         tipoAtivFisica (validator:{ value, object ->
-            if (object.tipoRegistro == 'AtivFisica' &&
+            if (object.tipoRegistro.contains('AtivFisica') &&
                 !['Leve','Moderada','Intensa'].contains(value) ) {
                     return 'validation.tipoAtivFisicaErrado'
 			}    

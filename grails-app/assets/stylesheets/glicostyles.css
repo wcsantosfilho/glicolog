@@ -131,6 +131,20 @@ li.listRadio {
     list-style-type:none;
 }
 
+ul.ulTabs {
+    margin: -20px;
+}
+
+li.listTabs {
+    list-style-type: none;
+    display: none;
+    margin: -10px 10px -10px 10px;
+}
+
+div.glicoHidden {
+    display: none;
+}
+
 .boxMensagem {
     padding: 10px 5px 10px 5px;
     margin: 10px auto 10px;
@@ -144,7 +158,7 @@ li.listRadio {
     text-align: center;
 }
 
-/* Define estilo de paginação */
+/* Define estilo para rodapé de paginação */
 .step {
     padding: 10px;
     color: black;

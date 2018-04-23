@@ -87,129 +87,153 @@ $(document).ready(function() {
         format: 'HH:i',
       };
     time_input.pickatime(time_options);
+    
+    /* --------------------------------------------------------------------- *
+     * Montagem da Lista de Tipos de Registro Preenchidos                    *
+     * --------------------------------------------------------------------- */
+    // Funções para tratar do objeto que controla o preenchimento das Tabs
+    // onde a Key = Tab e o Value = lista dos campos preenchidos
+    // retorna a lista de campos da tab, undefined se a tab não existe
+    var getTab = function (nomeTab) {
+        return listaTabs[nomeTab];
+    };
 
-    // Conforme a opção escolhida no Tipo de Registro, mostra a seção do formulário respectiva
-    var myFunction = function() {
-        var v1 = $("input:radio[name ='tipoRegistro']:checked").val()
-        switch(v1) {
-            case 'Glicemia':
-                $('#grupoGlicemia').show();
-                $('#grupoInsulina').hide();
-                $('#grupoRefeicao').hide();
-                $('#grupoAtivFisica').hide();
-                $('input.formTipoLadoDireito').val('Glicemia');
-                break;
-            case 'Insulina':
-                $('#grupoGlicemia').hide();
-                $('#grupoInsulina').show();
-                $('#grupoRefeicao').hide();
-                $('#grupoAtivFisica').hide();
-                $('input.formTipoLadoDireito').val('Insulina');
-                break;
-            case 'Refeicao':
-                $('#grupoGlicemia').hide();
-                $('#grupoInsulina').hide();
-                $('#grupoRefeicao').show();
-                $('#grupoAtivFisica').hide();
-                $('input.formTipoLadoDireito').val('Refeicao');
-                break;
-            case 'AtivFisica':
-                $('#grupoGlicemia').hide();
-                $('#grupoInsulina').hide();
-                $('#grupoRefeicao').hide();
-                $('#grupoAtivFisica').show();
-                $('input.formTipoLadoDireito').val('AtivFisica');
-                break;
-            default:
-                $('#grupoGlicemia').hide();
-                $('#grupoInsulina').hide();
-                $('#grupoRefeicao').hide();
-                $('#grupoAtivFisica').hide();
-                break;
-         }
+    var addTabECampo = function (nomeTab, nomeCampo) {
+        listaCampos = [];
+        tabExiste = getTab(nomeTab);
+        if (tabExiste) {
+            listaCampos = listaTabs[nomeTab];
+            // Se o campo não está na lista, insere
+            if (listaCampos.indexOf(nomeCampo) == -1) {
+                listaCampos.push(nomeCampo);
+            }
+            listaCampos.sort();
+            listaTabs[nomeTab] = listaCampos;
+        } else {
+            listaCampos.push(nomeCampo);
+            listaTabs[nomeTab] = listaCampos;
+        }
+    };
+
+    var deleteTabECampo = function (nomeTab, nomeCampo) {
+        listaCampos = [];
+        tabExiste = getTab(nomeTab);
+        if (tabExiste) {
+            listaCampos = listaTabs[nomeTab];
+            // Se o campo está na lista, deleta
+            posCampo = listaCampos.indexOf(nomeCampo)
+            if ( posCampo !== -1) {
+                listaCampos.splice( posCampo, 1)
+                // Se a lista ainda tem campos, salva como valor da Tab
+                if (listaCampos.length > 0 ) {
+                    listaCampos.sort();
+                    listaTabs[nomeTab] = listaCampos;
+                } else {
+                    // Senão, deleta a Tab
+                    delete listaTabs[nomeTab];
+                }
+            }
+        }
+    };
+    
+    // Monta Objeto para indicar quais campos, de quais Tabs foram preenchidos
+    // com o objetivo de chamar a gravação dos registros de cada tipo preenchido
+    // listaTabs mostra as Tabs que tiveram dados preenchidos. Serve para o Insert dos registros
+    // e também para validação dos campos.
+    var listaTabs = {};
+    // A classe CSS 'glicoInput' indica quais os Inputs que serão tratados
+    
+    // Define a listaTabs com os campos que vierem preenchidos do Server Side
+    $('.glicoInput').filter(function() {
+        if (this.value) {
+            setaInputList(this)     
+        }
+    });
+    
+    // Define a listaTabs com os campos que forem preenchidos no form
+    $('.glicoInput').on('change', function() {
+        setaInputList(this);
+    });
+    
+    // Monta Input List com os elementos que foram preenchidos
+    function setaInputList(elementoInput) {
+        var tipoRegistroInput = $(elementoInput).parents('.tab-pane').attr('id');
+        var campoInput = $(elementoInput).attr('id');
+        // Insere a Tab+Field preenchido no objeto
+        if ($(elementoInput).val() !== '') {
+                addTabECampo(tipoRegistroInput, campoInput);
+                if (tipoRegistroInput == 'Glicemia') {
+                    $('#iconeGlicemia').css("display", "inline");
+                }
+                if (tipoRegistroInput == 'Insulina') {
+                    $('#iconeInsulina').css("display", "inline");
+                }
+                if (tipoRegistroInput == 'Refeicao') {
+                    $('#iconeRefeicao').css("display", "inline");
+                }
+                if (tipoRegistroInput == 'AtivFisica') {
+                    $('#iconeAtivFisica').css("display", "inline");
+                }
+        }
+
+        // Elimina a Tab+Field, quando seu valor for excluido, no objeto (se tiver sido inserido)
+        if ($(elementoInput).val() == '') {
+                deleteTabECampo(tipoRegistroInput, campoInput);
+                if (tipoRegistroInput == 'Glicemia') {
+                    $('#iconeGlicemia').css("display", "none");
+                }
+                if (tipoRegistroInput == 'Insulina') {
+                    $('#iconeInsulina').css("display", "none");
+                }
+                if (tipoRegistroInput == 'Refeicao') {
+                    $('#iconeRefeicao').css("display", "none");
+                }
+                if (tipoRegistroInput == 'AtivFisica') {
+                    $('#iconeAtivFisica').css("display", "none");
+                }
+        }
+        $('#tipoRegistro').val(Object.keys(listaTabs));
     }
-    
-    // Conforme a opção escolhida no Tipo de Registro, mostra a seção do formulário respectiva
-    // Seta evento no carregamento da página para mostrar o form quando do re-carregamento (em caso de erro de preenchimento, por exemplo)
-    $(document).on ("ready", myFunction);
-    // Chama a função para as mudanças no seletor de radio do tipo do registro
-    $('input[type=radio][name=tipoRegistro]').on ( "change", myFunction);
-    
-    // Copia os valores do campos Data e Hora da parte esquerda do formulario para os campos da parte direita
-    $('.botaoFormLadoDireito').on("mouseenter",function() {
-        $('input.formDataLadoDireito').val($('#dataRegistro').val());
-        $('input.formHoraLadoDireito').val($('#horaRegistro').val());
-    });
+
     
     /* --------------------------------------------------------------------- *
-     * Validação do formulário Atividade Fisica                              *
+     * Validação do formulário                                               *
      * --------------------------------------------------------------------- */
-    $("#formAtivFisica").on("submit", function(){
+    $("#formRegistro").on("submit", function(){
+        // Valida campos obrigatórios do formulario: data e hora
         var contaErros = 0;
-        contaErros += validaSelecaoVazia( "divGrauAtivFisica", "errorField", "Campo Obrigatório");
-        contaErros += validaCampoVazio( "divObservAtivFisica", "errorField", "Campo Obrigatório");
         contaErros += validaCampoVazio( "divHoraRegistro", "errorField", "Campo Obrigatório");
         contaErros += validaCampoVazio( "divDataRegistro", "errorField", "Campo Obrigatório"); 
-
-        // Verifica a qtde de erros de validação. Se 0 envia o form para o servidor, senão ignora o submit
-        if (contaErros == 0) {
-            return true;
-        } else {
-            return false;
+        
+        // Valida campos da tab "Atividade Fisica", se estiverem preenchidos
+        if (getTab('AtivFisica')) {
+            contaErros += validaSelecaoVazia( "divGrauAtivFisica", "errorField", "Campo Obrigatório");
+            contaErros += validaCampoVazio( "divObservAtivFisica", "errorField", "Campo Obrigatório");
         }
-    });
-    
-    /* --------------------------------------------------------------------- *
-     * Validação do formulário Refeição                                       *
-     * --------------------------------------------------------------------- */
-    $("#formRefeicao").on("submit", function(){
-        var contaErros = 0;
-        contaErros += validaSelecaoVazia( "divTipoRefeicao", "errorField", "Campo Obrigatório");
-        contaErros += validaCampoVazio( "divObservRefeicao", "errorField", "Campo Obrigatório");
-        contaErros += validaCampoVazio( "divHoraRegistro", "errorField", "Campo Obrigatório");
-        contaErros += validaCampoVazio( "divDataRegistro", "errorField", "Campo Obrigatório"); 
 
-        // Verifica a qtde de erros de validação. Se 0 envia o form para o servidor, senão ignora o submit
-        if (contaErros == 0) {
-            return true;
-        } else {
-            return false;
+        // Valida campos da tab "Refeição", se estiverem preenchidos
+        if (getTab('Refeicao')) {
+            contaErros += validaSelecaoVazia( "divTipoRefeicao", "errorField", "Campo Obrigatório");
+            contaErros += validaCampoVazio( "divObservRefeicao", "errorField", "Campo Obrigatório");
         }
-    });    
-    
-    
-    /* --------------------------------------------------------------------- *
-     * Validação do formulário Insulina                                      *
-     * --------------------------------------------------------------------- */
-    $("#formInsulina").on("submit", function(){
-        var contaErros = 0;
-        contaErros += validaSelecaoVazia( "divTipoInsulina", "errorField", "Campo Obrigatório");
-        contaErros += validaCampoVazio( "divDoseInsulina", "errorField", "Campo Obrigatório");
-        contaErros += validaCampoVazio( "divHoraRegistro", "errorField", "Campo Obrigatório");
-        contaErros += validaCampoVazio( "divDataRegistro", "errorField", "Campo Obrigatório"); 
 
-        // Verifica a qtde de erros de validação. Se 0 envia o form para o servidor, senão ignora o submit
-        if (contaErros == 0) {
-            return true;
-        } else {
-            return false;
+        // Valida campos da tab "Insulina", se estiverem preenchidos
+        if (getTab('Insulina')) {
+            contaErros += validaSelecaoVazia( "divTipoInsulina", "errorField", "Campo Obrigatório");
+            contaErros += validaCampoVazio( "divDoseInsulina", "errorField", "Campo Obrigatório");
         }
-    });
-    
-    /* --------------------------------------------------------------------- *
-     * Validação do formulário Glicemia                                      *
-     * --------------------------------------------------------------------- */
-    $("#formGlicemia").on("submit", function(){
-        var contaErros = 0;
-        contaErros += validaSelecaoVazia( "divTipoGlicemia", "errorField", "Campo Obrigatório");
-        contaErros += validaCampoVazio( "divTaxaGlicemia", "errorField", "Campo Obrigatório");
-        contaErros += validaCampoVazio( "divHoraRegistro", "errorField", "Campo Obrigatório");
-        contaErros += validaCampoVazio( "divDataRegistro", "errorField", "Campo Obrigatório"); 
 
+        // Valida campos da tab "Glicemia", se estiverem preenchidos
+        if (getTab('Glicemia')) {
+            contaErros += validaSelecaoVazia( "divTipoGlicemia", "errorField", "Campo Obrigatório");
+            contaErros += validaCampoVazio( "divTaxaGlicemia", "errorField", "Campo Obrigatório");
+        }
+        
         // Verifica a qtde de erros de validação. Se 0 envia o form para o servidor, senão ignora o submit
         if (contaErros == 0) {
             return true;
         } else {
+            $('#errorMessage').text("O formulário contem erros!")
             return false;
         }
     });
