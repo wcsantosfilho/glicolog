@@ -58,6 +58,41 @@ class InfoRegistroService {
     }
     
     /* -----------------------------------------------------------------------*
+     * Todos os Registros da Pessoa                                           *
+     * -----------------------------------------------------------------------*/
+    @Transactional(readOnly = true)
+    def consultaTodosRegistrosDaPessoa(Pessoa pessoaParaConsulta) {
+        // HQL para buscar os todos os registros da pessoa, agrupados pela data e hora em uma mesma linha
+        def searchResults = Registro.executeQuery("""
+            select dataRegistro, 
+            min (tipoGlicemia),
+            min (taxaGlicemia),
+            min (tipoInsulina),
+            min (doseInsulina),
+            min (tipoRefeicao),
+            min (observRefeicao),
+            min (tipoAtivFisica),
+            min (observAtivFisica)
+            FROM Registro
+            WHERE pessoa = :pessoaParaSearch
+            GROUP BY dataRegistro
+            ORDER BY dataRegistro asc""", [pessoaParaSearch:pessoaParaConsulta]).collect {
+                [   dataRegistro: it[0],
+                    tipoGlicemia: it[1],
+                    taxaGlicemia: it[2],
+                    tipoInsulina: it[3],
+                    doseInsulina: it[4],
+                    tipoRefeicao: it[5],
+                    observRefeicao: it[6],
+                    tipoAtivFisica: it[7],
+                    observAtivFisica: it[8]
+                ]
+        }
+    }
+
+
+    
+    /* -----------------------------------------------------------------------*
      * Salva Registros da Pessoa (Glicemia)                                   *
      * -----------------------------------------------------------------------*/
     def salvaRegistroGlicemia(Pessoa pessoa, RegistroInfo info) {

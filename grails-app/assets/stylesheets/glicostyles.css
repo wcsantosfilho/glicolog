@@ -63,6 +63,7 @@ body {
         width: 100%;
         max-width: 100%;
         margin-bottom: 20px;
+        
     }
     .td-glicolog {
         display: table-cell;
@@ -132,13 +133,25 @@ li.listRadio {
 }
 
 ul.ulTabs {
-    margin: -20px;
+    margin: -20px 1px 1px -40px;
 }
 
 li.listTabs {
     list-style-type: none;
     display: none;
-    margin: -10px 10px -10px 10px;
+    margin: -10px 10px -10px 5px;
+}
+
+.tabTab {
+    background-color: #e3e3e3;
+    border-radius: 10px;
+    padding: 10px 10px 10px 10px;
+}
+
+.tabTabAlt {
+    background-color: #e3e3e3;
+    border-radius: 10px;
+    padding: 10px 10px 10px 10px;
 }
 
 div.glicoHidden {

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+
+<jasperReport name="glicologRegistros" columnCount="1" pageWidth="880" pageHeight="595" columnWidth="840" columnSpacing="15" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30">
+	<style name="Arial_Normal" isDefault="true" fontName="Arial" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="Arial_Bold" isDefault="false" fontName="Arial" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="Arial_Italic" isDefault="false" fontName="Arial" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Oblique" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="Comic_Normal" isDefault="false" fontName="Comic Sans MS" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="COMIC.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+	<style name="Comic_Bold" isDefault="false" fontName="Comic Sans MS" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="COMICBD.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+	<parameter name="ReportTitle" class="java.lang.String">
+	</parameter>
+    <parameter name="CurrentDate" class="java.util.Date">
+        <defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+    </parameter>
+	<queryString></queryString>
+	<field name="dataRegistro" class="java.sql.Timestamp">
+	</field>
+	<field name="tipoGlicemia" class="java.lang.String">
+	</field>
+	<field name="taxaGlicemia" class="java.lang.Integer">
+	</field>
+	<field name="tipoInsulina" class="java.lang.String">
+	</field>
+	<field name="doseInsulina" class="java.lang.Integer">
+	</field>
+	<field name="tipoRefeicao" class="java.lang.String">
+	</field>
+	<field name="observRefeicao" class="java.lang.String">
+	</field>
+	<field name="tipoAtivFisica" class="java.lang.String">
+	</field>
+	<field name="observAtivFisica" class="java.lang.String">
+	</field>
+    <variable name="DataUnica" class="java.lang.String" resetType="None">
+        <variableExpression><![CDATA[(new SimpleDateFormat("dd/MM/yyyy").format($F{dataRegistro}))]]></variableExpression>
+    </variable>
+    <group name="DataGroup" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$V{DataUnica}]]></groupExpression>
+		<groupHeader>
+		<band height="15">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement mode="Opaque" x="0" y="0" width="270" height="12" forecolor="#000000" backcolor="#c1c1c1" style="Arial_Bold"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{DataUnica}]]></textFieldExpression>
+			</textField>
+		</band>
+		</groupHeader>
+		<groupFooter>
+		<band height="15">
+			<line>
+				<reportElement x="0" y="0" width="840" height="1" forecolor="#454545"/>
+				<graphicElement/>
+			</line>
+		</band>
+		</groupFooter>
+	</group>
+	<pageHeader>
+		<band height="45">
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="840" height="40"/>
+				<graphicElement/>
+			</rectangle>
+            <textField pattern="dd/MM/yyyy HH:mm">
+                <reportElement mode="Opaque" x="10" y="2" width="100" height="20" style="Arial_Bold"/>
+                <textFieldExpression class="java.lang.String"><![CDATA[$P{CurrentDate}]]></textFieldExpression>
+            </textField>
+            <staticText>
+				<reportElement x="10" y="18" width="179" height="20" style="Arial_Bold"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Registros de: Fulano de Tal da Silva]]></text>
+			</staticText>
+            <staticText>
+				<reportElement x="180" y="5" width="420" height="35" style="Arial_Bold"/>
+				<textElement textAlignment="Center">
+					<font size="22"/>
+				</textElement>
+				<text><![CDATA[Glicolog - Registros]]></text>
+			</staticText>
+            <staticText>
+				<reportElement x="680" y="2" width="99" height="20" style="Arial_Bold"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Data Inicial:]]></text>
+			</staticText>
+            <textField pattern="dd/MM/yyyy">
+                <reportElement mode="Opaque" x="780" y="2" width="55" height="20" style="Arial_Bold"/>
+                <textFieldExpression class="java.lang.String"><![CDATA[$P{CurrentDate}]]></textFieldExpression>
+            </textField>
+            <staticText>
+				<reportElement x="680" y="18" width="99" height="20" style="Arial_Bold"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Data Final:]]></text>
+			</staticText>
+            <textField pattern="dd/MM/yyyy">
+                <reportElement mode="Opaque" x="780" y="18" width="55" height="20" style="Arial_Bold"/>
+                <textFieldExpression class="java.lang.String"><![CDATA[$P{CurrentDate}]]></textFieldExpression>
+            </textField>
+
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="17">
+			<rectangle>
+				<reportElement x="0" y="0" width="840" height="15" backcolor="#333333"/>
+				<graphicElement/>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="0" width="80" height="15" forecolor="#ffffff" backcolor="#333333" style="Arial_Bold"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Data / Hora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="101" y="0" width="99" height="15" forecolor="#ffffff" backcolor="#333333" style="Arial_Bold"/>
+                <textElement textAlignment="Right"/>
+				<text><![CDATA[Glicemia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="201" y="0" width="99" height="15" forecolor="#ffffff" backcolor="#333333" style="Arial_Bold"/>
+                <textElement textAlignment="Right"/>
+				<text><![CDATA[Insulina]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="401" y="0" width="199" height="15" forecolor="#ffffff" backcolor="#333333" style="Arial_Bold"/>
+                <textElement textAlignment="Left"/>
+				<text><![CDATA[Refeição]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="701" y="0" width="99" height="15" forecolor="#ffffff" backcolor="#333333" style="Arial_Bold"/>
+                <textElement textAlignment="Left"/>
+				<text><![CDATA[Atividade Física]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17">
+			<textField pattern="HH:mm">
+				<reportElement x="40" y="0" width="100" height="15">
+                </reportElement>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataRegistro}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="0" width="99" height="15">
+                    <printWhenExpression><![CDATA[($F{tipoGlicemia} != null)]]>
+                    </printWhenExpression>
+                </reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{tipoGlicemia} + " - " + String.valueOf($F{taxaGlicemia})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="200" y="0" width="99" height="15">
+                    <printWhenExpression><![CDATA[($F{tipoInsulina} != null)]]>
+                    </printWhenExpression>
+                </reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tipoInsulina} + " - " + String.valueOf($F{doseInsulina})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="400" y="0" width="199" height="15">
+                    <printWhenExpression><![CDATA[($F{tipoRefeicao} != null)]]>
+                    </printWhenExpression>
+                </reportElement>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tipoRefeicao} + " - " + $F{observRefeicao}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="700" y="0" width="199" height="15">
+                    <printWhenExpression><![CDATA[($F{tipoAtivFisica} != null)]]>
+                    </printWhenExpression>
+                </reportElement>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tipoAtivFisica} + " - " + $F{observAtivFisica}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="0" y="16" width="840" height="1" forecolor="#808080"/>
+				<graphicElement pen="Thin"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="30">
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="5" width="840" height="25"/>
+				<graphicElement/>
+			</rectangle>
+			<textField>
+				<reportElement x="700" y="10" width="75" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="775" y="10" width="5" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="780" y="10" width="75" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="65">
+			<rectangle>
+				<reportElement x="0" y="10" width="840" height="25" backcolor="#c0c0c0"/>
+				<graphicElement/>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Opaque" x="380" y="15" width="300" height="15" backcolor="#c0c0c0"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Gerado por Glicolog.]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

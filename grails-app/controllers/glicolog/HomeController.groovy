@@ -6,6 +6,12 @@ import grails.converters.XML
 import org.hibernate.criterion.CriteriaSpecification
 import grails.plugin.springsecurity.annotation.Secured
 
+import grails.plugins.jasper.JasperExportFormat
+import grails.plugins.jasper.JasperReportDef
+
+import org.apache.commons.io.FileUtils;
+
+
 class HomeController {
     static allowedMethods = [index:'GET',
             saveForm:'POST', sendmail:'GET'
@@ -14,6 +20,9 @@ class HomeController {
     def comunicacaoService
     def infoPessoaService
     def infoRegistroService
+    def reportService
+    def jasperService
+
     
     /* ------------------------------------------------ *
      *  index                                           *
@@ -29,7 +38,7 @@ class HomeController {
                 respond listObject, view:'index'            
                 return
             }
-
+            
             // Busca a pessoa ligada ao usuário da sessão
             def pessoaParaSearch = infoPessoaService.pessoaDoUsuarioLogado(getPrincipal().username)
             
@@ -55,7 +64,8 @@ class HomeController {
             return
         }
     }
-    
+
+
     /* ------------------------------------------------ *
      *  saveForm (input originario do home/index)      *
      * ------------------------------------------------ */
@@ -199,6 +209,60 @@ class HomeController {
             return
         }   
         redirect(controller:"home", action:"index")
+    }
+
+    /* ------------------------------------------------ *
+     *  relatório pessoas                               *
+     * ------------------------------------------------ */
+    @Secured('ROLE_USER')
+    def relatorioPessoas() {
+        try {
+            reportService.relatorioPessoas()
+        } catch (Exception ex) {
+            def errG = new errosGerais(controller: 'relatorioPessoas', erroNoCatch: 'Exception', erroException: ex.message)
+            respond errG, view:'error'
+            return
+        }   
+        redirect(controller:"home", action:"index")
+    }
+    
+    /* ------------------------------------------------ *
+     *  Relatório Registros                             *
+     * ------------------------------------------------ */
+    @Secured(['ROLE_USER'])
+    def reportRegistros() { 
+        try {
+            // Verifica se há uma sessão ativa
+            if (!isLoggedIn()) {
+                def flagErro = true
+                def textoErro = "Sessão não iniciada. Faça Login"
+                def listObject = [errors: textoErro, flagErro: flagErro]
+                respond listObject, view:'index'            
+                return
+            }
+            
+            // Busca a pessoa ligada ao usuário da sessão
+            def pessoaParaSearch = infoPessoaService.pessoaDoUsuarioLogado(getPrincipal().username)
+            
+            // Valida se há uma pessoa ligada ao usuário logado
+            if (pessoaParaSearch == null) {
+                respond pessoaParaSearch.errors, view:'index'
+                return
+            }
+
+            // define a lista para passar para o Jasper
+            def todosRegistros = infoRegistroService.consultaTodosRegistrosDaPessoa(pessoaParaSearch)
+            
+            def reportDef = new JasperReportDef(name:'glicologRegistros.jrxml', fileFormat: JasperExportFormat.PDF_FORMAT, reportData: todosRegistros)
+            FileUtils.writeByteArrayToFile(new File("/temp/Registros.pdf"), jasperService.generateReport(reportDef).toByteArray())
+            
+            redirect(controller:"home", action:"index")
+
+        } catch (Exception ex) {
+            def errG = new errosGerais(controller: 'home', erroNoCatch: 'Exception', erroException: ex.message)
+            respond errG, view:'error'
+            return
+        }
     }
 }
 

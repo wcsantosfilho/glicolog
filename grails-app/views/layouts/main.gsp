@@ -36,6 +36,8 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active"><a class="nav-link" href="/home/">Home <span class="sr-only">(current)</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="/home/sendmail">Pessoa</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/home/relatorioPessoas">Relatório P</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/home/reportRegistros">Relatório R</a></li>
                 </ul>
                 <form class="form-inline mt-2 mt-md-0">
                     <input class="form-control mr-sm-2" type="text" placeholder="Busca">

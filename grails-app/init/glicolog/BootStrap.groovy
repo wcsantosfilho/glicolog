@@ -98,6 +98,29 @@ class BootStrap {
                     .save(failOnError: true)
             }
             
+            def pessAntonio = Pessoa.findByNome('Antonio de Almeida') ?: new Pessoa(nome: "Antonio de Almeida", idade:32)
+            .save(failOnError: true)
+            def pessArthur = Pessoa.findByNome('Arthur Alencar') ?: new Pessoa(nome: "Arthur Alencar", idade:18)
+            .save(failOnError: true)
+            def pessArnaldo = Pessoa.findByNome('Arnaldo Albuquerque') ?: new Pessoa(nome: "Arnaldo Albuquerque", idade:12)
+            .save(failOnError: true)
+            def pessAstolfo = Pessoa.findByNome('Astolfo Andreoli') ?: new Pessoa(nome: "Astolfo Andreoli", idade:55)
+            .save(failOnError: true)
+            def pessAloa = Pessoa.findByNome('Aloá Arbacaredo') ?: new Pessoa(nome: "Aloá Arbacaredo", idade:82)
+            .save(failOnError: true)
+
+            def pessMariana = Pessoa.findByNome('Mariana Maia') ?: new Pessoa(nome: "Mariana Maia", idade:11)
+            .save(failOnError: true)
+            def pessMirlene = Pessoa.findByNome('Mirlene Mattos') ?: new Pessoa(nome: "Mirlene Mattos", idade:51)
+            .save(failOnError: true)
+            def pessMirian = Pessoa.findByNome('Mirian Matuelsen') ?: new Pessoa(nome: "Mirian Matuelsen", idade:35)
+            .save(failOnError: true)
+            def pessMonica = Pessoa.findByNome('Mônica Mascarenhas de Moraes') ?: new Pessoa(nome: "Mônica Mascarenhas de Moraes", idade:5)
+            .save(failOnError: true)
+            def pessMarcelo = Pessoa.findByNome('Marcelo Mercer') ?: new Pessoa(nome: "Marcelo Mercer", idade:22)
+            .save(failOnError: true)
+
+            
         }
     		
     	def countPessoasComGlicemia = Pessoa.findAll {

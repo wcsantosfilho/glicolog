@@ -35,10 +35,15 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Implementar o Validator no Client-Side                                    OK
 * Pesquisar Plugins de segurança: Spring Security Core                      +/-
    |- Duração da Session                                                    None
+* Layout de impressão para consulta médica                                  +/-
+   |- Seleção de datas                                                      None
+   |- Dados variáveis no cabeçalho (nome, data ini e data fim)              None
+   |- Nova Aba ou Download                                                  None
+   |- HTML e/ou PDF                                                         None
+   |- Rodapé ("Gerado por Glicolog") sozinho na página                      None
 * Problemas com formulário submetido com "Enter"                            None
 * Testar SendGrid para enviar email pelo Heroku                             None
 * Montar esquema para proteger API SendGrid                                 None
-* Layout de impressão para consulta médica                                  None
 * Permitir várias inserções de registros diferentes com a mesma data e hora None
 * Aviso por e-mail em caso de não preenchimento                             None
 * Avanço de cursor pelo teclado após Data                                   None

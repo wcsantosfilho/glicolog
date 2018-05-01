@@ -7,7 +7,7 @@ import groovy.json.JsonBuilder
 
 @Transactional
 class ComunicacaoService {
-
+ 
     def enviarEmail(String emailDestinatario,
                     String nomeDestinatario,
                     String emailAssunto,

@@ -24,51 +24,50 @@
                     </ul>
                 </g:hasErrors>
             </div>
-            <div class="row">
+            <div>
                 <p id="errorMessage"></p>
             </div>
-            <div class="row">
-                <g:form name="formRegistro" resource="${this?.registroInfo}" url="[action:'saveForm',controller:'home']" class="container formGlicolog" id="formRegistro">
+            <div class="container">
+                <g:form name="formRegistro" resource="${this?.registroInfo}" url="[action:'saveForm',controller:'home']" class="formGlicolog" id="formRegistro">
                     <div class="row">
                         <!-- Lado Esquerdo do Form (Data e Hora) -->
-                        <div class="col-md-6 col-xs-6">
-                            <label for="dataRegistro" class="label-control">Data e Hora:</label>
+                        <div class="col-md-5 col-xs-5 tabTab">
+                            <label for="dataRegistro" class="label-control"><button type="button" class="btn btn-primary">Data e Hora:</button></label>
                             <div class="input-group input-group-sm" id="divDataRegistro">
                                 <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                                 <input name="dataRegistro" value="${registroInfo?.dataRegistro}" id="dataRegistro" />
                                 <div class="errorField" aria-live="polite"></div>
                             </div>
 
-                            <br>
 
                             <div class="input-group input-group-sm" id="divHoraRegistro">
                                 <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
                                 <input name="horaRegistro" value="${registroInfo?.horaRegistro}" id="horaRegistro" />
                                 <div class="errorField" aria-live="polite"></div>
                             </div>
-                            <br>
                             <div class="input-group input-group-sm glicoHidden" id="divtipoRegistro">
                                 <span class="input-group-addon" id="basic-addon3">tipoRegistro</span>
                                 <input type="text" id="tipoRegistro" class="form-control" name="tipoRegistro" value="${registroInfo?.tipoRegistro}" />
                                 <div class="errorField" aria-live="polite"></div>
                             </div>
-
+                            <br>
                             <ul class="ulTabs">
                                 <li class="listTabs" id="iconeGlicemia"><span class="fa fa-tachometer"> Glicemia</span></li>
                                 <li class="listTabs" id="iconeInsulina"><span class="fa fa-thermometer"> Insulina</span></li>
                                 <li class="listTabs" id="iconeRefeicao"><span class="fa fa-cutlery"> Refeição</span></li>
                                 <li class="listTabs" id="iconeAtivFisica"><span class="fa fa-bicycle"> Atividade Física</span></li>
                             </ul>
-                            <br>
 
                         </div>
                         <!-- Fim Lado Esquerdo -->
+                        <div class="col-md-1 col-xs-1">
+                        </div>
                         <!-- Lado Direito do Form (Tabs c/ Tipos de Registro) -->
-                        <div class="col-md-6 col-xs-6">
-                            <div class="container">
-                                <ul class="nav nav-tabs" id="regTab" role="tablist">
+                        <div class="col-md-5 col-xs-5 tabTabAlt">
+                            <div>
+                                <ul class="nav nav-pills nav-justified flex-column flex-sm-row" id="regTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link" id="glicemiaTab" data-toggle="tab" href="#Glicemia" role="tab">Glicemia</a>
+                                        <a class="nav-link active" id="glicemiaTab" data-toggle="tab" href="#Glicemia" role="tab">Glicemia</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="insulinaTab" data-toggle="tab" href="#Insulina" role="tab">Insulina</a>
@@ -80,9 +79,9 @@
                                         <a class="nav-link" id="ativFisicaTab" data-toggle="tab" href="#AtivFisica" role="tab">Atividade Física</a>
                                     </li>
                                 </ul>
+
                                 <div class="tab-content" id="regTabContent">
                                     <div class="tab-pane fade show active" id="Glicemia" role="tabpanel" aria-labelledby="glicemia-tab">
-                                        <h4>glicemia</h4>
                                         <div class="input-group input-group-sm" id="divTipoGlicemia">
                                             <span class="input-group-addon" id="basic-addon3">Tipo Glicemia</span>
                                             <g:select class="form-control glicoInput" id="tipoGlicemia" name="tipoGlicemia" value="${registroInfo?.tipoGlicemia}" from="${['Pré prandial','Pós prandial','Controle']}" keys="${['Pre','Pos','Controle']}" noSelection="['':'-Tipo de Glicemia-']" />
@@ -96,7 +95,6 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="Insulina" role="tabpanel" aria-labelledby="insulina-tab">
-                                        <h4>insulina</h4>
                                         <div class="input-group input-group-sm" id="divTipoInsulina">
                                             <span class="input-group-addon" id="basic-addon3">Tipo Insulina</span>
                                             <g:select class="form-control glicoInput" id="tipoInsulina" name="tipoInsulina" value="${registroInfo?.tipoInsulina}" from="${['Rápida - Aspart','Lenta - Glargina']}" keys="${['Aspart', 'Glargina']}" noSelection="['':'-Tipo de Insulina']" />
@@ -110,7 +108,6 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="Refeicao" role="tabpanel" aria-labelledby="refeicao-tab">
-                                        <h4>refeicao</h4>
                                         <div class="input-group input-group-sm" id="divTipoRefeicao">
                                             <span class="input-group-addon" id="basic-addon3">Tipo Refeição</span>
                                             <g:select class="form-control glicoInput" id="tipoRefeicao" name="tipoRefeicao" value="${registroInfo?.tipoRefeicao}" from="${['Café','Almoço','Lanche','Jantar','Ceia']}" keys="${['Cafe', 'Almoco', 'Lanche', 'Jantar', 'Ceia']}" noSelection="['':'-Tipo de Refeição-']" />
@@ -124,7 +121,6 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="AtivFisica" role="tabpanel" aria-labelledby="ativfisica-tab">
-                                        <h4>ativfisica</h4>
                                         <div class="input-group input-group-sm" id="divGrauAtivFisica">
                                             <span class="input-group-addon" id="basic-addon3">Grau Ativ Física</span>
                                             <g:select class="form-control glicoInput" name="tipoAtivFisica" from="${['Leve','Moderada','Intensa']}" value="${registroInfo?.tipoAtivFisica}" noSelection="['':'-Grau de Atividade-']" id="tipoAtivFisica" />
@@ -140,16 +136,14 @@
                                 </div>
                                 <!-- Fim da Div das Tabs -->
                             </div>
-                            <!-- Fim do Container -->
+                            <!-- Fim da Div de toda a TAB (Cabecalho + Conteudos) -->
                         </div>
                         <!-- Fim Coluna Lado Direito -->
                         <br>
-                        <div class="row">
-                            <button type="submit" class="btn btn-primary btn-sm botaoFormLadoDireito">Gravar</button>
-                        </div>
-                        <!-- row do botão abaixo do form -->
                     </div>
-                    <!-- row do form como um todo -->
+                    <!-- row do form  -->
+                    <br>
+                    <button type="submit" class="btn btn-primary btn-md botaoFormLadoDireito">Gravar</button>
                 </g:form>
                 <!-- g form -->
             </div>
