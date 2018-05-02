@@ -15,10 +15,20 @@ class InfoRegistroService {
      * Consulta Registros da Pessoa                                           *
      * -----------------------------------------------------------------------*/
     @Transactional(readOnly = true)
-    def consultaRegistrosDaPessoa(Pessoa pessoaParaConsulta, Integer offset, Integer max, String order) {
-        // HQL para buscar os registros da pessoa, agrupados pela data e hora em uma mesma linha
+    def consultaRegistrosDaPessoa(Pessoa pessoaParaConsulta, Integer offset, Integer max, String campoOrder, String order, String dataIni, String dataFim) {
+        // Query para buscar os registros da pessoa, agrupados pela data e hora em uma mesma linha
         // depois transforma em Collect para virar um MAPA com propriedades nomeadas (a GSP/Taglib usa assim)
-        def searchResults = Registro.executeQuery("""
+        
+        // Tratamento das datas para a query
+        dataIni = dataIni ? dataIni + " 00:00:00" : '01/01/1900 00:00:00'
+        dataFim = dataFim ? dataFim + " 23:59:59" : '31/12/3000 23:59:59'
+        def dataInicial = Date.parse('dd/MM/yyyy HH:mm', dataIni)
+        def dataFinal = Date.parse('dd/MM/yyyy HH:mm', dataFim)
+
+        // Tratamento do campoOrder e order
+        campoOrder = campoOrder ?: 'dataRegistro'
+        
+        def queryParte1 = """
             select dataRegistro, 
             min (tipoGlicemia),
             min (taxaGlicemia),
@@ -29,9 +39,16 @@ class InfoRegistroService {
             min (tipoAtivFisica),
             min (observAtivFisica)
             FROM Registro
-            WHERE pessoa = :pessoaParaSearch
-            GROUP BY dataRegistro
-            ORDER BY dataRegistro desc""", [pessoaParaSearch:pessoaParaConsulta, offset:offset, max:max]).collect {
+            WHERE pessoa = :pessoaParaSearch AND
+            dataRegistro >= :dataInicial AND
+            dataRegistro <= :dataFinal
+            GROUP BY dataRegistro """
+        def queryParte2 = " ORDER BY "
+        def queryParte3 = " " + campoOrder + " "
+        def queryParte4 = " " + order
+        def queryCompleta = queryParte1 + queryParte2 + queryParte3 + queryParte4
+
+        def searchResults = Registro.executeQuery( queryCompleta, [pessoaParaSearch:pessoaParaConsulta, offset:offset, max:max, dataInicial:dataInicial, dataFinal:dataFinal]).collect {
                 [   dataRegistro: it[0],
                     tipoGlicemia: it[1],
                     taxaGlicemia: it[2],
@@ -48,8 +65,10 @@ class InfoRegistroService {
         def searchCount = Registro.executeQuery("""
             select count(dataRegistro)
                 FROM Registro
-                WHERE pessoa = :pessoaParaSearch
-                GROUP BY dataRegistro""", [pessoaParaSearch:pessoaParaConsulta])
+                WHERE pessoa = :pessoaParaSearch AND
+                dataRegistro >= :dataInicial AND
+                dataRegistro <= :dataFinal
+                GROUP BY dataRegistro""", [pessoaParaSearch:pessoaParaConsulta, dataInicial:dataInicial, dataFinal:dataFinal])
 
         def registroTotal = searchCount.size()
 

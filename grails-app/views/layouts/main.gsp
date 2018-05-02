@@ -39,10 +39,21 @@
                     <li class="nav-item"><a class="nav-link" href="/home/relatorioPessoas">Relatório P</a></li>
                     <li class="nav-item"><a class="nav-link" href="/home/reportRegistros">Relatório R</a></li>
                 </ul>
-                <form class="form-inline mt-2 mt-md-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Busca">
-                    <button class="btn btn-outline-sucess my-2 my-sm-0" type="submit">Busca</button>
-                </form>
+                <g:form class="form-inline mt-2 mt-md-0" controller="home" action="index" method="get">
+                    <label for="dataIni" class="label-control">De:</label>
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                        <input name="dataIni" id="dataIni" value="${params.dataIni}" class="dataGlico" />
+                        <div class="errorField" aria-live="polite"></div>
+                    </div>
+                    <label for="dataFim" class="label-control">Até:</label>
+                    <div class="input-group input-group-sm">
+                        <input name="dataFim" id="dataFim" value="${params.dataFim}" class="dataGlico" />
+                        <div class="errorField" aria-live="polite"></div>
+                    </div>
+                    <span> | </span>
+                    <button class="btn btn-outline-sucess btn-sm" type="submit">Vai!</button>
+                </g:form>
                 <ul class="navbar-nav d-flex flex-row-reverse">
                     <li class="nav-item nav-link">
                         <sec:ifLoggedIn>Olá <sec:username/>. <g:link controller='logoff'>Sair</g:link>

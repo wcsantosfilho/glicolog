@@ -59,7 +59,7 @@ $(document).ready(function() {
         
     
     // Ativa o DatePicker (Calendário) para o campo Data do formulário
-    var date_input=$('input[name="dataRegistro"]'); //our date input has the name "dataRegistro"
+    var date_input=$('.dataGlico'); //our date input has the name "dataRegistro"
     var date_options={
         monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
         monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],

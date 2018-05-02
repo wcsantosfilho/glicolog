@@ -35,7 +35,7 @@
                             <label for="dataRegistro" class="label-control"><button type="button" class="btn btn-primary">Data e Hora:</button></label>
                             <div class="input-group input-group-sm" id="divDataRegistro">
                                 <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                <input name="dataRegistro" value="${registroInfo?.dataRegistro}" id="dataRegistro" />
+                                <input name="dataRegistro" value="${registroInfo?.dataRegistro}" id="dataRegistro"  class="dataGlico" />
                                 <div class="errorField" aria-live="polite"></div>
                             </div>
 

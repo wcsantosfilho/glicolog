@@ -51,10 +51,13 @@ class HomeController {
             // Parametros de busca e paginação
             params.offset = params.offset ? params.int('offset') : 0
             params.max = Math.min(params.max ? params.int('max') : 10, 100)
+            params.campoOrder = params.campoOrder ?: 'dataRegistro'
             params.order = params.order ?: 'desc'
-            
+            params.dataIni = params.dataIni ?: '01/01/1900 00:00:00'
+            params.dataFim = params.dataFim ?: '31/12/3000 23:59:59'
+
             // define a lista para passar para o GSP 
-            def listObject = infoRegistroService.consultaRegistrosDaPessoa(pessoaParaSearch, params.offset, params.max, params.order)
+            def listObject = infoRegistroService.consultaRegistrosDaPessoa(pessoaParaSearch, params.offset, params.max, params.campoOrder, params.order, params.dataIni, params.dataFim)
             withFormat {
                 html { listObject }
             }

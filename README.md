@@ -41,6 +41,13 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
    |- Nova Aba ou Download                                                  None
    |- HTML e/ou PDF                                                         None
    |- Rodapé ("Gerado por Glicolog") sozinho na página                      None
+* Pesquisa por Intervalo de datas                                           +/-
+   |- Discutir com usuário esquema de datas e relatório                     None
+   |- Manter intervalo de datas na paginação                                None
+   |- Manter intervalo de datas no "Sort" asc ou desc                       None
+   |- Intervalo de datas padrão (não pode ser "sempre")                     None
+   |- Máscara do dataIni e dataFim                                          None
+   |- Permitir digitação do dataIni e dataFim?                              None
 * Problemas com formulário submetido com "Enter"                            None
 * Testar SendGrid para enviar email pelo Heroku                             None
 * Montar esquema para proteger API SendGrid                                 None
