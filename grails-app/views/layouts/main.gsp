@@ -36,24 +36,29 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active"><a class="nav-link" href="/home/">Home <span class="sr-only">(current)</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="/home/sendmail">Pessoa</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/home/relatorioPessoas">Relatório P</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/home/reportRegistros">Relatório R</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/home/relatorioPessoas">Relatório Pessoas</a></li>
                 </ul>
-                <g:form class="form-inline mt-2 mt-md-0" controller="home" action="index" method="get">
-                    <label for="dataIni" class="label-control">De:</label>
-                    <div class="input-group input-group-sm">
-                        <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                        <input name="dataIni" id="dataIni" value="${params.dataIni}" class="dataGlico" />
-                        <div class="errorField" aria-live="polite"></div>
+                <div class="btn-group">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Relatórios:</button>
+                    <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuButton">
+                        <button class="dropdown-item" type="button" id="button3Meses">Ult. 3 meses</button>
+                        <button class="dropdown-item" type="button" id="buttonUltMes">Ult. mês</button>
+                        <div class="dropdown-divider"></div>
+                        <h6 class="dropdown-header">Personalize:</h6>
+                        <g:form class="px-4 py-0" url="[action:'reportRegistros',controller:'home']" method="get" id="formRelatorios">
+                            <div class="form-group py-0 mt-0">
+                                <label for="dataIni">Data Inicial</label>
+                                <input name="dataIni" id="dataIni" class="dataGlico"/>
+                            </div>
+                            <div class="form-group py-0 mt-0">
+                                <label for="dataFim">Data Final</label>
+                                <input name="dataFim" id="dataFim" class="dataGlico"/>
+                            </div>
+                            <p id="erroFormData"></p>
+                            <button type="submit" class="btn btn-primary" id="botaoFormData">Vai!</button>
+                        </g:form>
                     </div>
-                    <label for="dataFim" class="label-control">Até:</label>
-                    <div class="input-group input-group-sm">
-                        <input name="dataFim" id="dataFim" value="${params.dataFim}" class="dataGlico" />
-                        <div class="errorField" aria-live="polite"></div>
-                    </div>
-                    <span> | </span>
-                    <button class="btn btn-outline-sucess btn-sm" type="submit">Vai!</button>
-                </g:form>
+                </div>
                 <ul class="navbar-nav d-flex flex-row-reverse">
                     <li class="nav-item nav-link">
                         <sec:ifLoggedIn>Olá <sec:username/>. <g:link controller='logoff'>Sair</g:link>

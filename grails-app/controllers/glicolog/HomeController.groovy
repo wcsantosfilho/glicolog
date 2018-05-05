@@ -253,13 +253,34 @@ class HomeController {
                 return
             }
 
-            // define a lista para passar para o Jasper
-            def todosRegistros = infoRegistroService.consultaTodosRegistrosDaPessoa(pessoaParaSearch)
+            // Parametros de busca e paginação
+            params.offset = params.offset ? params.int('offset') : 0
+            params.max = Math.min(params.max ? params.int('max') : 10000, 10000)
+            params.campoOrder = params.campoOrder ?: 'dataRegistro'
+            params.order = params.order ?: 'asc'
+
+            params.dataIni = params.dataIni ?: '01/01/1900 00:00:00'
+            params.dataFim = params.dataFim ?: '31/12/3000 23:59:59'
+
+            // define a lista para passar para o GSP 
+            def listObject = infoRegistroService.consultaRegistrosDaPessoa(pessoaParaSearch, params.offset, params.max, params.campoOrder, params.order, params.dataIni, params.dataFim)
+
+            def reportDef = new JasperReportDef(name:'glicologRegistros.jrxml', fileFormat: JasperExportFormat.PDF_FORMAT, reportData: listObject.registroList)
             
-            def reportDef = new JasperReportDef(name:'glicologRegistros.jrxml', fileFormat: JasperExportFormat.PDF_FORMAT, reportData: todosRegistros)
-            FileUtils.writeByteArrayToFile(new File("/temp/Registros.pdf"), jasperService.generateReport(reportDef).toByteArray())
-            
-            redirect(controller:"home", action:"index")
+            String nomeDoArquivo = "GlicologReport${pessoaParaSearch}.pdf"
+            try {
+                byte[] pdf = jasperService.generateReport(reportDef).toByteArray()
+                response.setHeader("Content-disposition", "attachment; ${nomeDoArquivo}")
+                response.setContentType('application/pdf')
+                response.outputStream << pdf;
+            } catch (IOException ioe) {
+                def errG = new errosGerais(controller: 'home', erroNoCatch: 'Exception', erroException: ex.message)
+                respond errG, view:'error'
+                return
+            }
+
+            flash.message = "Relatorio Gerado com Sucesso"
+            //redirect(controller:"home", action:"index")
 
         } catch (Exception ex) {
             def errG = new errosGerais(controller: 'home', erroNoCatch: 'Exception', erroException: ex.message)

@@ -197,7 +197,7 @@ $(document).ready(function() {
 
     
     /* --------------------------------------------------------------------- *
-     * Validação do formulário                                               *
+     * Validação do formulário de Entrada de Registros                       *
      * --------------------------------------------------------------------- */
     $("#formRegistro").on("submit", function(){
         // Valida campos obrigatórios do formulario: data e hora
@@ -237,5 +237,127 @@ $(document).ready(function() {
             return false;
         }
     });
+
+    /* --------------------------------------------------------------------- *
+     * Validação do formulário de Entrada de Registros                       *
+     * --------------------------------------------------------------------- */
+    $("#formRelatorios").on("submit", function(){
+        // Valida form relatórios
+        console.log($("#dataIni"))
+        console.log($("#dataFim"))
+    });
+
+    /* --------------------------------------------------------------------- *
+     * Função para calcular data no passado                                  *
+     * Parametros:                                                           *
+     * |- data = data atual                                                  *
+     * |- anos = anos a retroceder                                           *
+     * |- meses = meses a retroceder                                         *
+     * |- dias = dias a retroceder                                           *
+     * Exemplo: (data, 1, 2, 3) => retrocede 1 ano, 2 meses e 3 dias         *
+     * --------------------------------------------------------------------- */
+    function calculaDataPassada(data, anos, meses, dias) {
+        diaAtual = data.getDate();
+        mesAtual = data.getMonth();
+        anoAtual = data.getFullYear();
+        if (meses > 12) {
+            anos = anos + (meses % 12)
+            meses = meses - (anos * 12)
+        }
+        anoPassado = anoAtual - anos;
+        mesPassado = mesAtual - meses;
+        if (mesPassado < 0) {
+            anoPassado = anoPassado - 1;
+            mesPassado = 12 + mesPassado;
+        }
+        diaPassado = diaAtual - dias;
+        dataPassada = new Date()
+        dataPassada.setFullYear(anoPassado)
+        dataPassada.setMonth(mesPassado)
+        dataPassada.setDate(diaPassado)
+        
+        return dataPassada;
+    }    
+    
+    /* --------------------------------------------------------------------- *
+     * Validacao do intervalo de datas                                       *
+     * --------------------------------------------------------------------- */
+    function validaIntervaloForm() {
+            $("#erroFormData").text("")
+            $("#botaoFormData").prop("disabled",false);
+            
+            dataIniSelecionada = $("#dataIni").pickadate().pickadate('picker').get('select');
+            dataFimSelecionada = $("#dataFim").pickadate().pickadate('picker').get('select');
+            if (dataFimSelecionada != null && dataIniSelecionada != null) {
+                if ((dataFimSelecionada.pick < dataIniSelecionada.pick) ) {
+                    $("#erroFormData").text("Erro no intervalo de datas")
+                    $("#erroFormData").css("color", "#ff0000")
+                    $("#botaoFormData").prop("disabled",true);
+                } 
+            } else {
+                $("#botaoFormData").prop("disabled",true);
+            }
+            event.preventDefault();
+    }    
+
+    /* --------------------------------------------------------------------- *
+     * Validação e Definição do seletor de datas no cabecalho para relatório *
+     * --------------------------------------------------------------------- */
+    $("#button3Meses").on("click", function() {
+        var dataAtual = new Date();
+        var data3Meses = calculaDataPassada(dataAtual, 0, 3 , 0);
+        data3Meses.setDate(1);
+
+        // Chama a API do Pickadate para "setar" a data
+        var $input = $('#dataIni').pickadate();
+        var picker = $input.pickadate('picker');
+        picker.set('select', data3Meses);
+        
+        var $input = $('#dataFim').pickadate();
+        var picker = $input.pickadate('picker');
+        picker.set('select', dataAtual);
+        return false;
+    });
+    
+    $("#buttonUltMes").on("click", function() {
+        var dataAtual = new Date();
+        var dataUltMes = calculaDataPassada(dataAtual, 0, 1 , 0);
+        dataUltMes.setDate(1);
+
+        // Chama a API do Pickadate para "setar" a data
+        var $input = $('#dataIni').pickadate();
+        var picker = $input.pickadate('picker');
+        picker.set('select', dataUltMes);
+        
+        dataAtual = calculaDataPassada(dataAtual,0, 0, dataAtual.getDate())
+        var $input = $('#dataFim').pickadate();
+        var picker = $input.pickadate('picker');
+        picker.set('select', dataAtual);
+        return false;
+    });
+    
+    
+    // Validação se a DataFim é Maior que a DataIni
+    var $input = $('#dataIni').pickadate();
+    var pickerIni = $input.pickadate('picker');
+    dataIniSelecionada = pickerIni.get();
+    pickerIni.on({
+        set: function(dataSelecionada) {
+            validaIntervaloForm()
+        }
+    });
+
+    var $input = $('#dataFim').pickadate();
+    var pickerFim = $input.pickadate('picker');
+    dataFimSelecionada = pickerFim.get();
+    
+    pickerFim.on({
+        set: function(dataSelecionada) {
+            validaIntervaloForm()
+        }
+    });
+    
+
+
 });
 

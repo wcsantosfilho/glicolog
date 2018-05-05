@@ -33,25 +33,25 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Refatorar codigo para conceito de services (ver post)                     OK
 * Inclusão de Glicemia sem hora dá mensagem de erro, mas zera o form.       OK
 * Implementar o Validator no Client-Side                                    OK
+* Permitir várias inserções de registros diferentes com a mesma data e hora OK
+* Trazer data e hora pré-preenchidas                                        OK
+* Validar no Command Info as Constrains do Domain                           OK
 * Pesquisar Plugins de segurança: Spring Security Core                      +/-
    |- Duração da Session                                                    None
 * Layout de impressão para consulta médica                                  +/-
    |- Seleção de datas                                                      None
    |- Dados variáveis no cabeçalho (nome, data ini e data fim)              None
-   |- Nova Aba ou Download                                                  None
+   |- Nova Aba ou Download                                                  OK
    |- HTML e/ou PDF                                                         None
    |- Rodapé ("Gerado por Glicolog") sozinho na página                      None
-* Pesquisa por Intervalo de datas                                           +/-
-   |- Discutir com usuário esquema de datas e relatório                     None
-   |- Manter intervalo de datas na paginação                                None
-   |- Manter intervalo de datas no "Sort" asc ou desc                       None
-   |- Intervalo de datas padrão (não pode ser "sempre")                     None
-   |- Máscara do dataIni e dataFim                                          None
-   |- Permitir digitação do dataIni e dataFim?                              None
+   |- Mudar layout do relatório para usar menos papel                       None
+* Relatório por Intervalo de datas                                          +/-
+   |- Discutir com usuário esquema de datas e relatório                     OK
+   |- Intervalo de datas padrão (não pode ser "sempre")                     OK
+   |- Máscara do dataIni e dataFim                                          OK
 * Problemas com formulário submetido com "Enter"                            None
 * Testar SendGrid para enviar email pelo Heroku                             None
 * Montar esquema para proteger API SendGrid                                 None
-* Permitir várias inserções de registros diferentes com a mesma data e hora None
 * Aviso por e-mail em caso de não preenchimento                             None
 * Avanço de cursor pelo teclado após Data                                   None
 * Campo "Tipo Registro" sobrepõe do "Data e Hora" nas views menores         None
@@ -61,8 +61,6 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Estudar mecanismos de mensagem de erro, tanto no controller quanto no GSP +/-
 * Pesquisar plugin Google visualization plugin para Charts                  None
 * Estudar e Criar casos de testes                                           None
-* Trazer data e hora pré-preenchidas                                        None
-* Validar no Command Info as Constrains do Domain                           None
 * Colocar em tabelas os tipos (tipo de glicemia, tipo de insulina etc)      None
 * Cadastro de novos usuários                                                None
 * Eliminar itens inúteis do home/index                                      None

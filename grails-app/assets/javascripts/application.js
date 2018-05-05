@@ -8,6 +8,7 @@
 //= require jquery-2.1.4
 //= require jquery-ui 
 //= require tether
+//= require popper.min.js
 //= require bootstrap
 //= require pickadate
 //= require glicoscript
