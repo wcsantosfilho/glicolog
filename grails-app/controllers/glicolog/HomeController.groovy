@@ -261,11 +261,12 @@ class HomeController {
 
             params.dataIni = params.dataIni ?: '01/01/1900 00:00:00'
             params.dataFim = params.dataFim ?: '31/12/3000 23:59:59'
+            params.nomeUsuario = params.nomeUsuario ?: pessoaParaSearch.nome
 
             // define a lista para passar para o GSP 
             def listObject = infoRegistroService.consultaRegistrosDaPessoa(pessoaParaSearch, params.offset, params.max, params.campoOrder, params.order, params.dataIni, params.dataFim)
 
-            def reportDef = new JasperReportDef(name:'glicologRegistros.jrxml', fileFormat: JasperExportFormat.PDF_FORMAT, reportData: listObject.registroList)
+            def reportDef = new JasperReportDef(parameters: params, name:'glicologRegistros.jrxml', fileFormat: JasperExportFormat.PDF_FORMAT, reportData: listObject.registroList)
             
             String nomeDoArquivo = "GlicologReport${pessoaParaSearch}.pdf"
             try {

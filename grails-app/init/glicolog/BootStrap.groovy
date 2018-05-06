@@ -49,14 +49,16 @@ class BootStrap {
         }
         if (Environment.current == Environment.DEVELOPMENT) {
             
-            def anoReg = 2017
-            def mesReg = 05
-            def diaReg = 02
+            def dataAtual = new Date()
+            def anoReg = dataAtual[Calendar.YEAR]
+            def mesReg = dataAtual[Calendar.MONTH] + 1
+            def diaReg = dataAtual[Calendar.DATE]-55
             def ctDias = 55
-            def dataBase = new Date().parse("dd.mm.yyyy HH:mm:ss", "${diaReg}.${mesReg}.${anoReg} 06:00:00")
+            def dataBase = new Date().parse("dd.MM.yyyy HH:mm:ss", "${diaReg}.${mesReg}.${anoReg} 06:00:00")
+            println ("dataBase: ${dataBase}")
             1.upto(ctDias) {
                 dataBase = dataBase.plus(1)
-                dataBase = dataBase.parse("dd.mm.yyyy HH:mm:ss", "${dataBase[DATE]}.${dataBase[MONTH]+1}.${dataBase[YEAR]} 06:00:00")
+                dataBase = dataBase.parse("dd.MM.yyyy HH:mm:ss", "${dataBase[DATE]}.${dataBase[MONTH]+1}.${dataBase[YEAR]} 06:00:00")
                 def dataBase2 = dataBase.clone()
 
                 new Glicemia(pessoa: pessWalter, dataRegistro: dataBase2,  tipoGlicemia: "Pre", taxaGlicemia: 80)

@@ -51,10 +51,13 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
    |- Máscara do dataIni e dataFim                                          OK
 * Problemas com formulário submetido com "Enter"                            None
 * Testar SendGrid para enviar email pelo Heroku                             None
+* Datas Inicio e Fim do Relatório qdo não forem digitadas = Infinito        None
+* Login e Senha do Banco de Dados + APIs em arquivo (tirar do codigo fonte) None
 * Montar esquema para proteger API SendGrid                                 None
 * Aviso por e-mail em caso de não preenchimento                             None
 * Avanço de cursor pelo teclado após Data                                   None
 * Campo "Tipo Registro" sobrepõe do "Data e Hora" nas views menores         None
+* Ocultar Itens de Menu antes do Login                                      None
 * Permitir consulta ascendente e descentente                                None
 * Testar  http://bootstrapvalidator.com/ para o front-end                   None
 * Tratar erros no Controller                                                None
