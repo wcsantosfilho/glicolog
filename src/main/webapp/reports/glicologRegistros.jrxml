@@ -2,11 +2,9 @@
 <!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 
 <jasperReport name="glicologRegistros" columnCount="1" pageWidth="615" pageHeight="880" columnWidth="580" columnSpacing="5" leftMargin="10" rightMargin="10" topMargin="30" bottomMargin="30"  whenNoDataType="NoDataSection">
-	<style name="Arial_Normal" isDefault="true" fontName="Arial" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
-	<style name="Arial_Bold" isDefault="false" fontName="Arial" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
-	<style name="Arial_Italic" isDefault="false" fontName="Arial" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Oblique" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
-	<style name="Comic_Normal" isDefault="false" fontName="Comic Sans MS" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="COMIC.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-	<style name="Comic_Bold" isDefault="false" fontName="Comic Sans MS" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="COMICBD.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+	<style name="Arial_Normal" isDefault="true" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="Arial_Bold" isDefault="false" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="Arial_Italic" isDefault="false" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
 	<parameter name="ReportTitle" class="java.lang.String">
 	</parameter>
     <parameter name="CurrentDate" class="java.util.Date">

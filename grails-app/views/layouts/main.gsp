@@ -40,7 +40,7 @@
                 </ul>
                 <div class="btn-group">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Relatórios:</button>
-                    <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
                         <button class="dropdown-item" type="button" id="button3Meses">Ult. 3 meses</button>
                         <button class="dropdown-item" type="button" id="buttonUltMes">Ult. mês</button>
                         <div class="dropdown-divider"></div>

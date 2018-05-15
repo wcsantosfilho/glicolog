@@ -36,6 +36,7 @@ Registro de Glicemias, Insulinas aplicadas, refeições e atividades físicas pa
 * Permitir várias inserções de registros diferentes com a mesma data e hora OK
 * Trazer data e hora pré-preenchidas                                        OK
 * Validar no Command Info as Constrains do Domain                           OK
+* Problemas com visualização do Form de Datas do Relatório no iPhone        None
 * Pesquisar Plugins de segurança: Spring Security Core                      +/-
    |- Duração da Session                                                    None
 * Layout de impressão para consulta médica                                  +/-

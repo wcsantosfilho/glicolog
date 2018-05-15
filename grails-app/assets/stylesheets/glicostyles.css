@@ -8,6 +8,13 @@ body {
 
 /* Visualização no mobile */
 @media screen and (max-width: 480px) {
+    .scrollable-menu {
+        height: auto;
+        max-height: 180px;
+        overflow-x: hidden;
+    }
+
+
     .table-glicolog th {
         display: none;
     }
@@ -58,6 +65,12 @@ body {
 
 /* Visualização da tabela de registros no browser */
 @media screen and (min-width: 481px and max-width: 992px){
+    .scrollable-menu {
+        height: auto;
+        max-height: 500px;
+        overflow-x: hidden;
+    }
+
     .table-glicolog {
         table-layout: fixed;
         width: 100%;
@@ -126,6 +139,16 @@ body {
 
 #grupoAtivFisica {
     background-color: crimson;
+}
+
+.scrollable-menu::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 4px;        
+}    
+.scrollable-menu::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: yellow;
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.75);        
 }
 
 li.listRadio {
