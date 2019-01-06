@@ -1,0 +1,101 @@
+import glicolog.*
+
+def criteria = Registro.createCriteria()
+
+criteria.list {
+    pessoa {
+        eq 'nome', 'Jose'
+    }
+    projections { 
+        groupProperty 'dataRegistro'
+        min ('tipoGlicemia')
+        min ('taxaGlicemia')
+        min ('tipoInsulina')
+        min ('doseInsulina')
+        count()
+    }
+}
+
+==============================================
+
+
+import glicolog.*
+
+def userBernardino = new Usuario(login:"jose@gmail.com", password:"aaa", name: "jose", tipo: "Comum")
+new Pessoa(nome: "Jose", idade:25, usuario: userBernardino)
+   .addToGlicemias(new Glicemia(dataRegistro: "2015-05-01 06:00:00.00",  tipoGlicemia: "Pre", taxaGlicemia: 80))
+   .addToInsulinas(new Insulina(dataRegistro: "2015-05-01 06:00:00.00",  tipoInsulina: "Aspart", doseInsulina: 8))
+   .addToGlicemias(new Glicemia(dataRegistro: "2015-05-01 08:00:00.00",  tipoGlicemia: "Pos", taxaGlicemia: 122))
+   .addToInsulinas(new Insulina(dataRegistro: "2015-05-01 08:00:00.00",  tipoInsulina: "Glargina", doseInsulina: 12))
+   .save(failOnError: true)
+
+=============================================
+
+
+import glicolog.*
+
+def userBernardino = Pessoa.findByNome("Jose")
+   new Glicemia(dataRegistro: "2015-05-01 12:00:00.00",  tipoGlicemia: "Pos", taxaGlicemia: 122, pessoa: userBernardino)
+   .save(failOnError: true)
+   new Insulina(dataRegistro: "2015-05-01 12:00:00.00",  tipoInsulina: "Glargina", doseInsulina: 12, pessoa: userBernardino)
+   .save(failOnError: true)
+   
+   
+===============================================
+
+import glicolog.*
+import org.hibernate.criterion.CriteriaSpecification
+
+/*
+def userBernardino = Pessoa.findByNome("Jose")
+   new Glicemia(dataRegistro: "2015-05-01 12:00:00.00",  tipoGlicemia: "Pos", taxaGlicemia: 144, pessoa: userBernardino)
+   .save(failOnError: true)
+   new Insulina(dataRegistro: "2015-05-01 12:00:00.00",  tipoInsulina: "Glargina", doseInsulina: 14, pessoa: userBernardino)
+   .save(failOnError: true)
+   
+*/
+
+
+def map1 = [p1:100, p2:200, p3:300, p4:400, p5:500]
+println "map1: " + map1.getClass()
+println "${map1.keySet()}"
+map1.each {
+    println "Registro ${it}"
+}
+
+println "----------------------------"
+def pessoaParaSearch = Pessoa.findByNome("Jose")
+def searchResults = Registro.findAllByPessoa(pessoaParaSearch)
+println "sR  : " + searchResults.getClass()
+
+searchResults.each {
+    println "Registro ${it}"
+}
+
+println "----------------------------"
+def criteria = Registro.createCriteria()
+
+def criList = criteria.list {
+    resultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP)
+    pessoa {
+        eq 'nome', 'Jose'
+    }
+    projections { 
+        groupProperty ('dataRegistro', 'dataRegistro')
+        min ('tipoGlicemia', 'tipoGlicemia')
+        min ('taxaGlicemia', 'taxaGlicemia')
+        min ('tipoInsulina', 'tipoInsulina')
+        min ('doseInsulina', 'doseInsulina')
+        min ('tipoRefeicao', 'tipoRefeicao')
+        min ('observRefeicao', 'observRefeicao')
+        min ('tipoAtivFisica', 'tipoAtivFisica')
+        min ('observAtivFisica', 'observAtivFisica')
+        count('dataRegistro', 'ct') 
+    }
+}
+
+println "crit  : " + criList.getClass()
+
+criList.each {
+    println "CritList: ${it}"
+}
